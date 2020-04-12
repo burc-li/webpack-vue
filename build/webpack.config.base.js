@@ -1,21 +1,21 @@
 /**
- * @name webpack基础配置 
+ * @name webpack基础配置
  */
 
-const path = require('path');
+const path = require('path')
 // 请确保引入这个插件！
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 // 1. 为html文件中引入的外部资源如script、link,动态添加每次compile后的hash，防止引用缓存的外部文件问题
 // 2. 可以生成创建html入口文件，比如单页面可以生成一个html文件入口，配置N个html-webpack-plugin可以生成N个页面入口
-const HTMLPlugin = require('html-webpack-plugin');
+const HTMLPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
 //  引入vue-loader配置项
 const createVueLoaderOptions = require('./vue-loader.config.js')
 
-const isDev = process.env.NODE_ENV === 'development';
+const isDev = process.env.NODE_ENV === 'development'
 
 const config = {
-  //入口， __dirname 是当前文件所在目录
+  // 入口， __dirname 是当前文件所在目录
   entry: path.join(__dirname, '../src/index.js'),
 
   // 输出 [hash:8] 哈希算法随机生成 8位 大/小写字母和数字 例如： bundle.0f127098.js
@@ -31,7 +31,7 @@ const config = {
     rules: [
       // 使用以.vue文件名结尾的文件时，需要为其指定loader（解析和转换 .vue 文件）
       {
-        test: /\.vue$/, //正则表达式 /. .需要转义
+        test: /\.vue$/, // 正则表达式 /. .需要转义
         loader: 'vue-loader',
         options: createVueLoaderOptions(isDev)
       },
@@ -95,8 +95,8 @@ const config = {
     }),
 
     // 生成一个HTML文件
-    new HTMLPlugin(),
-  ],
+    new HTMLPlugin()
+  ]
 }
 
-module.exports = config;
+module.exports = config

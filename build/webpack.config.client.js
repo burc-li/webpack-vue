@@ -1,34 +1,34 @@
 /**
- * @name 区分开发环境和生产环境的webpack配置 
+ * @name 区分开发环境和生产环境的webpack配置
  */
 
 // 配置CSS单独分离打包
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // 合并webpack配置文件
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.config.base')
 
-const isDev = process.env.NODE_ENV === 'development';
+const isDev = process.env.NODE_ENV === 'development'
 
 // devServer配置
 const devServer = {
   port: 8000,
-  //可以通过三种方式访问: 127.0.0.1:8000/  localhost:8000/  192.168.43.117:8000/(本机IP)
+  // 可以通过三种方式访问: 127.0.0.1:8000  localhost:8000  192.168.43.117:8000(本机IP)
   host: '127.0.0.1',
   // 编译出错是显示在网页上
   overlay: {
-    errors: true,
+    errors: true
   },
   // 输入 npm run dev 自动打开浏览器访问页面
   open: true,
   // 热重载模式
-  hot: true,
+  hot: true
 }
 
 let config
 
 if (isDev) {
-  // 开发环境下 
+  // 开发环境下
   config = merge(baseConfig, {
     module: {
       rules: [
@@ -48,10 +48,10 @@ if (isDev) {
         }
       ]
     },
-    devServer,
+    devServer
   })
 } else {
-  // 生产环境下 
+  // 生产环境下
   config = merge(baseConfig, {
 
     // 输出 [chunkhash:8] 哈希算法随机生成 8位 大/小写字母和数字 例如： main.f6788b03.js
@@ -75,8 +75,8 @@ if (isDev) {
                 // by default it uses publicPath in webpackOptions.output
                 publicPath: './',
                 // only enable hot in development
-                hmr: process.env.NODE_ENV === 'development',
-              },
+                hmr: process.env.NODE_ENV === 'development'
+              }
             },
             'css-loader',
             {
@@ -96,10 +96,10 @@ if (isDev) {
       new MiniCssExtractPlugin({
         filename: '[name].[contenthash:8].css',
         chunkFilename: '[id].css',
-        ignoreOrder: false, // Enable to remove warnings about conflicting order
+        ignoreOrder: false // Enable to remove warnings about conflicting order
       })
     ]
   })
 }
 
-module.exports = config;
+module.exports = config

@@ -1,8 +1,13 @@
+/**
+ *eslint配置文件
+ */
 {
-  "extends": "standard",
+  "extends": ["standard"],
   "plugins": ["html"],
-  "parser": "babel-eslint"
-  // "rules": {
-  //   "no-new": "off"
-  // }
+  "parserOptions": {
+    "parser": "babel-eslint"
+  },
+  "rules": {
+    "no-tabs": "off"
+  }
 }
