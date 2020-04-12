@@ -1,3 +1,7 @@
+/**
+ * @name 区分开发环境和生产环境的webpack配置 
+ */
+
 // 配置CSS单独分离打包
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // 合并webpack配置文件

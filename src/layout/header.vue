@@ -1,6 +1,8 @@
 <template>
   <header class="main-header">
-    <h1>Todo</h1>
+    <h1>
+      Todos
+    </h1>
   </header>
 </template>
 

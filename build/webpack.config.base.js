@@ -1,3 +1,7 @@
+/**
+ * @name webpack基础配置 
+ */
+
 const path = require('path');
 // 请确保引入这个插件！
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
@@ -5,6 +9,8 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 // 2. 可以生成创建html入口文件，比如单页面可以生成一个html文件入口，配置N个html-webpack-plugin可以生成N个页面入口
 const HTMLPlugin = require('html-webpack-plugin');
 const webpack = require('webpack')
+//  引入vue-loader配置项
+const createVueLoaderOptions = require('./vue-loader.config.js')
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -26,7 +32,8 @@ const config = {
       // 使用以.vue文件名结尾的文件时，需要为其指定loader（解析和转换 .vue 文件）
       {
         test: /\.vue$/, //正则表达式 /. .需要转义
-        loader: 'vue-loader'
+        loader: 'vue-loader',
+        options: createVueLoaderOptions(isDev)
       },
 
       // 解析和转换 .jsx文件

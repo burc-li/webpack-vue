@@ -5,7 +5,6 @@
     <Footer></Footer>
   </div>
 </template>
-views/
 <script>
 import Header from "./layout/header.vue";
 import Footer from "./layout/footer.jsx";
