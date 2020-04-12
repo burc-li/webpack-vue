@@ -1,16 +1,16 @@
-import "../assets/styles/footer.less";
+import '../assets/styles/footer.less'
 
 export default {
-  data() {
+  data () {
     return {
-      author: "burc",
-    };
+      author: 'burc'
+    }
   },
-  render() {
+  render () {
     return (
       <div id="footer">
         <span>Written by {this.author}</span>
       </div>
-    );
-  },
-};
+    )
+  }
+}
