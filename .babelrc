@@ -1,0 +1,9 @@
+/**
+ * Vue支持JSX语法
+ * npm i babel-preset-env babel-plugin-transform-vue-jsx
+ */
+
+{
+  "presets": ["env"],
+  "plugins": ["transform-vue-jsx"]
+}
