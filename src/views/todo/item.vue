@@ -1,7 +1,7 @@
 <template>
   <div :class="['todo-item', {completed: todo.completed}]">
     <input type="checkbox" class="toggle" v-model="todo.completed" />
-    <label for="">{{ todo.content }}</label>
+    <label for>{{ todo.content }}</label>
     <button class="destory" @click="deleteTodo"></button>
   </div>
 </template>
@@ -11,14 +11,14 @@ export default {
   props: {
     todo: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   methods: {
     deleteTodo() {
       this.$emit("del", this.todo.id);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -61,10 +61,10 @@ export default {
   appearance: none;
   outline: none;
   &:after {
-    content: url("../assets/images/unChecked.svg");
+    content: url("../../assets/images/unChecked.svg");
   }
   &:checked:after {
-    content: url("../assets/images/checked.svg");
+    content: url("../../assets/images/checked.svg");
   }
 }
 .destory {

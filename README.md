@@ -48,11 +48,12 @@ npm i autoprefixer postcss-loader
 # Vue支持 .jsx文件
 # babel-loader: 用来处理ES6语法，将其编译为浏览器可以执行的js语法
 # @babel/core: babel核心模块
-npm i babel-loader @babel/core
+# @babel/preset-env: babel转码神器
+npm i babel-loader @babel/core @babel/preset-env
 
 # Vue支持 jsx语法
 # 新建文件.babelrc
-npm i babel-preset-env babel-plugin-transform-vue-jsx 
+npm i babel-plugin-transform-vue-jsx 
 npm i babel-helper-vue-jsx-merge-props babel-plugin-syntax-jsx
 
 # 配置CSS单独分离打包
