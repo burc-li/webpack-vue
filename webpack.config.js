@@ -1,3 +1,7 @@
+/**
+ * @name webpack配置
+ * @description 已废弃，被拆分为 build/webpack.config.base.js  build/webpack.client.js
+ */
 const path = require('path');
 // 请确保引入这个插件！
 const VueLoaderPlugin = require('vue-loader/lib/plugin');

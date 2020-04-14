@@ -2,8 +2,8 @@
  *eslint配置文件
  */
 {
-  "extends": ["standard"],
-  "plugins": ["html"],
+  "extends": ["standard", "plugin:vue/recommended"],
+  "plugins": ["html", "vue"],
   "parserOptions": {
     "parser": "babel-eslint"
   },

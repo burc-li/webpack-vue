@@ -3,7 +3,6 @@
  * npm i autoprefixer postcss-loader
  *  @description autoprefixer: 自动添加css前缀,例如-webkit-、-moz-
  *  @description postcss-loader: 用来优化css的，通过一系列的组件来优化，如：autoprofixer,为css加前缀
- * 
  * 设置完postcss.config.js后，添加postcss-loader到您的中webpack.config.js。
  * 您可以将其单独使用或与css-loader（推荐）结合使用。在style-loader和 css-loader之后，
  * 但要在其他预处理程序加载程序（例如sass|less|stylus-loader，如果使用）之前使用它。
@@ -15,9 +14,9 @@ module.exports = {
   plugins: [
     autoprefixer({
       overrideBrowserslist: [
-        "> 1%",
-        "last 2 versions",
-        "ie >= 9"
+        '> 1%',
+        'last 2 versions',
+        'ie >= 9'
       ]
     })
   ]

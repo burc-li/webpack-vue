@@ -1,8 +1,15 @@
 <template>
   <div :class="['todo-item', {completed: todo.completed}]">
-    <input type="checkbox" class="toggle" v-model="todo.completed" />
+    <input
+      v-model="todo.completed"
+      type="checkbox"
+      class="toggle"
+    >
     <label for>{{ todo.content }}</label>
-    <button class="destory" @click="deleteTodo"></button>
+    <button
+      class="destory"
+      @click="deleteTodo"
+    />
   </div>
 </template>
 
@@ -15,11 +22,11 @@ export default {
     }
   },
   methods: {
-    deleteTodo() {
-      this.$emit("del", this.todo.id);
+    deleteTodo () {
+      this.$emit('del', this.todo.id)
     }
   }
-};
+}
 </script>
 
 <style lang="less" scoped>

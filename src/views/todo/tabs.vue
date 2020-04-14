@@ -7,11 +7,12 @@
         :key="state"
         :class="[state, filter === state ? 'actived' : '']"
         @click="toggleFilter(state)"
-      >
-        {{ state }}
-      </span>
+      >{{ state }}</span>
     </span>
-    <span class="clear" @click="clearAllCompleted">Clear Completed</span>
+    <span
+      class="clear"
+      @click="clearAllCompleted"
+    >Clear Completed</span>
   </div>
 </template>
 
@@ -20,32 +21,32 @@ export default {
   props: {
     filter: {
       type: String,
-      required: true,
+      required: true
     },
     todos: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
-      states: ["all", "active", "completed"],
-    };
+      states: ['all', 'active', 'completed']
+    }
   },
   computed: {
-    unfinishedTodo: function() {
-      return this.todos.filter((todo) => todo.completed === false);
-    },
+    unfinishedTodo: function () {
+      return this.todos.filter(todo => todo.completed === false)
+    }
   },
   methods: {
-    clearAllCompleted() {
-      this.$emit("clearAll");
+    clearAllCompleted () {
+      this.$emit('clearAll')
     },
-    toggleFilter(state) {
-      this.$emit("toggle", state);
-    },
-  },
-};
+    toggleFilter (state) {
+      this.$emit('toggle', state)
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>

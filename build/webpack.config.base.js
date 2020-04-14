@@ -22,7 +22,10 @@ const config = {
   // hash是跟整个项目的构建相关，只要项目里有文件更改，整个项目构建的hash值都会更改，并且全部文件都共用相同的hash值
   output: {
     filename: 'bundle.[hash:8].js',
-    path: path.join(__dirname, '../dist')
+    path: path.join(__dirname, '../dist'),
+    // 在打包发布时，需要指定项目的路径。在hash模式时，项目的根目录是不变的，而在history模式时，以/开头的嵌套路径会被当做根据经。
+    // 所以更改文件output(publicPath从'./'更改为'/')即可解决此问题：
+    publicPath: '/',
   },
 
   // webpack原生只支持js、json文件类型，只支持ES5语法，
@@ -94,8 +97,10 @@ const config = {
       'process.env.NODE_ENV': isDev ? JSON.stringify('development') : '"production"'
     }),
 
-    // 生成一个HTML文件
-    new HTMLPlugin()
+    // 根据本地自定义文件 template.html 生成html文件
+    new HTMLPlugin({
+      template: path.join(__dirname, './template.html')
+    })
   ]
 }
 

@@ -9,8 +9,8 @@
     />
     <Item
       v-for="todo in filterTodos"
-      :todo="todo"
       :key="todo.id"
+      :todo="todo"
       @del="deleteTodo"
     />
     <Tabs
@@ -19,26 +19,26 @@
       @toggle="toggleFilter"
       @clearAll="clearAllCompletedTodo"
     />
+    <router-view />
   </section>
 </template>
 
 <script>
 import Item from "./item.vue";
 import Tabs from "./tabs.vue";
-import {constants} from "crypto";
 
 let id = 0;
 
 export default {
+  components: {
+    Item,
+    Tabs
+  },
   data() {
     return {
       todos: [],
-      filter: "all",
+      filter: "all"
     };
-  },
-  components: {
-    Item,
-    Tabs,
   },
   computed: {
     filterTodos() {
@@ -46,22 +46,25 @@ export default {
         return this.todos;
       }
       const filterCompleted = this.filter === "completed";
-      return this.todos.filter((todo) => todo.completed === filterCompleted);
-    },
+      return this.todos.filter(todo => todo.completed === filterCompleted);
+    }
+  },
+  mounted() {
+    // debugger;
   },
   methods: {
     addTodo(e) {
       this.todos.unshift({
         id: id++,
         content: e.target.value.trim(),
-        completed: false,
+        completed: false
       });
 
       e.target.value = "";
     },
     deleteTodo(id) {
       this.todos.splice(
-        this.todos.findIndex((todo) => id === todo.id),
+        this.todos.findIndex(todo => id === todo.id),
         1
       );
     },
@@ -70,9 +73,9 @@ export default {
       this.filter = state;
     },
     clearAllCompletedTodo() {
-      this.todos = this.todos.filter((todo) => todo.completed === false);
-    },
-  },
+      this.todos = this.todos.filter(todo => todo.completed === false);
+    }
+  }
 };
 </script>
 
