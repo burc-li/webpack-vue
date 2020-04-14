@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <Header />
-    <h1>{{ burcFullName }}</h1>
+    <h1>{{ burcCount }}</h1>
+    <el-button type="primary">主要按钮</el-button>
+    <el-tag type="success">标签二</el-tag>
     <!-- <router-link :to="{name: 'burcTodo'}">跳转todo</router-link> -->
     <router-link to="/todo/2">跳转todo</router-link>
     <!-- <router-link to="/todo">跳转todo</router-link> -->
