@@ -14,7 +14,7 @@
     "practice": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.practice.js"
   },
   "pre-commit": [
-    "lint-fix"
+    "lint"
   ],
   "author": "",
   "license": "ISC",
