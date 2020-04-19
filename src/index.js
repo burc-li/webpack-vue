@@ -8,7 +8,7 @@ import App from './app.vue'
 
 import './assets/styles/global.less'
 import createRouter from './config/router'
-import createStore from './store/store'
+import createStore from './store/store';
 
 Vue.use(VueRouter)
 Vue.use(Vuex)
