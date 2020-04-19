@@ -10,8 +10,8 @@
  * __proto__: Object
  */
 export default {
-  updateCountAsync(store, data) {
-    console.log("store", store)
+  updateCountAsync (store, data) {
+    console.log('store', store)
     setTimeout(() => {
       store.commit('updateCount', {
         num: data.num

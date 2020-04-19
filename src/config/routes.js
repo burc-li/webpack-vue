@@ -8,7 +8,7 @@ export default [
     redirect: '/todo/1'
   },
   {
-    //路由传参 /todo/xxx
+    // 路由传参 /todo/xxx
     path: '/todo/:id',
     // path: '/todo',
 
@@ -30,7 +30,7 @@ export default [
     // },
 
     // 路由守卫 跳转到路由 /todo/:id 之前 执行
-    beforeEnter(to, from, next) {
+    beforeEnter (to, from, next) {
       console.log('to', to)
       console.log('from', from)
       if (to) {
@@ -58,7 +58,7 @@ export default [
   },
   {
     path: '/login',
-    component: Login,
+    component: Login
     // 异步路由，提高首屏加载速度
     // component: () => import('../views/login/login.vue')
   }

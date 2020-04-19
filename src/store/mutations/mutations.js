@@ -6,12 +6,12 @@
  */
 
 export default {
-  updateAddress(state, { town, village }) {
+  updateAddress (state, { town, village }) {
     console.log(town, village)
     state.address = state.address + town + village
   },
-  updateCount(state, data) {
-    console.log("state", state)
+  updateCount (state, data) {
+    console.log('state', state)
     state.count = state.count + data.num
   }
 }

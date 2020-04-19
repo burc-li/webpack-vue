@@ -5,7 +5,6 @@ import mutations from './mutations/mutations'
 import getters from './getters/getters'
 import actions from './actions/actions'
 
-
 export default () => {
   const store = new Vuex.Store({
     state: defaultState,
@@ -54,7 +53,7 @@ export default () => {
   //   }
   // }
 
-  // 给 vuex 加一个 热更新 
+  // 给 vuex 加一个 热更新
   // 热更新功能 不用每次刷新页面
   if (module.hot) {
     module.hot.accept([

@@ -1,6 +1,6 @@
 <template>
   <div class="helper">
-    <span class="left">{{ this.unfinishedTodo.length }} items left</span>
+    <span class="left">{{ unfinishedTodo.length }} items left</span>
     <span class="tabs">
       <span
         v-for="state in states"

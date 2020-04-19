@@ -6,7 +6,7 @@
       autofocus="autofocus"
       placeholder="接下来做什么"
       @keyup.enter="addTodo"
-    />
+    >
     <Item
       v-for="todo in filterTodos"
       :key="todo.id"
@@ -24,59 +24,59 @@
 </template>
 
 <script>
-import Item from "./item.vue";
-import Tabs from "./tabs.vue";
+import Item from './item.vue'
+import Tabs from './tabs.vue'
 
-let id = 0;
+let id = 0
 
 export default {
   components: {
     Item,
     Tabs
   },
-  data() {
+  data () {
     return {
       todos: [],
-      filter: "all"
-    };
-  },
-  computed: {
-    filterTodos() {
-      if (this.filter === "all") {
-        return this.todos;
-      }
-      const filterCompleted = this.filter === "completed";
-      return this.todos.filter(todo => todo.completed === filterCompleted);
+      filter: 'all'
     }
   },
-  mounted() {
+  computed: {
+    filterTodos () {
+      if (this.filter === 'all') {
+        return this.todos
+      }
+      const filterCompleted = this.filter === 'completed'
+      return this.todos.filter(todo => todo.completed === filterCompleted)
+    }
+  },
+  mounted () {
     // debugger;
   },
   methods: {
-    addTodo(e) {
+    addTodo (e) {
       this.todos.unshift({
         id: id++,
         content: e.target.value.trim(),
         completed: false
-      });
+      })
 
-      e.target.value = "";
+      e.target.value = ''
     },
-    deleteTodo(id) {
+    deleteTodo (id) {
       this.todos.splice(
         this.todos.findIndex(todo => id === todo.id),
         1
-      );
+      )
     },
-    toggleFilter(state) {
-      console.log(state);
-      this.filter = state;
+    toggleFilter (state) {
+      console.log(state)
+      this.filter = state
     },
-    clearAllCompletedTodo() {
-      this.todos = this.todos.filter(todo => todo.completed === false);
+    clearAllCompletedTodo () {
+      this.todos = this.todos.filter(todo => todo.completed === false)
     }
   }
-};
+}
 </script>
 
 <style lang="less" scoped>

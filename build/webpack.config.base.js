@@ -25,13 +25,19 @@ const config = {
     path: path.join(__dirname, '../dist'),
     // 在打包发布时，需要指定项目的路径。在hash模式时，项目的根目录是不变的，而在history模式时，以/开头的嵌套路径会被当做根据经。
     // 所以更改文件output(publicPath从'./'更改为'/')即可解决此问题：
-    publicPath: '/',
+    publicPath: '/'
   },
 
   // webpack原生只支持js、json文件类型，只支持ES5语法，
   // 作用：打包、转译js或者css文件，还有其他的打包、压缩的功能，简单的说就是把你写的代码转换成浏览器能识别的
   module: {
     rules: [
+      {
+        test: /\.(vue|js|jsx)$/,
+        loader: 'eslint-loader',
+        exclude: /node_modules/,
+        enforce: 'pre' // 优先处理
+      },
       // 使用以.vue文件名结尾的文件时，需要为其指定loader（解析和转换 .vue 文件）
       {
         test: /\.vue$/, // 正则表达式 /. .需要转义
