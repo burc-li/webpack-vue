@@ -4,11 +4,11 @@ import Vuex from 'vuex'
 // import ElementUI from 'element-ui'
 import { Button, tag } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import App from './app.vue';
+import App from './app.vue'
 
-import './assets/styles/global.less';
-import createRouter from './config/router';
-import createStore from './store/store';
+import './assets/styles/global.less'
+import createRouter from './config/router'
+import createStore from './store/store'
 
 Vue.use(VueRouter)
 Vue.use(Vuex)
