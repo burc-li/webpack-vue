@@ -1,18 +1,24 @@
+<doc>
+  @name: 根组件
+</doc>
+
 <template>
   <div id="app">
     <Header />
     <h1>{{ burcCount }}</h1>
-    <!-- <router-link :to="{name: 'burcTodo'}">跳转todo</router-link> -->
-    <router-link to="/todo/2">
-      跳转todo
+    <router-link to="/distribute">
+      <el-button
+        type="primary"
+        size="mini"
+      >
+        跳转路由分发页面
+      </el-button>
     </router-link>
+    <section>
+      <!-- <router-view />显示的是当前路由地址所对应的内容 -->
+      <router-view />
+    </section>
 
-    <!-- <router-link to="/todo">跳转todo</router-link> -->
-    <router-link to="/login">
-      跳转login
-    </router-link>
-    <!-- <router-view />显示的是当前路由地址所对应的内容 -->
-    <router-view />
     <Footer />
   </div>
 </template>
@@ -93,8 +99,26 @@ export default {
 }
 </script>
 
-<style scoped>
+<style rel="stylesheet/less" lang="less" scoped>
 #app {
-  margin: auto;
+  margin: 40px auto;
+  h1 {
+    color: #de5e5f;
+    font-size: 22px;
+    display: inline-block;
+    line-height: 22px;
+  }
+  a {
+    font-size: 22px;
+  }
+  section{
+    margin-top: 10vh;
+  }
+  #footer{
+    position: fixed;
+    bottom: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 </style>

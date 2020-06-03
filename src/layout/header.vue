@@ -12,9 +12,9 @@
 }
 
 .main-header h1 {
-  font-size: 100px;
+  font-size: 40px;
   color: rgba(175, 47, 47, 0.4);
-  font-weight: 400;
-  margin: 20px;
+  font-weight: 600;
+  margin: 10px;
 }
 </style>
