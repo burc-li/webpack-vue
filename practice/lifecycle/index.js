@@ -1,7 +1,11 @@
+/**
+ * @name 生命周期
+ */
+
 import Vue from 'vue'
 
 const app = new Vue({
-  el: '#root',
+  el: '#todo-root',
   data: {
     text: 0
   },

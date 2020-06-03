@@ -1,5 +1,5 @@
 /**
- * @name Vue核心知识练习
+ * @name Vue核心知识练习入口文件
  */
 
 // import './instance'

@@ -1,3 +1,7 @@
+/**
+ * @name 自定义的路由对象
+ */
+
 // import Todo from '../views/todo/todo.vue'
 import Login from '../views/login/login.vue'
 

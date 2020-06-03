@@ -1,3 +1,7 @@
+/**
+ * @name state数据
+ */
+
 export default {
   count: 0,
   address: '济南市商河县',

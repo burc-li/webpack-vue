@@ -1,4 +1,8 @@
-import Vue from 'vue'
+/**
+ * @name 实例方法
+ */
+
+ import Vue from 'vue'
 
 const app = new Vue({
   data: {
@@ -10,13 +14,13 @@ const app = new Vue({
       console.log('text数据发生改变立即调用watch方法', `${newText} : ${oldText}`)
     }
   },
-  // el: '#root',
+  // el: '#todo-root',
   template: '<div ref="div">{{text}} {{obj.a}}</div>'
 })
 
-// 或者通过Vue对象中添加 el: '#root'
-// 将app挂载到#root标签
-app.$mount('#root')
+// 或者通过Vue对象中添加 el: '#todo-root'
+// 将app挂载到#todo-root标签
+app.$mount('#todo-root')
 
 setInterval(() => {
   // app.text += 1  改变

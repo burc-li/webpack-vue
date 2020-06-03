@@ -1,3 +1,7 @@
+/**
+ * @name 计算属性和侦听器
+ */
+
 import Vue from 'vue'
 
 /* eslint-disable no-new */

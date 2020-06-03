@@ -1,3 +1,7 @@
+/**
+ * @name Class与Style绑定
+ */
+
 import Vue from 'vue'
 
 /* eslint-disable no-new */

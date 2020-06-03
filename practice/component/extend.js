@@ -1,6 +1,7 @@
 /**
  * @name 组件-组件继承
  */
+
 import Vue from 'vue'
 
 const compoent = {
@@ -51,7 +52,7 @@ const parent = new Vue({
 new Vue({
   parent: parent,
   name: 'Root',
-  el: '#root',
+  el: '#todo-root',
   mounted() {
     console.log('new Vue({})', this.$parent.$options.name) //parent
   },

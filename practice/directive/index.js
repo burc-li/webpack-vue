@@ -1,8 +1,12 @@
+/**
+ * @name 指令
+ */
+
 import Vue from 'vue'
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#root',
+  el: '#todo-root',
   data: {
     arr: [2, 3],
     obj: {

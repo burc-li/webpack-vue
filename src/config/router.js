@@ -1,3 +1,7 @@
+/**
+ * @name VueRouter实例
+ */
+
 import VueRouter from 'vue-router'
 
 import routes from './routes'

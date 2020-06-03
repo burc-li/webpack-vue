@@ -1,6 +1,7 @@
 /**
  * @name 组件-自定义双向绑定
  */
+
 import Vue from 'vue'
 
 const component1 = {

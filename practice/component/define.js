@@ -1,6 +1,7 @@
 /**
  * @name 组件-组件定义
  */
+
 import Vue from 'vue'
 
 const compoent = {
@@ -37,7 +38,7 @@ const compoent = {
 // Vue.component('CompOne', compoent)
 /* eslint-disable no-new */
 new Vue({
-  el: '#root',
+  el: '#todo-root',
   // 组件名 CamelCase驼峰命名法  例如：CompOne
   components: {
     CompOne: compoent

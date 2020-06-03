@@ -39,7 +39,7 @@ new Vue({
   components: {
     CompOne: component
   },
-  el: '#root',
+  el: '#todo-root',
   data() {
     return {
       value: '123'

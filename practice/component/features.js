@@ -1,6 +1,7 @@
 /**
  * @name 组件-高级属性
  */
+
 import Vue from 'vue'
 
 const component1 = {

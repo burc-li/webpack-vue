@@ -1,4 +1,8 @@
 /**
+ * @name mutations 修改state数据
+ */
+
+/**
  * mutations不能写异步代码, 异步代码写在actions
  * 第一个参数：state
  * 第二个参数：变量或对象

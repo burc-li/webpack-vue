@@ -1,3 +1,7 @@
+/**
+ * @name Store实例
+ */
+
 import Vuex from 'vuex'
 
 import defaultState from './state/state'

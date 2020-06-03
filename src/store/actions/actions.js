@@ -1,4 +1,8 @@
 /**
+ * @name actions 异步操作
+ */
+
+/**
  * store对象值
  * {getters: {…}, state: {…}, rootGetters: {…}, dispatch: ƒ, commit: ƒ, …}
  * dispatch: ƒ boundDispatch(type, payload)
