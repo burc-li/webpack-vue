@@ -2,49 +2,50 @@ import Vue from 'vue'
 
 const app = new Vue({
   el: '#root',
-  template: '<div>{{text}}</div>',
   data: {
     text: 0
   },
-  beforeCreate() {
+  beforeCreate () {
     console.log(this.$el, 'beforeCreate')
   },
-  created() {
+  created () {
     console.log(this.$el, 'created')
   },
-  beforeMount() {
+  beforeMount () {
     console.log(this.$el, 'beforeMount')
   },
-  mounted() {
+  mounted () {
     console.log(this.$el, 'mounted')
   },
-  beforeUpdate() {
+  beforeUpdate () {
     console.log(this, 'beforeUpdate')
   },
-  updated() {
+  updated () {
     console.log(this, 'updated')
   },
-  activated() { // 在组件章节讲解
+  activated () { // 在组件章节讲解
     console.log(this, 'activated')
   },
-  deactivated() { // 在组件章节讲解
+  deactivated () { // 在组件章节讲解
     console.log(this, 'deactivated')
   },
-  beforeDestroy() {
+  beforeDestroy () {
     console.log(this, 'beforeDestroy')
   },
-  destroyed() {
+  destroyed () {
     console.log(this, 'destroyed')
   },
-  render(h) {
+  template: '<div>{{text}}</div>',
+  // eslint-disable-next-line vue/require-render-return
+  render (h) {
     throw new TypeError('render error')
     // console.log('render function invoked')
     // return h('div', {}, this.text)
   },
-  renderError(h, err) {
+  renderError (h, err) {
     return h('div', {}, err.stack)
   },
-  errorCaptured() {
+  errorCaptured () {
     // 会向上冒泡，并且正式环境可以使用
   }
 })

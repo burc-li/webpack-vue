@@ -47,7 +47,7 @@ config = merge(baseConfig, {
   // vue.esm.js: 可以写Vue对象里面写template
   resolve: {
     alias: {
-      'vue': path.join(__dirname, '../node_modules/vue/dist/vue.esm.js')
+      vue: path.join(__dirname, '../node_modules/vue/dist/vue.esm.js')
     }
   },
 

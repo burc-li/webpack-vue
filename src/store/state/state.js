@@ -5,5 +5,5 @@ export default {
   lastName: '柏成',
   todos: [],
   user: null,
-  loading: false
+  loading: false,
 }

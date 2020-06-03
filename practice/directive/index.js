@@ -1,7 +1,20 @@
 import Vue from 'vue'
 
+/* eslint-disable no-new */
 new Vue({
   el: '#root',
+  data: {
+    arr: [2, 3],
+    obj: {
+      a: '123',
+      b: '456',
+      c: '789'
+    },
+    picked: '',
+    text: 0,
+    active: false,
+    html: '<span>this is html</span>'
+  },
   template: `
     <div>
       <div>Text: {{text}}</div>
@@ -26,17 +39,5 @@ new Vue({
         <li v-for="(val, key, index) in obj">{{val}}:{{key}}:{{index}}</li>
       </ul>
     </div>
-  `,
-  data: {
-    arr: [2, 3],
-    obj: {
-      a: '123',
-      b: '456',
-      c: '789'
-    },
-    picked: '',
-    text: 0,
-    active: false,
-    html: '<span>this is html</span>'
-  }
+  `
 })

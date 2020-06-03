@@ -3,7 +3,7 @@ import '../assets/styles/footer.less'
 export default {
   data () {
     return {
-      author: 'burc'
+      author: 'burc',
     }
   },
   render () {
@@ -12,5 +12,5 @@ export default {
         <span>Written by {this.author}</span>
       </div>
     )
-  }
+  },
 }

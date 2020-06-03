@@ -1,31 +1,19 @@
 import Vue from 'vue'
 
+/* eslint-disable no-new */
 new Vue({
-  el: '#root',
-  // template: `
-  //   <div :id="aaa" @click="handleClick">
-  //     <p v-html="html"></p>
-  //   </div>
-  // `,
-  template: `
-    <div
-      :class="[{ active: isActive }]"
-      :style="[styles, styles2]"
-    >
-      <p>{{getJoinedArr(arr)}}</p>
-    </div>
-  `,
+  el: '#todo-root',
   data: {
-    isActive: false,
+    isActive: true,
+    text: 'text-danger',
     arr: [1, 2, 3],
     html: '<span>123</span>',
     aaa: 'main',
     styles: {
-      color: 'red',
-      appearance: 'none'
+      color: 'red'
     },
     styles2: {
-      color: 'black'
+      fontSize: '28px'
     }
   },
   methods: {
@@ -35,5 +23,18 @@ new Vue({
     getJoinedArr (arr) {
       return arr.join(' ')
     }
-  }
+  },
+  // template: `
+  //   <div :id="aaa" @click="handleClick">
+  //     <p v-html="html"></p>
+  //   </div>
+  // `,
+  template: `
+    <div
+      :class="[{ 'text-actice': isActive, active: isActive },text,'text']"
+      :style="[styles, styles2,{border:'1px solid #f00'}]"
+    >
+      <p>{{getJoinedArr(arr)}}</p>
+    </div>
+  `
 })

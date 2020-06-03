@@ -5,7 +5,9 @@
       type="checkbox"
       class="toggle"
     >
-    <label for>{{ todo.content }}</label>
+    <label>
+      {{ todo.content }}
+    </label>
     <button
       class="destory"
       @click="deleteTodo"
@@ -18,14 +20,14 @@ export default {
   props: {
     todo: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   methods: {
     deleteTodo () {
       this.$emit('del', this.todo.id)
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -41,7 +43,7 @@ export default {
     }
   }
   label {
-    white-space: pre-line;
+    // white-space: pre-line;
     word-break: break-all;
     padding: 15px 60px 15px 15px;
     margin-left: 45px;
@@ -65,10 +67,10 @@ export default {
   bottom: 0;
   margin: auto 0;
   border: none;
-  appearance: none;
+  // appearance: none;
   outline: none;
   &:after {
-    content: url("../../assets/images/unChecked.svg");
+    content: url("../../assets/images/checked.svg");
   }
   &:checked:after {
     content: url("../../assets/images/checked.svg");

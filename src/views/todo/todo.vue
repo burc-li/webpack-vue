@@ -32,12 +32,12 @@ let id = 0
 export default {
   components: {
     Item,
-    Tabs
+    Tabs,
   },
   data () {
     return {
       todos: [],
-      filter: 'all'
+      filter: 'all',
     }
   },
   computed: {
@@ -47,17 +47,18 @@ export default {
       }
       const filterCompleted = this.filter === 'completed'
       return this.todos.filter(todo => todo.completed === filterCompleted)
-    }
+    },
   },
   mounted () {
-    // debugger;
+    console.log('this.$router全局路由器对象：', this.$router)
+    console.log('this.$route路由对象：', this.$route)
   },
   methods: {
     addTodo (e) {
       this.todos.unshift({
         id: id++,
         content: e.target.value.trim(),
-        completed: false
+        completed: false,
       })
 
       e.target.value = ''
@@ -65,17 +66,17 @@ export default {
     deleteTodo (id) {
       this.todos.splice(
         this.todos.findIndex(todo => id === todo.id),
-        1
+        1,
       )
     },
-    toggleFilter (state) {
-      console.log(state)
+    toggleFilter (state, name) {
+      console.log(state, name)
       this.filter = state
     },
     clearAllCompletedTodo () {
       this.todos = this.todos.filter(todo => todo.completed === false)
-    }
-  }
+    },
+  },
 }
 </script>
 

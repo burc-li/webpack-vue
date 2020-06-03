@@ -1,23 +1,22 @@
 import Vue from 'vue'
 
 const app = new Vue({
-  // el: '#root',
-  template: '<div ref="div">{{text}} {{obj.a}}</div>',
   data: {
     text: 0,
     obj: {}
   },
   watch: {
-    text(newText, oldText) {
+    text (newText, oldText) {
       console.log('text数据发生改变立即调用watch方法', `${newText} : ${oldText}`)
     }
-  }
+  },
+  // el: '#root',
+  template: '<div ref="div">{{text}} {{obj.a}}</div>'
 })
 
-// 或者通过Vue对象中添加 el: '#root' 
+// 或者通过Vue对象中添加 el: '#root'
 // 将app挂载到#root标签
 app.$mount('#root')
-
 
 setInterval(() => {
   // app.text += 1  改变

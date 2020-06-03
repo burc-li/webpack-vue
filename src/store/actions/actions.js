@@ -8,16 +8,17 @@
  * rootGetters: {}
  * rootState: {…}
  * __proto__: Object
+ * updateCountAsync( store, […args] )
  */
 export default {
   updateCountAsync (store, data) {
-    console.log('store', store)
+    // console.log('store', store)
     setTimeout(() => {
       store.commit('updateCount', {
-        num: data.num
+        num: data.num,
       })
     }, data.time)
-  }
+  },
   // updateCountAsync({ dispatch, commit, state }, data) {
   //   console.log("store", store)
   //   setTimeout(() => {

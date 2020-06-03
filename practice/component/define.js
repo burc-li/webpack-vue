@@ -1,5 +1,5 @@
 /**
- * @name 组件-组件定义 
+ * @name 组件-组件定义
  */
 import Vue from 'vue'
 
@@ -7,7 +7,7 @@ const compoent = {
   props: {
     active: {
       type: Boolean,
-      required: true,
+      required: true
       // validator(value) {
       //   return typeof value === 'boolean'
       // }
@@ -22,21 +22,22 @@ const compoent = {
     </div>
   `,
   // 如果组件不是通过new Vue({})创建， 则data必须用一个函数
-  data() {
+  data () {
     return {
       text: 0
     }
   },
   methods: {
-    handleChange() {
+    handleChange () {
       this.$emit('change')
     }
   }
 }
 
 // Vue.component('CompOne', compoent)
-
+/* eslint-disable no-new */
 new Vue({
+  el: '#root',
   // 组件名 CamelCase驼峰命名法  例如：CompOne
   components: {
     CompOne: compoent
@@ -44,15 +45,14 @@ new Vue({
   data: {
     prop1: 'text1'
   },
+  mounted () {
+    console.log(this.$refs.comp1)
+  },
   methods: {
-    handleChange() {
+    handleChange () {
       this.prop1 += 1
     }
   },
-  mounted() {
-    console.log(this.$refs.comp1)
-  },
-  el: '#root',
   // DOM中使用 kebab-case (短横线分隔命名)  例如：<comp-one />
   // 推荐 prop-one  尽量不使用propOne
   template: `

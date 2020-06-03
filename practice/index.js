@@ -4,7 +4,7 @@
 
 // import './instance'
 // import './lifecycle'
-// import './data-binding'
+// import './data-bindisng'
 // import './computed'
 // import './directive'
-import './component' 
+import './component'
