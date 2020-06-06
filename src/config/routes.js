@@ -3,7 +3,7 @@
  */
 
 // import Todo from '../views/todo/index.vue'
-import Distribute from '../views/distribute/index.vue'
+import Distribute from '@/views/distribute/index.vue'
 
 export default [
   {
@@ -23,8 +23,8 @@ export default [
     // component: Todo,
 
     // 异步路由，提高首屏加载速度
-    // component: resolve => require(['../views/todo/index.vue'], resolve),
-    component: () => import('../views/todo/index.vue'),
+    // component: resolve => require(['@/views/todo/index.vue'], resolve),
+    component: () => import('@/views/todo/index.vue'),
 
     // 给路由命名  使用：<router-link :to="{name: 'burcTodo'}">跳转todo</router-link>
     name: 'burcTodo',
@@ -67,11 +67,11 @@ export default [
     // component: Distribute
 
     // 异步路由，提高首屏加载速度
-    // component: resolve => require(['../views/distribute/index.vue'], resolve)
-    component: () => import('../views/distribute/index.vue'),
+    // component: resolve => require(['@/views/distribute/index.vue'], resolve)
+    component: () => import('@/views/distribute/index.vue'),
   },
   {
     path: '/i18n',
-    component: () => import('../views/i18n/index.vue'),
+    component: () => import('@/views/i18n/index.vue'),
   },
 ]

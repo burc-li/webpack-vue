@@ -5,7 +5,7 @@
 <template>
   <div id="app">
     <Header />
-    <h1>{{ burcCount }}</h1>
+    {{ burcAddress }}{{ burcCount }}
     <router-link to="/distribute">
       <el-button
         type="primary"
@@ -16,21 +16,30 @@
     </router-link>
     <section>
       <!-- <router-view />显示的是当前路由地址所对应的内容 -->
-      <router-view />
+      <router-view v-if="isRouterAlive" />
     </section>
-
     <Footer />
   </div>
 </template>
 <script>
-import Header from './layout/header.vue'
-import Footer from './layout/footer.jsx'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
   components: {
     Header,
     Footer,
+  },
+  provide () {
+    return {
+      reload: this.reload,
+    }
+  },
+  data () {
+    return {
+      isRouterAlive: true,
+    }
   },
   computed: {
     // 原生调用vuex中 state 中的值
@@ -82,12 +91,12 @@ export default {
     // });
 
     // 通过 mapActions 方法调用vuex中 actions 中方法
-    setInterval(() => {
-      this.updateCountAsync({
-        num: 1,
-        time: 500,
-      })
-    }, 1000)
+    // setInterval(() => {
+    //   this.updateCountAsync({
+    //     num: 1,
+    //     time: 500,
+    //   })
+    // }, 1000)
   },
 
   methods: {
@@ -95,6 +104,13 @@ export default {
     ...mapMutations(['updateAddress']),
     // 通过 mapActions 方法调用vuex中 mapActions 中方法
     ...mapActions(['updateCountAsync']),
+
+    reload () {
+      this.isRouterAlive = false
+      this.$nextTick(function () {
+        this.isRouterAlive = true
+      })
+    },
   },
 }
 </script>
@@ -102,17 +118,14 @@ export default {
 <style rel="stylesheet/less" lang="less" scoped>
 #app {
   margin: 40px auto;
-  h1 {
-    color: #de5e5f;
-    font-size: 22px;
-    display: inline-block;
-    line-height: 22px;
-  }
   a {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     font-size: 22px;
   }
   section{
-    margin-top: 10vh;
+    margin-top: 20vh;
   }
   #footer{
     position: fixed;

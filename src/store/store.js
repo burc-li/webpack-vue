@@ -74,8 +74,8 @@ export default () => {
       store.hotUpdate({
         state: newState,
         mutations: newMutations,
-        getters: newGetters,
         actions: newActions,
+        getters: newGetters,
       })
     })
   }

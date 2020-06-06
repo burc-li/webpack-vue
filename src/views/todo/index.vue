@@ -28,8 +28,8 @@
 </template>
 
 <script>
-import Item from './item.vue'
-import Tabs from './tabs.vue'
+import Item from './item'
+import Tabs from './tabs'
 
 let id = 0
 

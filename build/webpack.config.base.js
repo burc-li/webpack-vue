@@ -25,7 +25,7 @@ const config = {
     path: path.join(__dirname, '../dist'),
     // 在打包发布时，需要指定项目的路径。在hash模式时，项目的根目录是不变的，而在history模式时，以/开头的嵌套路径会被当做根据经。
     // 所以更改文件output(publicPath从'./'更改为'/')即可解决此问题：
-    publicPath: '/'
+    publicPath: '/',
   },
 
   // webpack原生只支持js、json文件类型，只支持ES5语法，
@@ -36,33 +36,30 @@ const config = {
         test: /\.(vue|js|jsx)$/,
         loader: 'eslint-loader',
         exclude: /node_modules/,
-        enforce: 'pre' // 优先处理
+        enforce: 'pre', // 优先处理
       },
       // 使用以.vue文件名结尾的文件时，需要为其指定loader（解析和转换 .vue 文件）
       {
         test: /\.vue$/, // 正则表达式 /. .需要转义
         loader: 'vue-loader',
-        options: createVueLoaderOptions(isDev)
+        options: createVueLoaderOptions(isDev),
       },
-
       // 解析和转换 .jsx文件
       {
         test: /\.jsx$/,
-        loader: 'babel-loader'
+        loader: 'babel-loader',
       },
-
       // 解析和转换 .js文件
       // exclude 表示哪些目录中的 .js 文件不要进行 babel-loader
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
-
       // 解决 vue 使用 element 时报错ERROR in ./node_modules/element-ui/lib/theme-chalk/fonts/element-icons.ttf
       {
         test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
-        loader: 'file-loader'
+        loader: 'file-loader',
       },
 
       // 解析和转换 css代码 或 .css 文件
@@ -75,9 +72,9 @@ const config = {
           'css-loader',
           {
             loader: 'postcss-loader',
-            options: { sourceMap: true }
-          }
-        ]
+            options: { sourceMap: true },
+          },
+        ],
       },
 
       // 将小于1024byte的图片转为base64代码，减少http请求
@@ -91,13 +88,22 @@ const config = {
               // 限制大小 1024byte
               limit: 1024,
               // 输出路径/文件名 burc-文件名.扩展名   dist/resources/src/assets/imgages/bg.5fe5ab56.jpg
-              name: 'resources/[path]/[name].[hash:8].[ext]'
-            }
-          }
-        ]
-      }
+              name: 'resources/[path]/[name].[hash:8].[ext]',
+            },
+          },
+        ],
+      },
 
-    ]
+    ],
+  },
+
+  resolve: {
+    // 设置别名
+    alias: {
+      '@': path.resolve(__dirname, '../src'),
+    },
+    // 引入时省略文件扩展名
+    extensions: ['.js', '.jsx', '.json', '.vue', '.scss', '.css'],
   },
 
   plugins: [
@@ -106,14 +112,14 @@ const config = {
 
     // 在编译时期创建全局变量，对开发模式和发布模式的构建允许不同的行为
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': isDev ? JSON.stringify('development') : '"production"'
+      'process.env.NODE_ENV': isDev ? JSON.stringify('development') : '"production"',
     }),
 
     // 根据本地自定义文件 template.html 生成html文件
     new HTMLPlugin({
-      template: path.join(__dirname, './template.html')
-    })
-  ]
+      template: path.join(__dirname, './template.html'),
+    }),
+  ],
 }
 
 module.exports = config
