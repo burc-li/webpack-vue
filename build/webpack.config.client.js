@@ -4,6 +4,7 @@
 
 // 配置CSS单独分离打包
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const webpack = require('webpack')
 // 合并webpack配置文件
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.config.base')
@@ -102,6 +103,8 @@ if (isDev) {
         chunkFilename: '[id].css',
         ignoreOrder: false, // Enable to remove warnings about conflicting order
       }),
+
+      new webpack.HotModuleReplacementPlugin(),
     ],
   })
 }

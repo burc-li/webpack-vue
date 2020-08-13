@@ -1,10 +1,20 @@
 <template>
   <header class="main-header">
     <h1>
-      Todos
+      {{ hello }}
     </h1>
   </header>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      hello: this.$t('hello'),
+    }
+  },
+}
+</script>
 
 <style scoped>
 .main-header {

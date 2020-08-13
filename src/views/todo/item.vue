@@ -1,3 +1,8 @@
+<doc>
+  @name: Todo Item
+  @description： Todo页面的事项Item
+</doc>
+
 <template>
   <div :class="['todo-item', {completed: todo.completed}]">
     <input

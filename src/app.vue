@@ -5,7 +5,7 @@
 <template>
   <div id="app">
     <Header />
-    {{ burcAddress }}{{ burcCount }}
+    <h1>{{ `${burcAddress}--${hello}` }}</h1>
     <router-link to="/distribute">
       <el-button
         type="primary"
@@ -31,14 +31,15 @@ export default {
     Header,
     Footer,
   },
-  provide () {
+  provide() {
     return {
       reload: this.reload,
     }
   },
-  data () {
+  data() {
     return {
       isRouterAlive: true,
+      hello: this.$t('hello'),
     }
   },
   computed: {
@@ -68,7 +69,7 @@ export default {
   },
   mounted() {
     // 获取route参数
-    console.log(this.$route)
+    console.log('app.vue--route路由对象', this.$route)
 
     // 原生执行vuex中 mutations中的方法 (不建议在store外部使用mutations方法)
     // this.$store.commit("updateAddress", {
@@ -105,9 +106,9 @@ export default {
     // 通过 mapActions 方法调用vuex中 mapActions 中方法
     ...mapActions(['updateCountAsync']),
 
-    reload () {
+    reload() {
       this.isRouterAlive = false
-      this.$nextTick(function () {
+      this.$nextTick(() => {
         this.isRouterAlive = true
       })
     },
@@ -118,16 +119,23 @@ export default {
 <style rel="stylesheet/less" lang="less" scoped>
 #app {
   margin: 40px auto;
+  h1 {
+    position: absolute;
+    left: 50%;
+    color: #de5e60;
+    margin: 0;
+  }
   a {
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(calc(-50% - 100px));
     font-size: 22px;
+    line-height: 30px;
   }
-  section{
+  section {
     margin-top: 20vh;
   }
-  #footer{
+  #footer {
     position: fixed;
     bottom: 5vh;
     left: 50%;

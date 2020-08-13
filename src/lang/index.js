@@ -17,13 +17,14 @@ const i18n = new VueI18n({
   },
 })
 
-// 热更新
-if (module.hot) {
-  module.hot.accept(['./zh', './en'], function () {
-    i18n.setLocaleMessage('zh', require('./zh').default)
-    i18n.setLocaleMessage('en', require('./en').default)
-  })
-}
+// 热更新（个人感觉弊大于利）
+// 缺点：配置i18n热更新后，直接手动更改语言包内容，通过this.$t('')获取的数据【排除在computed选项中使用this.$t('')】，页面相关数据均不会自动更改
+// if (module.hot) {
+//   module.hot.accept(['./zh', './en'], function () {
+//     i18n.setLocaleMessage('zh', require('./zh').default)
+//     i18n.setLocaleMessage('en', require('./en').default)
+//   })
+// }
 
 export default i18n
 

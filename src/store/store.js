@@ -18,7 +18,7 @@ export default () => {
   })
   // plugins: [
   //   (store) => {
-  //     console.log('my plugin invoked')
+  //     console.log('store/store.js--my plugin invoked')
   //   }
   // ]
   // modules: {
@@ -29,7 +29,7 @@ export default () => {
   //     },
   //     mutations: {
   //       updateText (state, text) {
-  //         console.log('a.state', state)
+  //         console.log('store/store.js--a.state', state)
   //         state.text = text
   //       }
   //     },
@@ -57,8 +57,8 @@ export default () => {
   //   }
   // }
 
-  // 给 vuex 加一个 热更新
   // 热更新功能 不用每次刷新页面
+  // 缺点：配置vuex热更新后，直接手动更改state中的数据，无效果，页面不会自动刷新
   if (module.hot) {
     module.hot.accept([
       './state/state',

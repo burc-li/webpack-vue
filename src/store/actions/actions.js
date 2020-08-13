@@ -16,7 +16,7 @@
  */
 export default {
   updateCountAsync (store, data) {
-    // console.log('store', store)
+    // console.log('store/actions/actions.js--store', store)
     setTimeout(() => {
       store.commit('updateCount', {
         num: data.num,
@@ -24,7 +24,7 @@ export default {
     }, data.time)
   },
   // updateCountAsync({ dispatch, commit, state }, data) {
-  //   console.log("store", store)
+  //   console.log("store/actions/actions.js--store", store)
   //   setTimeout(() => {
   //     commit('updateCount', {
   //       num: data.num

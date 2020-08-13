@@ -35,9 +35,10 @@ Vue.use(ElementUI, {
   i18n: (key, value) => i18n.t(key, value),
 })
 
+// 全局路由守卫
 router.beforeEach((to, from, next) => {
-  console.log('全局路由守卫-to', to)
-  console.log('全局路由守卫-from', from)
+  console.log('index.js--全局路由守卫-to', to)
+  console.log('index.js--全局路由守卫-from', from)
   if (to.meta.requireAuth) {
     // 禁止跳转
     // next(false)

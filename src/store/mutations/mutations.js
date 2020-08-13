@@ -12,11 +12,11 @@
 
 export default {
   updateAddress (state, { town, village }) {
-    // console.log(town, village)
+    // console.log("store/mutations/mutations.js--",town, village)
     state.address = state.address + town + village
   },
   updateCount (state, data) {
-    // console.log('state', state)
+    // console.log('store/mutations/mutations.js--state', state)
     state.count = state.count + data.num
   },
 }

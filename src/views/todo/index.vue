@@ -1,5 +1,6 @@
 <doc>
-  @name: Todo首页
+  @name: Todo页面
+  @description： Todo页面入口文件
 </doc>
 
 <template>
@@ -54,8 +55,8 @@ export default {
     },
   },
   mounted () {
-    console.log('this.$router全局路由器对象：', this.$router)
-    console.log('this.$route路由对象：', this.$route)
+    console.log('todo/index.vue--this.$router全局路由器对象：', this.$router)
+    console.log('todo/index.vue--this.$route路由对象：', this.$route)
   },
   methods: {
     addTodo (e) {
@@ -73,8 +74,8 @@ export default {
         1,
       )
     },
-    toggleFilter (state, name) {
-      console.log(state, name)
+    toggleFilter (state, name1, name2) {
+      console.log('todo/index.vue--', state, name1, name2)
       this.filter = state
     },
     clearAllCompletedTodo () {

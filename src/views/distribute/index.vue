@@ -1,5 +1,6 @@
 <doc>
   @name: 路由分发页面
+  @description： 作为路由分发的中转站，以便查看其他功能测试模块
 </doc>
 
 <template>

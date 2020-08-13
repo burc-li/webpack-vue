@@ -1,3 +1,8 @@
+<doc>
+  @name: Todo Tabs
+  @description： Todo 底部
+</doc>
+
 <template>
   <div class="helper">
     <span class="left">{{ unfinishedTodo.length }} items left</span>
@@ -33,6 +38,7 @@ export default {
   data () {
     return {
       states: ['all', 'active', 'completed'],
+      name: 'burc',
     }
   },
   computed: {
@@ -40,12 +46,16 @@ export default {
       return this.todos.filter(todo => todo.completed === false)
     },
   },
+  mounted () {
+    console.log('data', this.state)
+    console.log('props', this.filter)
+  },
   methods: {
     clearAllCompleted () {
       this.$emit('clearAll')
     },
     toggleFilter (state) {
-      this.$emit('toggle', state, 'burc')
+      this.$emit('toggle', state, 'burc1', 'burc2')
     },
   },
 }

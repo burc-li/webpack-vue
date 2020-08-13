@@ -37,24 +37,24 @@ export default [
     },
 
     // 局部路由守卫 跳转到路由 /todo/:id 之前 执行
-    // beforeEach (to, from, next) {
-    //   console.log('to', to)
-    //   console.log('from', from)
-    //   if (to) {
-    //     // 禁止跳转
-    //     // next(false)
+    beforeEnter (to, from, next) {
+      console.log('config/routes.js--to', to)
+      console.log('config/routes.js--from', from)
+      if (to) {
+        // 禁止跳转
+        // next(false)
 
-    //     // 跳转到指定页面
-    //     // next('/distribute')
-    //     // next({ path: '/distribute' })
+        // 跳转到指定页面
+        // next('/distribute')
+        // next({ path: '/distribute' })
 
-    //     // 允许跳转
-    //     next()
-    //   } else {
-    //     // 允许跳转
-    //     next()
-    //   }
-    // }
+        // 允许跳转
+        next()
+      } else {
+        // 允许跳转
+        next()
+      }
+    },
     children: [
       {
         path: 'child', // 以“/”开头的嵌套路径会被当作根路径，所以子路由上不用加“/”
@@ -73,5 +73,9 @@ export default [
   {
     path: '/i18n',
     component: () => import('@/views/i18n/index.vue'),
+  },
+  {
+    path: '/refresh',
+    component: () => import('@/views/refresh/index.vue'),
   },
 ]
