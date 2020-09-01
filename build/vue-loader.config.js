@@ -10,7 +10,7 @@ module.exports = (isDev) => {
     // 清除.vue文件文本换行等情况空格
     preserveWhitepace: true,
     // 把vue的css提取到单独的文件  CSS提取应该只用于生产环境
-    extractCSS: !isDev
+    extractCSS: !isDev,
     // cssModules: {
     //   localIdentName: isDev ? '[path]-[name]-[hash:base64:5]' : '[hash:base64:5]',
     //   camelCase: true //将burc-libc 转换成 burcLibc

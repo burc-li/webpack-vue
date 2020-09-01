@@ -9,15 +9,13 @@ const devServer = {
   port: 8080,
   host: '127.0.0.1',
   overlay: {
-    errors: true
+    errors: true,
   },
   hot: true,
-  open: true
+  open: true,
 }
 
-let config
-
-config = merge(baseConfig, {
+const config = merge(baseConfig, {
   entry: path.join(__dirname, '../practice/index.js'),
 
   module: {
@@ -31,12 +29,12 @@ config = merge(baseConfig, {
           'css-loader',
           {
             loader: 'postcss-loader',
-            options: { sourceMap: true }
+            options: { sourceMap: true },
           },
-          'less-loader'
-        ]
-      }
-    ]
+          'less-loader',
+        ],
+      },
+    ],
   },
 
   devServer,
@@ -47,21 +45,21 @@ config = merge(baseConfig, {
   // vue.esm.js: 可以写Vue对象里面写template
   resolve: {
     alias: {
-      vue: path.join(__dirname, '../node_modules/vue/dist/vue.esm.js')
-    }
+      vue: path.join(__dirname, '../node_modules/vue/dist/vue.esm.js'),
+    },
   },
 
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: '"development"'
-      }
+        NODE_ENV: '"development"',
+      },
     }),
     // 根据本地自定义文件 template.html 生成html文件
     new HTMLPlugin({
-      template: path.join(__dirname, './template.html')
-    })
-  ]
+      template: path.join(__dirname, './template.html'),
+    }),
+  ],
 })
 
 module.exports = config

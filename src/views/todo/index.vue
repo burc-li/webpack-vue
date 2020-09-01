@@ -5,6 +5,8 @@
 
 <template>
   <section class="real-app">
+    <GlobalSilder />
+
     <input
       type="text"
       class="add-input"

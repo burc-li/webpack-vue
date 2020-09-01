@@ -111,13 +111,16 @@ const config = {
     new VueLoaderPlugin(),
 
     // 在编译时期创建全局变量，对开发模式和发布模式的构建允许不同的行为
+    // src下的全部文件都可以访问到此全局变量
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': isDev ? JSON.stringify('development') : '"production"',
     }),
 
     // 根据本地自定义文件 template.html 生成html文件
+    // 生成的文件所在目录同 output 输出目录一致
     new HTMLPlugin({
       template: path.join(__dirname, './template.html'),
+      filename: 'index.html',
     }),
   ],
 }

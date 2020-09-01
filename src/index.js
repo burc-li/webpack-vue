@@ -14,11 +14,16 @@ import 'element-ui/lib/theme-chalk/index.css'
 import App from '@/app.vue'
 
 import '@/assets/styles/global.less'
-import createRouter from '@/config/router'
+import createRouter from '@/route/router'
 import createStore from '@/store/store'
 import i18n from '@/lang/index'
 // 使用i18n导出方法二：需引入createI18n方法
 // import createI18n from './lang/index'
+
+import Slider from '@/components/Slider'
+Vue.use(Slider)
+// import Slider from '@/components/Slider/Slider'
+// Vue.component(Slider.name, Slider)
 
 // 通过插件的形式挂载
 Vue.use(VueRouter)
