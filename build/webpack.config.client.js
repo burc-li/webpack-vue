@@ -2,7 +2,7 @@
  * @name 区分开发环境和生产环境的webpack配置
  */
 
-// 配置CSS单独分离打包
+// 配置CSS单独分离打包  开发环境使用 vue-style-loader   生产环境使用 MiniCssExtractPlugin
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const webpack = require('webpack')
 // 合并webpack配置文件
@@ -11,7 +11,7 @@ const baseConfig = require('./webpack.config.base')
 
 const isDev = process.env.NODE_ENV === 'development'
 
-// devServer配置
+// devServer配置 并不会真正的打包文件，而是生成内存中的打包，把文件写到内存中
 const devServer = {
   port: 8000,
   // 可以通过三种方式访问: 127.0.0.1:8000  localhost:8000  192.168.43.117:8000(本机IP)
@@ -20,8 +20,10 @@ const devServer = {
   overlay: {
     errors: false,
   },
+  // 打包显示进度百分比
+  // progress: true,
   // 输入 npm run dev 自动打开浏览器访问页面
-  open: true,
+  // open: true,
   // 热重载模式
   hot: true,
   // router中 history模式下的url会请求到服务器端，但是服务器端并没有这一个资源文件，就会返回404，所以需要配置这一项
@@ -53,6 +55,10 @@ if (isDev) {
         },
       ],
     },
+    plugins: [
+      // 永远不要在生产环境(production)下启用 HotModuleReplacementPlugin()
+      new webpack.HotModuleReplacementPlugin(),
+    ],
     devServer,
   })
 } else {
@@ -95,7 +101,7 @@ if (isDev) {
     },
 
     plugins: [
-      // 配置CSS单独分离打包
+      // 配置CSS单独分离打包，将css从js中抽离出来
       // 输出 [contenthash:8] 哈希算法随机生成 8位 大/小写字母和数字 例如： main.5917e715.css
       // 只要css文件内容不变，那么不会重复构建，粒度是每个文件的内容
       new MiniCssExtractPlugin({
@@ -103,10 +109,6 @@ if (isDev) {
         chunkFilename: '[id].css',
         ignoreOrder: false, // Enable to remove warnings about conflicting order
       }),
-
-      // MiniCssExtractPlugin 跟hotModuleReplacementPlugin有冲突
-      // 如果运行 npm run build 必须注释掉 热更新 即 下面这段代码
-      new webpack.HotModuleReplacementPlugin(),
     ],
   })
 }

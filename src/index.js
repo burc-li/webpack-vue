@@ -13,17 +13,24 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 import App from '@/app.vue'
 
+// 全局css
 import '@/assets/styles/global.less'
+
 import createRouter from '@/route/router'
 import createStore from '@/store/store'
 import i18n from '@/lang/index'
 // 使用i18n导出方法二：需引入createI18n方法
 // import createI18n from './lang/index'
 
-import Slider from '@/components/Slider'
-Vue.use(Slider)
-// import Slider from '@/components/Slider/Slider'
+// 注册全局组件
+import Slider from '@/components/index.js'
+
+// 挂载动画库
+import animate from 'animate.css'
+// import Slider from '@/components/Slider/index.vue'
 // Vue.component(Slider.name, Slider)
+Vue.use(Slider)
+Vue.use(animate)
 
 // 通过插件的形式挂载
 Vue.use(VueRouter)
@@ -64,12 +71,11 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-// webpack 配置 new HTMLPlugin({}) 根据本地自定义文件 template.html 生成html文件
-// const root = document.createElement('div')
-// document.body.appendChild(root)
+// /build/template.html 是一个会被 html-webpack-plugin 【new HTMLPlugin({})】处理的模板。在构建过程中，资源链接会被自动注入。
 
-new Vue({
-  // 等价 .$mount('#todo-root')
+// 挂载到全局window对象上
+window.vm = new Vue({
+  // 如果在实例化时存在el这个选项，实例将立即进入编译过程，否则，需要显式调用 vm.$mount() 手动开启编译。
   // el: '#todo-root',
 
   router,

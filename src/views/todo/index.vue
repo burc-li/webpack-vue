@@ -6,6 +6,7 @@
 <template>
   <section class="real-app">
     <GlobalSilder />
+    <Silder />
 
     <input
       type="text"
@@ -33,6 +34,7 @@
 <script>
 import Item from './item'
 import Tabs from './tabs'
+import Silder from '../../components/Slider'
 
 let id = 0
 
@@ -40,6 +42,7 @@ export default {
   components: {
     Item,
     Tabs,
+    Silder,
   },
   data () {
     return {
@@ -49,6 +52,8 @@ export default {
   },
   computed: {
     filterTodos () {
+      const { filter } = this.$data
+      console.log('------', filter)
       if (this.filter === 'all') {
         return this.todos
       }

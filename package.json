@@ -10,7 +10,7 @@
     "lint": "eslint --ext .js --ext .jsx --ext .vue src/",
     "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/",
     "build": "npm run clean && npm run build:client",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.client.js",
+    "dev": "cross-env NODE_ENV=development VERSION=2.0 webpack-dev-server --config build/webpack.config.client.js",
     "practice": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.practice.js"
   },
   "pre-commit": [
@@ -19,9 +19,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "animate.css": "^4.1.1",
     "cross-env": "^7.0.2",
     "element-ui": "^2.13.1",
-    "less": "^3.11.1",
+    "less": "^3.11.3",
     "vue": "^2.6.11",
     "vue-i18n": "^8.18.1",
     "vue-router": "^3.1.6",

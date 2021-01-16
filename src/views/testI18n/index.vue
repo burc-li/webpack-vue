@@ -101,6 +101,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .i18n-wrap {
-  width: 85vw;
+  width: 75vw;
+  margin: 0 auto;
 }
 </style>

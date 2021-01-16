@@ -6,24 +6,24 @@
   <div id="app">
     <Header />
     <h1>{{ `${burcAddress}--${hello}` }}</h1>
-    <router-link to="/distribute">
-      <el-button
-        type="primary"
-        size="mini"
+    <section class="router-wrap">
+      <transition
+        mode="out-in"
+        name="fade"
       >
-        跳转路由分发页面
-      </el-button>
-    </router-link>
-    <section>
-      <!-- <router-view />显示的是当前路由地址所对应的内容 -->
-      <router-view v-if="isRouterAlive" />
+        <!-- <router-view />显示的是当前路由地址所对应的内容 -->
+        <router-view
+          v-if="isRouterAlive"
+        />
+      </transition>
     </section>
     <Footer />
   </div>
 </template>
 <script>
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
+import Header from '@components/Header/index'
+// import Footer from '@components/Footer/index'
+import Footer from '@components/Footer/index'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
@@ -70,6 +70,10 @@ export default {
   mounted() {
     // 获取route参数
     console.log('app.vue--route路由对象', this.$route)
+
+    console.log('process.env.NODE_ENV', process.env.NODE_ENV)
+    console.log('process.env.VERSION', process.env.VERSION)
+    console.log('process.env.GLOBAL_CONFIG', process.env.GLOBAL_CONFIG)
 
     // 原生执行vuex中 mutations中的方法 (不建议在store外部使用mutations方法)
     // this.$store.commit("updateAddress", {
@@ -118,12 +122,14 @@ export default {
 
 <style rel="stylesheet/less" lang="less" scoped>
 #app {
-  margin: 40px auto;
+  position: relative;
+  width: 100%;
+  margin: 0px auto 40px;
   h1 {
     position: absolute;
     left: 50%;
+    transform: translateX(-50%);
     color: #de5e60;
-    margin: 0;
   }
   a {
     position: absolute;
@@ -132,8 +138,13 @@ export default {
     font-size: 22px;
     line-height: 30px;
   }
-  section {
+  section.router-wrap {
     margin-top: 20vh;
+    position: absolute;
+    top: 60px;
+    bottom: 0px;
+    width: 100%;
+    overflow: hidden;
   }
   #footer {
     position: fixed;
@@ -141,5 +152,29 @@ export default {
     left: 50%;
     transform: translateX(-50%);
   }
+  // .animate__animated {
+  //   --animate-duration: .4s;
+  // }
+  .fade-enter{
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  .fade-enter-active{
+    transition: all .5s;
+  }
+  .fade-enter-to{
+    opacity: 1;
+  }
+  .fade-leave{
+    opacity: 1;
+  }
+  .fade-leave-active{
+    transition: all .5s;
+  }
+  .fade-leave-to{
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
 }
 </style>

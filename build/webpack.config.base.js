@@ -14,7 +14,16 @@ const createVueLoaderOptions = require('./vue-loader.config.js')
 
 const isDev = process.env.NODE_ENV === 'development'
 
+console.log('process.env.NODE_ENV', process.env.NODE_ENV)
+console.log('process.env.GLOBAL_CONFIG', process.env.GLOBAL_CONFIG)
+
+const GLOBAL_CONFIG = {
+  name: JSON.stringify('libc'),
+  sex: JSON.stringify('man'),
+}
+
 const config = {
+  mode: 'development',
   // 入口， __dirname 是当前文件所在目录
   entry: path.join(__dirname, '../src/index.js'),
 
@@ -51,6 +60,7 @@ const config = {
       },
       // 解析和转换 .js文件
       // exclude 表示哪些目录中的 .js 文件不要进行 babel-loader
+      // 它会应用到普通的 `.js` 文件  以及  `.vue` 文件中的 `<script>` 块
       {
         test: /\.js$/,
         loader: 'babel-loader',
@@ -65,6 +75,7 @@ const config = {
       // 解析和转换 css代码 或 .css 文件
       // css-loader: 把css代码写入 js。发现 css 的代码确实是写进了 bundle.js 文件中，但此时页面样式并不生效
       // style-loader: 能够在需要载入的html中创建一个<style></style>标签，标签里的内容就是CSS内容。页面样式生效
+      // 它会应用到普通的 `.css` 文件 以及  `.vue` 文件中的 `<style>` 块
       {
         test: /\.css$/,
         use: [
@@ -93,7 +104,6 @@ const config = {
           },
         ],
       },
-
     ],
   },
 
@@ -101,6 +111,7 @@ const config = {
     // 设置别名
     alias: {
       '@': path.resolve(__dirname, '../src'),
+      '@components': path.resolve(__dirname, '../src/components'),
     },
     // 引入时省略文件扩展名
     extensions: ['.js', '.jsx', '.json', '.vue', '.scss', '.css'],
@@ -108,12 +119,14 @@ const config = {
 
   plugins: [
     // 请确保引入这个插件！
+    // 它的职责是将你定义过的其它规则复制并应用到 .vue 文件里相应语言的块 官方解释：https://vue-loader.vuejs.org/zh/guide/#%E6%89%8B%E5%8A%A8%E8%AE%BE%E7%BD%AE
     new VueLoaderPlugin(),
 
     // 在编译时期创建全局变量，对开发模式和发布模式的构建允许不同的行为
     // src下的全部文件都可以访问到此全局变量
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': isDev ? JSON.stringify('development') : '"production"',
+      'process.env.GLOBAL_CONFIG': GLOBAL_CONFIG,
     }),
 
     // 根据本地自定义文件 template.html 生成html文件

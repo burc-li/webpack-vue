@@ -3,7 +3,6 @@
  */
 
 // import Todo from '../views/todo/index.vue'
-import Distribute from '@/views/distribute/index.vue'
 
 export default [
   {
@@ -58,24 +57,28 @@ export default [
     children: [
       {
         path: 'child', // 以“/”开头的嵌套路径会被当作根路径，所以子路由上不用加“/”
-        component: Distribute,
+        component: () => import('@/views/testI18n/index.vue'),
       },
     ],
   },
   {
-    path: '/distribute',
-    // component: Distribute
+    path: '/testI18n',
 
     // 异步路由，提高首屏加载速度
-    // component: resolve => require(['@/views/distribute/index.vue'], resolve)
-    component: () => import('@/views/distribute/index.vue'),
-  },
-  {
-    path: '/i18n',
-    component: () => import('@/views/i18n/index.vue'),
+    // component: resolve => require(['@/views/i18n/index.vue'], resolve)
+    component: () => import('@/views/testI18n/index.vue'),
   },
   {
     path: '/refresh',
     component: () => import('@/views/refresh/index.vue'),
+  },
+  {
+    path: '/test',
+    component: () => import('@/views/test/index.vue'),
+  },
+  {
+    path: '/testVuex/:id',
+    name: 'myTestVuex',
+    component: () => import('@/views/testVuex/index.vue'),
   },
 ]
