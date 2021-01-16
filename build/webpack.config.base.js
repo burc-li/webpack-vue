@@ -32,9 +32,22 @@ const config = {
   output: {
     filename: 'bundle.[hash:8].js',
     path: path.join(__dirname, '../dist'),
-    // 在打包发布时，需要指定项目的路径。在hash模式时，项目的根目录是不变的，而在history模式时，以/开头的嵌套路径会被当做根据经。
-    // 所以更改文件output(publicPath从'./'更改为'/')即可解决此问题：
-    publicPath: '/',
+    // 在打包发布时，需要指定项目的路径。在hash模式时，项目的根目录是不变的，而在history模式时，以/开头的嵌套路径会被当做根路径。
+    // 生产环境使用'./'，相对于当前路径
+    // 例如把打包文件放入服务器mobile目录下，<script>标签的src属性 和 <link>标签的href属性引用的路径是：https://xbworld.cn/mobile/static/js/bundle.0f127098.js(假设路径)
+    // 开发环境使用'/'，根路径
+    // <script>标签的src属性 和 <link>标签的href属性引用的路径是：http://127.0.0.1/static/js/bundle.0f127098.js(假设路径)
+    publicPath: isDev ? '/' : './',
+  },
+
+  resolve: {
+    // 设置别名
+    alias: {
+      '@': path.resolve(__dirname, '../src'),
+      '@components': path.resolve(__dirname, '../src/components'),
+    },
+    // 引入时省略文件扩展名
+    extensions: ['.js', '.jsx', '.json', '.vue', '.scss', '.css'],
   },
 
   // webpack原生只支持js、json文件类型，只支持ES5语法，
@@ -105,16 +118,6 @@ const config = {
         ],
       },
     ],
-  },
-
-  resolve: {
-    // 设置别名
-    alias: {
-      '@': path.resolve(__dirname, '../src'),
-      '@components': path.resolve(__dirname, '../src/components'),
-    },
-    // 引入时省略文件扩展名
-    extensions: ['.js', '.jsx', '.json', '.vue', '.scss', '.css'],
   },
 
   plugins: [

@@ -10,7 +10,7 @@
     "lint": "eslint --ext .js --ext .jsx --ext .vue src/",
     "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/",
     "build": "npm run clean && npm run build:client",
-    "dev": "cross-env NODE_ENV=development VERSION=2.0 webpack-dev-server --config build/webpack.config.client.js",
+    "dev": "cross-env NODE_ENV=development VERSION=2.0 webpack-dev-server --config build/webpack.config.client.js --progress",
     "practice": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.practice.js"
   },
   "pre-commit": [
@@ -64,5 +64,11 @@
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3",
     "webpack-merge": "^4.2.2"
-  }
+  },
+  "browserslist": [
+    "last 2 version",
+    "> 1%", 
+    "maintained node versions", 
+    "not ie < 11"
+  ]
 }
