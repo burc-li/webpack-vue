@@ -86,8 +86,8 @@ const config = {
       },
 
       // 解析和转换 css代码 或 .css 文件
-      // css-loader: 把css代码写入 js。发现 css 的代码确实是写进了 bundle.js 文件中，但此时页面样式并不生效
-      // style-loader: 能够在需要载入的html中创建一个<style></style>标签，标签里的内容就是CSS内容。页面样式生效
+      // css-loader: 对 @import 和 url() 进行处理，但此时页面样式并不生效
+      // style-loader: 将 css-loader 打包好的 CSS 代码以<style>标签的形式插入到 HTML 文件中。页面样式生效
       // 它会应用到普通的 `.css` 文件 以及  `.vue` 文件中的 `<style>` 块
       {
         test: /\.css$/,
@@ -132,7 +132,7 @@ const config = {
       'process.env.GLOBAL_CONFIG': GLOBAL_CONFIG,
     }),
 
-    // 根据本地自定义文件 template.html 生成html文件
+    // 根据本地自定义文件 template.html 生成html文件，并自动注入所有生成的 bundle
     // 生成的文件所在目录同 output 输出目录一致
     new HTMLPlugin({
       template: path.join(__dirname, './template.html'),
