@@ -40,7 +40,14 @@ const config = merge(baseConfig, {
         test: /\.less$/,
         use: [
           'style-loader',
-          'css-loader',
+          {
+            loader: 'css-loader',
+            // 配置 css-loader 作用于 @import 引入的css文件之前，要使用几个其它的loader进行处理
+            // 此处有两个loader  postcss-loader、less-loader
+            options: {
+              importLoaders: 2,
+            },
+          },
           {
             // 只要使用 postcss-loader，必须配置 postcss-preset-env 插件
             loader: 'postcss-loader',
