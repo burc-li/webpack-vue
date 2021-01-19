@@ -27,17 +27,31 @@ const config = merge(baseConfig, {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              // you can specify a publicPath here
-              // by default it uses publicPath in webpackOptions.output
-              publicPath: './',
-              // only enable hot in development
-              hmr: process.env.NODE_ENV === 'development',
+              // 为CSS中的图像、文件等外部资源指定自定义公共路径，将CSS文件抽离出来后，css文件和资源文件可能不在同一级目录，需要添加'./' '../' '../../'，此时会在url()等引用外部资源的地方自动添加相对路径'./' '../' '../../'
+              // 和MiniCssExtractPlugin-》filename有关，
+              // 若filename 为 '[name].[contenthash:8].css',则 publicPath 为 './'
+              // 若filename 为 'css/[name].[contenthash:8].css',则 publicPath 为 '../'
+              publicPath: '../',
             },
           },
-          'css-loader',
+          {
+            loader: 'css-loader',
+            // 配置 css-loader 作用于 @import 引入的css文件之前，要使用几个其它的loader进行处理
+            // 此处有两个loader  postcss-loader、less-loader
+            options: {
+              importLoaders: 2,
+            },
+          },
           {
             loader: 'postcss-loader',
-            options: { sourceMap: true },
+            options: {
+              plugins: [
+                // 智能合并压缩css代码
+                require('cssnano')(),
+                // 跟 babel 的 preset-env 类似的功能，通过它可以安心的使用最新的 CSS 语法来写样式，不用关心浏览器兼容性，给 css 补齐各种浏览器私有的前缀，处理浏览器兼容问题
+                require('postcss-preset-env')(),
+              ],
+            },
           },
           'less-loader',
         ],
@@ -46,13 +60,17 @@ const config = merge(baseConfig, {
   },
 
   plugins: [
-    // 配置CSS单独分离打包，将css从js中抽离出来
+    //  配置CSS单独分离打包，将CSS从JS中抽离出来，为每个包含CSS的JS文件创建一个CSS文件
     // 输出 [contenthash:8] 哈希算法随机生成 8位 大/小写字母和数字 例如： main.5917e715.css
     // 只要css文件内容不变，那么不会重复构建，粒度是每个文件的内容
     new MiniCssExtractPlugin({
-      filename: '[name].[contenthash:8].css',
-      chunkFilename: '[id].css',
-      ignoreOrder: false, // Enable to remove warnings about conflicting order
+      // 输出路径是output->path指定的路径
+      // 输出 css 的名称，一般是入口文件对应的css文件
+      filename: 'css/[name].[contenthash:8].css',
+      // 输出非入口(non-entry) chunk 文件的名称，默认'[id].js'
+      chunkFilename: '[id].[contenthash:8].css',
+      // 删除有关css冲突顺序的警告，例如在a.js 里，引入的顺序是1.css、2.css; 在b.js里，引入顺序是1.css、2.css,
+      ignoreOrder: true,
     }),
   ],
 })

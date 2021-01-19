@@ -12,9 +12,7 @@
         name="fade"
       >
         <!-- <router-view />显示的是当前路由地址所对应的内容 -->
-        <router-view
-          v-if="isRouterAlive"
-        />
+        <router-view v-if="isRouterAlive" />
       </transition>
     </section>
     <Footer />
@@ -155,26 +153,25 @@ export default {
   // .animate__animated {
   //   --animate-duration: .4s;
   // }
-  .fade-enter{
+  .fade-enter {
     opacity: 0;
     transform: translateX(20px);
   }
-  .fade-enter-active{
-    transition: all .5s;
+  .fade-enter-active {
+    transition: all 0.5s;
   }
-  .fade-enter-to{
+  .fade-enter-to {
     opacity: 1;
   }
-  .fade-leave{
+  .fade-leave {
     opacity: 1;
   }
-  .fade-leave-active{
-    transition: all .5s;
+  .fade-leave-active {
+    transition: all 0.5s;
   }
-  .fade-leave-to{
+  .fade-leave-to {
     opacity: 0;
     transform: translateX(20px);
   }
-
 }
 </style>

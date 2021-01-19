@@ -30,13 +30,16 @@ const config = {
   // 输出 [hash:8] 哈希算法随机生成 8位 大/小写字母和数字 例如： bundle.0f127098.js
   // hash是跟整个项目的构建相关，只要项目里有文件更改，整个项目构建的hash值都会更改，并且全部文件都共用相同的hash值
   output: {
+    // 输出 bundle 的名称，一般是入口文件对应的bundle
     filename: 'bundle.[hash:8].js',
+    // 输出非入口(non-entry) chunk 文件的名称，默认'[id].js',例如 0.js 1.js
+    chunkFilename: '[id].[chunkhash:8].js',
     path: path.join(__dirname, '../dist'),
     // 在打包发布时，需要指定项目的路径。在hash模式时，项目的根目录是不变的，而在history模式时，以/开头的嵌套路径会被当做根路径。
     // 生产环境使用'./'，相对于当前路径
-    // 例如把打包文件放入服务器mobile目录下，<script>标签的src属性 和 <link>标签的href属性引用的路径是：https://xbworld.cn/mobile/static/js/bundle.0f127098.js(假设路径)
+    // 例如把打包文件放入服务器mobile目录下，<script>标签的src属性 和 <link>标签的href属性引用的路径是：https://xbworld.cn/mobile/bundle.0f127098.js(假设路径)
     // 开发环境使用'/'，根路径
-    // <script>标签的src属性 和 <link>标签的href属性引用的路径是：http://127.0.0.1/static/js/bundle.0f127098.js(假设路径)
+    // <script>标签的src属性 和 <link>标签的href属性引用的路径是：http://127.0.0.1/bundle.0f127098.js(假设路径)
     publicPath: isDev ? '/' : './',
   },
 
@@ -57,8 +60,8 @@ const config = {
       {
         test: /\.(vue|js|jsx)$/,
         loader: 'eslint-loader',
-        exclude: /node_modules/,
-        enforce: 'pre', // 优先处理
+        exclude: path.resolve(__dirname, '../node_modules'),
+        enforce: 'pre', // 优先处理 保证先检测代码风格，之后再做 Babel 转换等工作
       },
       // 使用以.vue文件名结尾的文件时，需要为其指定loader（解析和转换 .vue 文件）
       {
@@ -77,7 +80,7 @@ const config = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: /node_modules/,
+        exclude: path.resolve(__dirname, '../node_modules'),
       },
       // 解决 vue 使用 element 时报错ERROR in ./node_modules/element-ui/lib/theme-chalk/fonts/element-icons.ttf
       {
