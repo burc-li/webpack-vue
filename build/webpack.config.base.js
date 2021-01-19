@@ -40,6 +40,7 @@ const config = {
     // 例如把打包文件放入服务器mobile目录下，<script>标签的src属性 和 <link>标签的href属性引用的路径是：https://xbworld.cn/mobile/bundle.0f127098.js(假设路径)
     // 开发环境使用'/'，根路径
     // <script>标签的src属性 和 <link>标签的href属性引用的路径是：http://127.0.0.1/bundle.0f127098.js(假设路径)
+    // 如果使用history路由模式，服务器非根目录部署，生产环境下要改为'/mobile/',绝对路径
     publicPath: isDev ? '/' : './',
   },
 
@@ -47,6 +48,7 @@ const config = {
     // 设置别名
     alias: {
       '@': path.resolve(__dirname, '../src'),
+      '@assets': path.resolve(__dirname, '../src/assets'),
       '@components': path.resolve(__dirname, '../src/components'),
     },
     // 引入时省略文件扩展名

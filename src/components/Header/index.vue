@@ -1,6 +1,11 @@
 <template>
   <header class="main-header">
     <h1>
+      <img
+        :src="logoImg"
+        width="50"
+        height="50"
+      >
       {{ hello }}
     </h1>
 
@@ -25,10 +30,13 @@
 </template>
 
 <script>
+import logoImg from '@assets/images/bg.jpg'
+
 export default {
   name: 'GlobalHeader',
   data() {
     return {
+      logoImg: logoImg,
       hello: this.$t('hello'),
     }
   },
@@ -56,6 +64,9 @@ export default {
   font-size: 40px;
   font-weight: 600;
   margin: 0;
+}
+.main-header img {
+  vertical-align: bottom;
 }
 
 .main-header .link{
