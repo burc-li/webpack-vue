@@ -100,8 +100,14 @@ const config = {
           'style-loader',
           'css-loader',
           {
+            // 只要使用 postcss-loader，必须配置 postcss-preset-env 插件
             loader: 'postcss-loader',
-            options: { sourceMap: true },
+            options: {
+              plugins: [
+                // 跟 babel 的 preset-env 类似的功能，通过它可以安心的使用最新的 CSS 语法来写样式，不用关心浏览器兼容性，给 css 补齐各种浏览器私有的前缀，处理浏览器兼容问题
+                require('postcss-preset-env')(),
+              ],
+            },
           },
         ],
       },

@@ -43,6 +43,7 @@ const config = merge(baseConfig, {
             },
           },
           {
+            // 只要使用 postcss-loader，必须配置 postcss-preset-env 插件
             loader: 'postcss-loader',
             options: {
               plugins: [
