@@ -1,12 +1,12 @@
-/**
- * Vue支持JSX语法
- * npm i babel-preset-env babel-plugin-transform-vue-jsx
- */
-
 {
+  // 转换javascript语法，npm install babel-loader @babel/core @babel/preset-env -D
   "presets": ["@babel/preset-env"],
+
   "plugins": [ 
+    // Vue支持 jsx语法 ，npm install babel-plugin-transform-vue-jsx -D
     "transform-vue-jsx",
+
+    // elementui 按需引入，npm install babel-plugin-component -D
     [
       "component",
       {
@@ -14,15 +14,8 @@
         "styleLibraryName": "theme-chalk"
       }
     ],
+
+    // 路由懒加载，npm install @babel/plugin-syntax-dynamic-import -D
     "syntax-dynamic-import"
   ]
 }
-
-// 按需引入 elementUI
-// [
-//   "component",
-//   {
-//     "libraryName": "element-ui",
-//     "styleLibraryName": "theme-chalk"
-//   }
-// ],
