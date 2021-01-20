@@ -15,7 +15,7 @@
       }
     ],
 
-    // 路由懒加载，npm install @babel/plugin-syntax-dynamic-import -D
+    // 路由懒加载，npm install babel-plugin-syntax-dynamic-import babel-plugin-transform-vue-jsx babel-helper-vue-jsx-merge-props -D
     "syntax-dynamic-import"
   ]
 }
