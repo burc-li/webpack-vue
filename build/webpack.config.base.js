@@ -3,12 +3,16 @@
  */
 
 const path = require('path')
+const webpack = require('webpack')
 // 请确保引入这个插件！
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 // 1. 为html文件中引入的外部资源如script、link,动态添加每次compile后的hash，防止引用缓存的外部文件问题
 // 2. 可以生成创建html入口文件，比如单页面可以生成一个html文件入口，配置N个html-webpack-plugin可以生成N个页面入口
-const HTMLPlugin = require('html-webpack-plugin')
-const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+// 在打包之前使用这个插件尝试清除output.path打包目录中的所有文件,但是目录本身不会被删除
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+
+
 //  引入vue-loader配置项
 const createVueLoaderOptions = require('./vue-loader.config.js')
 
@@ -145,10 +149,13 @@ const config = {
 
     // 根据本地自定义文件 template.html 生成html文件，并自动注入所有生成的 bundle
     // 生成的文件所在目录同 output 输出目录一致
-    new HTMLPlugin({
+    new HtmlWebpackPlugin({
       template: path.join(__dirname, './template.html'),
       filename: 'index.html',
     }),
+
+    // 在打包之前使用这个插件尝试清除output.path打包目录中的所有文件,但是目录本身不会被删除
+    new CleanWebpackPlugin()
   ],
 }
 
