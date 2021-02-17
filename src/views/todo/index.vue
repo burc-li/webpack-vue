@@ -83,6 +83,7 @@ export default {
     },
     toggleFilter (state, name1, name2) {
       console.log('todo/index.vue--', state, name1, name2)
+      console.log('todo/index.vue--', state, name1, name2)
       this.filter = state
     },
     clearAllCompletedTodo () {
