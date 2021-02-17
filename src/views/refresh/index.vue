@@ -12,7 +12,7 @@
 export default {
   // 当DOM更新之后
   // 用创建好的实例调用 `beforeRouteEnter` 守卫中传给 `next` 的回调函数。【创建好的实例作为参数传递给 `next` 的回调函数】
-  beforeRouteEnter(to, from, next) {
+  beforeRouteEnter (to, from, next) {
     next(vm => {
       vm.$router.replace(from.path)
       console.log('refresh/index.vue--this', this)

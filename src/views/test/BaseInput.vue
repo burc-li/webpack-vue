@@ -16,20 +16,20 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       flag: true,
       value: '',
     }
   },
-  mounted() {
+  mounted () {
     console.log('渲染组件')
   },
-  destroyed() {
+  destroyed () {
     console.log('销毁组件')
   },
   methods: {
-    enterInput() {
+    enterInput () {
       console.log('value', this.value)
     },
   },

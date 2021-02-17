@@ -39,14 +39,14 @@ export default {
   components: {
     BaseInput,
   },
-  data() {
+  data () {
     return {
       flag: true,
       input: '',
     }
   },
   methods: {
-    changeCondition() {
+    changeCondition () {
       this.flag = !this.flag
     },
   },

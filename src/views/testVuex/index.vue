@@ -66,7 +66,7 @@ const { mapState: mapStateCart, mapGetters: mapGettersCart, mapActions: mapActio
 const { mapState: mapStateProduct, mapGetters: mapGettersProduct, mapActions: mapActionsProduct } = createNamespacedHelpers('product')
 
 export default {
-  data() {
+  data () {
     return {
     }
   },
@@ -88,14 +88,14 @@ export default {
     ...mapGettersProduct(['productName']),
   },
 
-  mounted() {
+  mounted () {
     console.log('测试路由', this.$route)
   },
 
   methods: {
     // 根命名空间
     ...mapActions(['updateCountAsync']),
-    clickRootBtn() {
+    clickRootBtn () {
       this.updateCountAsync({
         time: 100,
         num: 1,
@@ -104,7 +104,7 @@ export default {
 
     // 购物车命名空间
     ...mapActionsCart(['updateNameAsync']),
-    clickCartBtn() {
+    clickCartBtn () {
       this.updateNameAsync({
         time: 100,
         num: 1,
@@ -113,19 +113,19 @@ export default {
 
     // 商品命名空间
     ...mapActionsProduct(['updateProductNameAsync', 'updateRootCountAsync', 'updateCartCountAsync']),
-    clickProductBtnUpdateSelf() {
+    clickProductBtnUpdateSelf () {
       this.updateProductNameAsync({
         time: 100,
         num: 1,
       })
     },
-    clickProductBtnUpdateRoot() {
+    clickProductBtnUpdateRoot () {
       this.updateRootCountAsync({
         time: 100,
         num: 1,
       })
     },
-    clickProductBtnUpdateCart() {
+    clickProductBtnUpdateCart () {
       this.updateCartCountAsync({
         time: 100,
         num: 1,

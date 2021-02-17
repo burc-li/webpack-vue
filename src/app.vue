@@ -28,12 +28,12 @@ export default {
     Header,
     Footer,
   },
-  provide() {
+  provide () {
     return {
       reload: this.reload,
     }
   },
-  data() {
+  data () {
     return {
       isRouterAlive: true,
       hello: this.$t('hello'),
@@ -64,7 +64,7 @@ export default {
       burcFullName: 'fullName',
     }),
   },
-  mounted() {
+  mounted () {
     // 获取route参数
     console.log('app.vue--route路由对象', this.$route)
 
@@ -107,7 +107,7 @@ export default {
     // 通过 mapActions 方法调用vuex中 mapActions 中方法
     ...mapActions(['updateCountAsync']),
 
-    reload() {
+    reload () {
       this.isRouterAlive = false
       this.$nextTick(() => {
         this.isRouterAlive = true

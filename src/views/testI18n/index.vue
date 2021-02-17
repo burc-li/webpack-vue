@@ -54,7 +54,7 @@
 import { getTitle, getIntroduction } from './until'
 export default {
   inject: ['reload'],
-  data() {
+  data () {
     return {
       title: '',
       radioLabel: localStorage.getItem('lang') || 'zh',
@@ -74,16 +74,16 @@ export default {
     }
   },
   computed: {
-    introduction() {
+    introduction () {
       return getIntroduction()
     },
   },
-  mounted() {
+  mounted () {
     this.initTitle()
     console.log('i18n/index.vue--初始化')
   },
   methods: {
-    changeLanguage(val) {
+    changeLanguage (val) {
       this.$i18n.locale = val
       localStorage.setItem('lang', val)
       this.$router.replace({ path: '/refresh', query: {} })
@@ -93,7 +93,7 @@ export default {
       // location.reload()
       // this.$router.go(0)
     },
-    initTitle() {
+    initTitle () {
       this.title = getTitle()
     },
   },

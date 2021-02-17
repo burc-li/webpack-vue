@@ -34,7 +34,7 @@ import logoImg from '@assets/images/bg.jpg'
 
 export default {
   name: 'GlobalHeader',
-  data() {
+  data () {
     return {
       logoImg: logoImg,
       hello: this.$t('hello'),
@@ -42,7 +42,7 @@ export default {
   },
 
   methods: {
-    navigate() {
+    navigate () {
       this.$router.push({ name: 'myTestVuex', params: { id: 5678 } })
     },
   },

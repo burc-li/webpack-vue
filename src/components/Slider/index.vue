@@ -9,7 +9,7 @@
 <script>
 export default {
   name: 'GlobalSilder',
-  data() {
+  data () {
     return {
 
     }
