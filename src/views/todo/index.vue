@@ -19,6 +19,7 @@
       v-for="todo in filterTodos"
       :key="todo.id"
       :todo="todo"
+      @changeStatus="updateTodo"
       @del="deleteTodo"
     />
     <Tabs
@@ -75,6 +76,16 @@ export default {
 
       e.target.value = ''
     },
+    updateTodo ({ checked, id }) {
+      console.log(checked, id, this.todos)
+      const todo = this.todos.find(item => id === item.id)
+
+      this.todos.splice(
+        this.todos.findIndex(item => id === item.id),
+        1,
+        { ...todo, completed: checked },
+      )
+    },
     deleteTodo (id) {
       this.todos.splice(
         this.todos.findIndex(todo => id === todo.id),
@@ -82,9 +93,6 @@ export default {
       )
     },
     toggleFilter (state, name1, name2) {
-      console.log('todo/index.vue--', state, name1, name2)
-      console.log('todo/index.vue--', state, name1, name2)
-      console.log('todo/index.vue--', state, name1, name2)
       console.log('todo/index.vue--', state, name1, name2)
       this.filter = state
     },

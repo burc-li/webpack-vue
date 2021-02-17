@@ -6,9 +6,10 @@
 <template>
   <div :class="['todo-item', {completed: todo.completed}]">
     <input
-      v-model="todo.completed"
+      :checked="todo.completed"
       type="checkbox"
       class="toggle"
+      @change="changeCheckboxValue(...arguments,todo)"
     >
     <label>
       {{ todo.content }}
@@ -29,6 +30,13 @@ export default {
     },
   },
   methods: {
+    changeCheckboxValue (event, { id }) {
+      const checked = event.target.checked
+      this.$emit('changeStatus', {
+        id,
+        checked,
+      })
+    },
     deleteTodo () {
       this.$emit('del', this.todo.id)
     },
