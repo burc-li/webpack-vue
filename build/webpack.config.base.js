@@ -36,7 +36,7 @@ const config = {
     // 输出 bundle 的名称，一般是入口文件对应的bundle
     filename: 'bundle.[hash:8].js',
     // 输出非入口(non-entry) chunk 文件的名称，默认'[id].js',例如 0.js 1.js
-    chunkFilename: '[id].[chunkhash:8].js',
+    chunkFilename: 'js/[id].[chunkhash:8].js',
     path: path.join(__dirname, '../dist'),
     // 在打包发布时，需要指定项目的路径。在hash模式时，项目的根目录是不变的，而在history模式时，以/开头的嵌套路径会被当做根路径。
     // 生产环境使用'./'，相对于当前路径

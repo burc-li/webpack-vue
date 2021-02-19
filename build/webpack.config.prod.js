@@ -14,7 +14,7 @@ const config = merge(baseConfig, {
   // 根据不同的入口文件(Entry)进行依赖文件解析、构建对应的chunk，生成对应的哈希值
   // 我们在生产环境里把一些公共库和程序入口文件区分开，单独打包构建，接着我们采用chunkhash的方式生成哈希值，那么只要我们不改动公共库的代码，就可以保证其哈希值不会受影响。
   output: {
-    filename: '[name].[chunkhash:8].js',
+    filename: 'js/[name].[chunkhash:8].js',
   },
 
   module: {
@@ -69,7 +69,7 @@ const config = merge(baseConfig, {
       // 输出 css 的名称，一般是入口文件对应的css文件
       filename: 'css/[name].[contenthash:8].css',
       // 输出非入口(non-entry) chunk 文件的名称，默认'[id].js'
-      chunkFilename: '[id].[contenthash:8].css',
+      chunkFilename: 'css/[id].[contenthash:8].css',
       // 删除有关css冲突顺序的警告，例如在a.js 里，引入的顺序是1.css、2.css; 在b.js里，引入顺序是1.css、2.css,
       ignoreOrder: true,
     }),
