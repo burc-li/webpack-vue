@@ -10,10 +10,10 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 // 2. 可以生成创建html入口文件，比如单页面可以生成一个html文件入口，配置N个html-webpack-plugin可以生成N个页面入口
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 // 在打包之前使用这个插件尝试清除output.path打包目录中的所有文件,但是目录本身不会被删除
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 //  引入vue-loader配置项
-const createVueLoaderOptions = require('./vue-loader.config.js')
+// const createVueLoaderOptions = require('./vue-loader.config.js')
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -66,13 +66,15 @@ const config = {
       {
         test: /\.vue$/, // 正则表达式 /. .需要转义
         loader: 'vue-loader',
-        options: createVueLoaderOptions(isDev),
+        // options: createVueLoaderOptions(isDev),
       },
+
       // 解析和转换 .jsx文件
       {
         test: /\.jsx$/,
         loader: 'babel-loader',
       },
+
       // 解析和转换 .js文件
       // exclude 表示哪些目录中的 .js 文件不要进行 babel-loader
       // 它会应用到普通的 `.js` 文件  以及  `.vue` 文件中的 `<script>` 块
@@ -80,11 +82,6 @@ const config = {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: path.resolve(__dirname, '../node_modules'),
-      },
-      // 解决 vue 使用 element 时报错ERROR in ./node_modules/element-ui/lib/theme-chalk/fonts/element-icons.ttf
-      {
-        test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
-        loader: 'file-loader',
       },
 
       // 解析和转换 css代码 或 .css 文件
@@ -109,18 +106,40 @@ const config = {
         ],
       },
 
-      // 将小于1024byte的图片转为base64代码，减少http请求
-      // url-loader 依赖 file-loader
+      // 解决 vue 使用 element 时报错ERROR in ./node_modules/element-ui/lib/theme-chalk/fonts/element-icons.ttf
       {
-        test: /\.(gif|jpg|jpeg|png|svg)$/,
+        test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: isDev ? '[path]/[name].[ext]' : '[name].[hash:8].[ext]',
+              outputPath: 'fonts/',
+            },
+          },
+        ],
+      },
+
+      // 将小于10KB的图片转为base64代码，减少http请求
+      // 压缩优化图片
+      {
+        test: /\.(jpg|jpeg|png|gif|svg)$/,
         use: [
           {
             loader: 'url-loader',
             options: {
-              // 限制大小 1024byte
-              limit: 1024,
-              // 输出路径/文件名 burc-文件名.扩展名   dist/resources/src/assets/imgages/bg.5fe5ab56.jpg
-              name: 'resources/[path]/[name].[hash:8].[ext]',
+              // 限制大小 10KB  1KB = 1024byte
+              limit: 10 * 1024,
+              name: isDev ? '[path]/[name].[ext]' : '[name].[hash:8].[ext]',
+              outputPath: 'images/',
+              esModule: false,
+            },
+          },
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              // 开发环境禁用，生产环境启用
+              disable: isDev,
             },
           },
         ],
@@ -148,7 +167,9 @@ const config = {
     }),
 
     // 在打包之前使用这个插件尝试清除output.path打包目录中的所有文件,但是目录本身不会被删除
-    new CleanWebpackPlugin(),
+    // 如果使用webpack-dev-server打包到内存中【开发环境】，dist目录下的文件会被全部删除,不太友好
+    // 个人更喜欢使用 rimraf插件
+    // new CleanWebpackPlugin(),
   ],
 }
 

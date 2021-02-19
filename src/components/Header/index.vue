@@ -2,7 +2,7 @@
   <header class="main-header">
     <h1>
       <img
-        :src="logoImg"
+        src="../../assets/images/bg.jpg"
         width="50"
         height="50"
       >
