@@ -17,6 +17,8 @@
     ],
     "rules": {
       "no-console": "warn",
+      // 被定义但是未使用
+      "no-unused-vars": "warn",
       // 数组、对象 多行且不与]、}同行时 尾随逗号  https://cloud.tencent.com/developer/section/1135595
       "comma-dangle": ["error", "always-multiline"],
       // vue 限制每行的最大属性数  https://eslint.vuejs.org/rules/max-attributes-per-line.html
