@@ -15,6 +15,15 @@
  * updateCountAsync( store, […args] )
  */
 export default {
+  updateAddressAsync (store, data) {
+    // console.log('store/actions/actions.js--store', store)
+    setTimeout(() => {
+      store.commit('updateAddress', {
+        town: '商河县',
+        village: '郑路镇',
+      })
+    }, data.time)
+  },
   updateCountAsync (store, data) {
     // console.log('store/actions/actions.js--store', store)
     setTimeout(() => {

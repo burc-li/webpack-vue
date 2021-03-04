@@ -4,6 +4,11 @@
 
 // 配置CSS单独分离打包  开发环境使用 vue-style-loader   生产环境使用 MiniCssExtractPlugin
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+// JavaScript 压缩工具
+const TerserPlugin = require('terser-webpack-plugin')
+// JavaScript 压缩工具
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+
 // 合并webpack配置文件
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.config.base')
@@ -74,6 +79,16 @@ const config = merge(baseConfig, {
       ignoreOrder: true,
     }),
   ],
+
+  // 不生成 source map
+  devtool: 'none',
+
+  // 压缩优化代码
+  optimization: {
+    // 作用域提升（Scope Hoisting）: 通过 ES6 语法的静态分析，分析出模块之间的依赖关系，尽可能地把模块放到同一个函数中
+    // 通过 Scope Hoisting 的功能可以让 Webpack 打包出来的代码文件更小、运行的更快
+    concatenateModules: true,
+  },
 })
 
 module.exports = config

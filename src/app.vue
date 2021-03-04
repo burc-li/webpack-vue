@@ -80,17 +80,19 @@ export default {
 
     // 原生执行vuex中 actions中的方法
     // setInterval(() => {
-    //   this.$store.dispatch("updateCountAsync", {
+    //   this.$store.dispatch('updateCountAsync', {
     //     num: 1,
-    //     time: 500
-    //   });
-    // }, 1000);
+    //     time: 500,
+    //   })
+    // }, 1000)
 
     // 通过 mapMutations 方法调用vuex中 mutatios 中方法(不建议在store外部使用mutations方法)
-    // this.updateAddress({
-    //   town: "郑路镇",
-    //   village: "扒牯李村"
-    // });
+    // setInterval(() => {
+    this.updateAddress({
+      town: '郑路镇',
+      village: '扒牯李村',
+    })
+    // }, 1000)
 
     // 通过 mapActions 方法调用vuex中 actions 中方法
     // setInterval(() => {

@@ -26,7 +26,7 @@ export default Vue => {
   // })
 
   // 方法二
-  // requireComponents本身就是一个函数，其接收一个参数request，这个request是指requireComponents.keys()的元素key，即可得到对应模块
+  // requireContext本身就是一个函数，其接收一个参数request，这个request是指requireContext.keys()的元素key，即可得到对应模块
   const componentModules = requireContext.keys().map(requireContext)
   console.log('require-componentModules', componentModules)
 

@@ -12,23 +12,36 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 // 在打包之前使用这个插件尝试清除output.path打包目录中的所有文件,但是目录本身不会被删除
 // const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
+// 可视化分析包大小
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+
 //  引入vue-loader配置项
 // const createVueLoaderOptions = require('./vue-loader.config.js')
 
 const isDev = process.env.NODE_ENV === 'development'
 
 console.log('process.env.NODE_ENV', process.env.NODE_ENV)
-console.log('process.env.GLOBAL_CONFIG', process.env.GLOBAL_CONFIG)
 
-const GLOBAL_CONFIG = {
-  name: JSON.stringify('libc'),
-  sex: JSON.stringify('man'),
-}
+// 可视化分析包大小配置
+const BundleAnalyzerPluginInstance = new BundleAnalyzerPlugin({
+  analyzerMode: 'server',
+  analyzerHost: '127.0.0.1',
+  analyzerPort: 8001,
+  reportFilename: 'report.html',
+  defaultSizes: 'parsed',
+  openAnalyzer: true,
+  generateStatsFile: false,
+  statsFilename: 'stats.json',
+  statsOptions: null,
+  logLevel: 'info',
+})
 
 const config = {
   mode: 'development',
   // 入口， __dirname 是当前文件所在目录
-  entry: path.join(__dirname, '../src/index.js'),
+  entry: {
+    main: path.join(__dirname, '../src/index.js'),
+  },
 
   // 输出 [hash:8] 哈希算法随机生成 8位 大/小写字母和数字 例如： bundle.0f127098.js
   // hash是跟整个项目的构建相关，只要项目里有文件更改，整个项目构建的hash值都会更改，并且全部文件都共用相同的hash值
@@ -44,7 +57,7 @@ const config = {
     // 开发环境使用'/'，根路径
     // <script>标签的src属性 和 <link>标签的href属性引用的路径是：http://127.0.0.1/bundle.0f127098.js(假设路径)
     // 如果使用history路由模式，服务器非根目录部署，生产环境下要改为'/mobile/',绝对路径
-    publicPath: isDev ? '/' : './',
+    publicPath: isDev ? '/vue/' : '/vue/',
   },
 
   resolve: {
@@ -156,14 +169,13 @@ const config = {
     // src下的全部文件都可以访问到此全局变量
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': isDev ? JSON.stringify('development') : '"production"',
-      'process.env.GLOBAL_CONFIG': GLOBAL_CONFIG,
     }),
 
     // 根据本地自定义文件 template.html 生成html文件，并自动注入所有生成的 bundle
     // 生成的文件所在目录同 output 输出目录一致
     new HtmlWebpackPlugin({
       template: path.join(__dirname, './template.html'),
-      filename: 'index.html',
+      filename: 'index.html', // 默认名称为index.html
     }),
 
     // 在打包之前使用这个插件尝试清除output.path打包目录中的所有文件,但是目录本身不会被删除
@@ -171,6 +183,11 @@ const config = {
     // 个人更喜欢使用 rimraf插件
     // new CleanWebpackPlugin(),
   ],
+}
+
+console.log('REPORT_VIS', process.env.REPORT_VIS)
+if (process.env.REPORT_VIS === 'OK') {
+  config.plugins.push(BundleAnalyzerPluginInstance)
 }
 
 module.exports = config

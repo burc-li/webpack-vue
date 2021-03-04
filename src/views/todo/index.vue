@@ -7,7 +7,6 @@
   <section class="real-app">
     <GlobalSilder />
     <Silder />
-
     <input
       type="text"
       class="add-input"
@@ -63,6 +62,7 @@ export default {
     },
   },
   mounted () {
+    // 小姐姐小姐姐
     console.log('todo/index.vue--this.$router全局路由器对象：', this.$router)
     console.log('todo/index.vue--this.$route路由对象：', this.$route)
   },
