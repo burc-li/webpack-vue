@@ -11,6 +11,8 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 // 在打包之前使用这个插件尝试清除output.path打包目录中的所有文件,但是目录本身不会被删除
 // const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+// 打包进度条显示
+const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 
 // 可视化分析包大小
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
@@ -47,7 +49,9 @@ const config = {
   // hash是跟整个项目的构建相关，只要项目里有文件更改，整个项目构建的hash值都会更改，并且全部文件都共用相同的hash值
   output: {
     // 输出 bundle 的名称，一般是入口文件对应的bundle
-    filename: 'bundle.[hash:8].js',
+    // 模块热替换 和 [chunkhash] 是冲突的，所以开发环境下 filename 无法设置[chunkhash]!!!!!!!!!!
+    // 根据不同的入口文件(Entry)进行依赖文件解析、构建对应的chunk，生成对应的哈希值
+    filename: isDev ? 'bundle.[hash:8].js' : 'js/[name].[chunkhash:8].js',
     // 输出非入口(non-entry) chunk 文件的名称，默认'[id].js',例如 0.js 1.js
     chunkFilename: 'js/[id].[chunkhash:8].js',
     path: path.join(__dirname, '../dist'),
@@ -94,7 +98,19 @@ const config = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
+        options: {
+          // 打包速度优化
+          // 用来缓存 loader 的执行结果。之后的 webpack 构建，将会尝试读取缓存，来避免在每次执行时，可能产生的、高性能消耗的 Babel 重新编译过程
+          // 默认值false，设置为true，将使用默认的缓存目录 node_modules/.cache/babel-loader
+          cacheDirectory: true,
+        },
+        // Webpack 中打包的核心是 JavaScript 文件的打包，JavaScript 使用的是 babel-loader，其实打包时间长很多时候是 babel-loader 执行慢导致的。
+        // 这时候我们就要使用exclude和include来尽可能准确的指定要转换内容的范畴
+        // 排除路径
         exclude: path.resolve(__dirname, '../node_modules'),
+        // 查找路径
+        include: [path.resolve('.src')],
+
       },
 
       // 解析和转换 css代码 或 .css 文件
@@ -182,6 +198,9 @@ const config = {
     // 如果使用webpack-dev-server打包到内存中【开发环境】，dist目录下的文件会被全部删除,不太友好
     // 个人更喜欢使用 rimraf插件
     // new CleanWebpackPlugin(),
+
+    // 打包进度条显示
+    new SimpleProgressWebpackPlugin(),
   ],
 }
 

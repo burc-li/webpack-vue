@@ -4,9 +4,9 @@
 
 // 配置CSS单独分离打包  开发环境使用 vue-style-loader   生产环境使用 MiniCssExtractPlugin
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-// JavaScript 压缩工具
+// JavaScript 压缩工具，只在mode=production中会被使用
 const TerserPlugin = require('terser-webpack-plugin')
-// JavaScript 压缩工具
+// JavaScript 压缩工具，只在mode=production中会被使用
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 // 合并webpack配置文件
@@ -14,14 +14,6 @@ const merge = require('webpack-merge')
 const baseConfig = require('./webpack.config.base')
 
 const config = merge(baseConfig, {
-
-  // 输出 [chunkhash:8] 哈希算法随机生成 8位 大/小写字母和数字 例如： main.f6788b03.js
-  // 根据不同的入口文件(Entry)进行依赖文件解析、构建对应的chunk，生成对应的哈希值
-  // 我们在生产环境里把一些公共库和程序入口文件区分开，单独打包构建，接着我们采用chunkhash的方式生成哈希值，那么只要我们不改动公共库的代码，就可以保证其哈希值不会受影响。
-  output: {
-    filename: 'js/[name].[chunkhash:8].js',
-  },
-
   module: {
     rules: [
       // 解析和转换.less 文件
@@ -80,7 +72,7 @@ const config = merge(baseConfig, {
     }),
   ],
 
-  // 不生成 source map
+  // 不生成 source map，sourceMap 生成耗时严重
   devtool: 'none',
 
   // 压缩优化代码
@@ -88,6 +80,12 @@ const config = merge(baseConfig, {
     // 作用域提升（Scope Hoisting）: 通过 ES6 语法的静态分析，分析出模块之间的依赖关系，尽可能地把模块放到同一个函数中
     // 通过 Scope Hoisting 的功能可以让 Webpack 打包出来的代码文件更小、运行的更快
     concatenateModules: true,
+    minimizer: [
+      new TerserPlugin({
+        cache: true, // 开启缓存
+        parallel: true, // 多线程
+      }),
+    ],
   },
 })
 
