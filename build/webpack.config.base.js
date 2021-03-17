@@ -12,6 +12,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 // 在打包之前使用这个插件尝试清除output.path打包目录中的所有文件,但是目录本身不会被删除
 // const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
+// 增强控制台日志显示效果
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+
 // 可视化分析包大小
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
@@ -38,11 +41,14 @@ const BundleAnalyzerPluginInstance = new BundleAnalyzerPlugin({
 
 const config = {
   mode: 'development',
+  // 控制台不输出children 信息
+  stats: {
+    children: false,
+  },
   // 入口， __dirname 是当前文件所在目录
   entry: {
     main: path.join(__dirname, '../src/index.js'),
   },
-
   // 输出 [hash:8] 哈希算法随机生成 8位 大/小写字母和数字 例如： bundle.0f127098.js
   // hash是跟整个项目的构建相关，只要项目里有文件更改，整个项目构建的hash值都会更改，并且全部文件都共用相同的hash值
   output: {
@@ -191,6 +197,9 @@ const config = {
       template: path.join(__dirname, './template.html'),
       filename: 'index.html', // 默认名称为index.html
     }),
+
+    // 识别webpack中的某些类别的错误，并对它们进行清理、聚合和排序，以提供更好的开发体验
+    new FriendlyErrorsPlugin(),
 
     // 在打包之前使用这个插件尝试清除output.path打包目录中的所有文件,但是目录本身不会被删除
     // 如果使用webpack-dev-server打包到内存中【开发环境】，dist目录下的文件会被全部删除,不太友好

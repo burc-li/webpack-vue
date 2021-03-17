@@ -9,3 +9,9 @@ export const getTitle = () => {
 export const getIntroduction = () => {
   return VueI18n.t('introduction')
 }
+export const getIntroduction1 = () => {
+  return VueI18n.t('introduction')
+}
+export const getIntroduction2 = () => {
+  return VueI18n.t('introduction')
+}

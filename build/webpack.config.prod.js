@@ -100,9 +100,11 @@ const config = merge(baseConfig, {
 
     // 使用 ParallelUglifyPlugin 并行压缩输出的 JS 代码
     new ParallelUglifyPlugin({
+      cache: false, // 开启缓存
+      parallel: true, // 开启多个进程并行处理
       uglifyJS: {
         // 是否在UglifyJS删除没有用到的代码时输出警告信息，默认为输出，可以设置为false关闭这些作用不大的警告
-        warnings: false,
+        warnings: true,
         output: {
           // 最紧凑的输出,是否输出可读性较强的代码，即会保留空格和制表符，默认为输出，为了达到更好的压缩效果
           beautify: false,
