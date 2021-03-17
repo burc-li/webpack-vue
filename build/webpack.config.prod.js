@@ -4,10 +4,12 @@
 
 // 配置CSS单独分离打包  开发环境使用 vue-style-loader   生产环境使用 MiniCssExtractPlugin
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-// JavaScript 压缩工具，只在mode=production中会被使用
-const TerserPlugin = require('terser-webpack-plugin')
-// JavaScript 压缩工具，只在mode=production中会被使用
+// JavaScript 压缩工具，单线程压缩代码
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+// JavaScript 压缩工具，多个子进程并行压缩代码
+const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
+// 打包进度条显示
+const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 
 // 合并webpack配置文件
 const merge = require('webpack-merge')
@@ -70,23 +72,57 @@ const config = merge(baseConfig, {
       // 删除有关css冲突顺序的警告，例如在a.js 里，引入的顺序是1.css、2.css; 在b.js里，引入顺序是1.css、2.css,
       ignoreOrder: true,
     }),
+    // 打包进度条显示
+    new SimpleProgressWebpackPlugin(),
+
+    // new UglifyJsPlugin({
+    //   cache: false, // 开启缓存
+    //   parallel: true, // 开启多个进程并行处理
+    //   uglifyOptions: {
+    //     // 是否在UglifyJS删除没有用到的代码时输出警告信息，默认为输出，可以设置为false关闭这些作用不大的警告
+    //     warnings: false,
+    //     output: {
+    //       // 最紧凑的输出,是否输出可读性较强的代码，即会保留空格和制表符，默认为输出，为了达到更好的压缩效果
+    //       beautify: false,
+    //       // 是否保留代码中的注释，默认为保留，为了达到更好的压缩效果，可以设置为false
+    //       comments: false,
+    //     },
+    //     compress: {
+    //       // 是否删除代码中所有的console语句，默认为不删除，开启后，会删除所有的console语句
+    //       drop_console: true,
+    //       // 是否内嵌虽然已经定义了，但是只用到一次的变量，比如将 var x = 1; y = x, 转换成 y = 1, 默认为不转换，为了达到更好的压缩效果，可以设置为false
+    //       collapse_vars: true,
+    //       // 是否提取出现了多次但是没有定义成变量去引用的静态值，比如将 x = 'xxx'; y = 'xxx'  转换成var a = 'xxx'; x = a; y = a; 默认为不转换，为了达到更好的压缩效果，可以设置为false
+    //       reduce_vars: true,
+    //     },
+    //   },
+    // }),
+
+    // 使用 ParallelUglifyPlugin 并行压缩输出的 JS 代码
+    new ParallelUglifyPlugin({
+      uglifyJS: {
+        // 是否在UglifyJS删除没有用到的代码时输出警告信息，默认为输出，可以设置为false关闭这些作用不大的警告
+        warnings: false,
+        output: {
+          // 最紧凑的输出,是否输出可读性较强的代码，即会保留空格和制表符，默认为输出，为了达到更好的压缩效果
+          beautify: false,
+          // 是否保留代码中的注释，默认为保留，为了达到更好的压缩效果，可以设置为false
+          comments: false,
+        },
+        compress: {
+          // 是否删除代码中所有的console语句，默认为不删除，开启后，会删除所有的console语句
+          drop_console: true,
+          // 是否内嵌虽然已经定义了，但是只用到一次的变量，比如将 var x = 1; y = x, 转换成 y = 1, 默认为不转换，为了达到更好的压缩效果，可以设置为false
+          collapse_vars: true,
+          // 是否提取出现了多次但是没有定义成变量去引用的静态值，比如将 x = 'xxx'; y = 'xxx'  转换成var a = 'xxx'; x = a; y = a; 默认为不转换，为了达到更好的压缩效果，可以设置为false
+          reduce_vars: true,
+        },
+      },
+    }),
   ],
 
   // 不生成 source map，sourceMap 生成耗时严重
   devtool: 'none',
-
-  // 压缩优化代码
-  optimization: {
-    // 作用域提升（Scope Hoisting）: 通过 ES6 语法的静态分析，分析出模块之间的依赖关系，尽可能地把模块放到同一个函数中
-    // 通过 Scope Hoisting 的功能可以让 Webpack 打包出来的代码文件更小、运行的更快
-    concatenateModules: true,
-    minimizer: [
-      new TerserPlugin({
-        cache: true, // 开启缓存
-        parallel: true, // 多线程
-      }),
-    ],
-  },
 })
 
 module.exports = config

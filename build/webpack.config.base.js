@@ -11,8 +11,6 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 // 在打包之前使用这个插件尝试清除output.path打包目录中的所有文件,但是目录本身不会被删除
 // const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-// 打包进度条显示
-const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 
 // 可视化分析包大小
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
@@ -61,7 +59,7 @@ const config = {
     // 开发环境使用'/'，根路径
     // <script>标签的src属性 和 <link>标签的href属性引用的路径是：http://127.0.0.1/bundle.0f127098.js(假设路径)
     // 如果使用history路由模式，服务器非根目录部署，生产环境下要改为'/mobile/',绝对路径
-    publicPath: isDev ? '/vue/' : '/vue/',
+    publicPath: isDev ? '/' : '/vue/',
   },
 
   resolve: {
@@ -199,8 +197,6 @@ const config = {
     // 个人更喜欢使用 rimraf插件
     // new CleanWebpackPlugin(),
 
-    // 打包进度条显示
-    new SimpleProgressWebpackPlugin(),
   ],
 }
 

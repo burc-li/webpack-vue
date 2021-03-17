@@ -9,7 +9,7 @@ const baseConfig = require('./webpack.config.base')
 // devServer配置 并不会真正的打包文件，而是生成内存中的打包，把文件写到内存中
 const devServer = {
   // 端口
-  port: 8000,
+  port: 8002,
   // 可以通过三种方式访问: 127.0.0.1:8000  localhost:8000  192.168.43.117:8000(本机IP)
   host: '127.0.0.1',
   // 是否允许使用全屏覆盖的方式显示编译错误，默认不允许
@@ -28,13 +28,13 @@ const devServer = {
   inline: true,
   // 表示的是打包到内存中生成的静态文件所在内存中的虚拟位置（默认是output里面设置的publicPath的值)
   // 必须与output里面设置的publicPath一致
-  publicPath: '/vue/',
+  publicPath: '/',
   // router中 history模式下的url会请求到服务器端，但是服务器端并没有这一个资源文件，就会返回404，所以需要配置这一项
   historyApiFallback: {
     // 与devServer的publicPath、HtmlWebpackPlugin的filename有关
     // 例如此处填写 '/vue/index.html'，devServer=》publicPath属性应该填写 '/vue/'
     // HtmlWebpackPlugin生成的html默认名称为index.html，若修改HtmlWebpackPlugin-》filename为 main.html，则此处需填写 '/main.html'
-    index: '/vue/index.html',
+    index: '/index.html',
   },
 }
 
