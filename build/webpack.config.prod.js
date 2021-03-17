@@ -1,7 +1,6 @@
 /**
  * @name 区分开发环境和生产环境的webpack配置
  */
-
 // 配置CSS单独分离打包  开发环境使用 vue-style-loader   生产环境使用 MiniCssExtractPlugin
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // JavaScript 压缩工具，单线程压缩代码
@@ -125,6 +124,12 @@ const config = merge(baseConfig, {
 
   // 不生成 source map，sourceMap 生成耗时严重
   devtool: 'none',
+
+  // 性能优化
+  optimization: {
+    // 开启Scope Hoisting,打包出来的代码文件更小、运行的更快
+    concatenateModules: true,
+  },
 })
 
 module.exports = config
