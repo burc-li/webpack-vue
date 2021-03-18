@@ -11,7 +11,7 @@
     "analyz:dev": "cross-env REPORT_VIS=OK npm run dev",
     "analyz:prod": "cross-env REPORT_VIS=OK npm run build:prod",
     "dev": "cross-env NODE_ENV=development VERSION=2.0 webpack-dev-server --config build/webpack.config.dev.js --progress",
-    "build:prod": "npm run clean && cross-env NODE_ENV=production webpack --config build/webpack.config.prod.js --display-used-exports"
+    "build:prod": "npm run clean && cross-env NODE_ENV=production webpack --config build/webpack.config.prod.js"
   },
   "husky": {
     "hooks": {
