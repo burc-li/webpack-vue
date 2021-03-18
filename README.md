@@ -2,7 +2,7 @@
 # webpack-vue
 
  **eslint检测** 
-```
+```shell
 npm run lint-ext
 ```
 
