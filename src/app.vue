@@ -36,6 +36,7 @@ export default {
   data () {
     return {
       isRouterAlive: true,
+      test: '',
       hello: this.$t('hello'),
     }
   },
