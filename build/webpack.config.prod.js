@@ -33,13 +33,8 @@ const config = merge(baseConfig, {
       // 它会应用到普通的 `.js` 文件  以及  `.vue` 文件中的 `<script>` 块
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        options: {
-          // 打包速度优化
-          // 用来缓存 loader 的执行结果。之后的 webpack 构建，将会尝试读取缓存，来避免在每次执行时，可能产生的、高性能消耗的 Babel 重新编译过程
-          // 默认值false，设置为true，将使用默认的缓存目录 node_modules/.cache/babel-loader
-          cacheDirectory: true,
-        },
+        // 把对 .js 文件的处理转交给 id 为 babel 的 HappyPack 实例
+        use: ['happypack/loader?id=babel'],
         // Webpack 中打包的核心是 JavaScript 文件的打包，JavaScript 使用的是 babel-loader，其实打包时间长很多时候是 babel-loader 执行慢导致的。
         // 这时候我们就要使用exclude和include来尽可能准确的指定要转换内容的范畴
         // node_modules 目录下的文件都是采用的 ES5 语法，没必要再通过 Babel 去转换
@@ -102,6 +97,14 @@ const config = merge(baseConfig, {
       chunkFilename: 'css/[id].[contenthash:8].css',
       // 删除有关css冲突顺序的警告，例如在a.js 里，引入的顺序是1.css、2.css; 在b.js里，引入顺序是1.css、2.css,
       ignoreOrder: true,
+    }),
+
+    new HappyPack({
+      // 用唯一的标识符 id 来代表当前的 HappyPack 是用来处理一类特定的文件
+      id: 'babel',
+      // 如何处理 .js 文件，用法和 Loader 配置中一样
+      loaders: ['babel-loader?cacheDirectory'],
+      // ... 其它配置项
     }),
 
     // 打包进度条显示
