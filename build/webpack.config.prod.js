@@ -104,7 +104,6 @@ const config = merge(baseConfig, {
       id: 'babel',
       // 如何处理 .js 文件，用法和 Loader 配置中一样
       loaders: ['babel-loader?cacheDirectory'],
-      // ... 其它配置项
     }),
 
     // 打包进度条显示
