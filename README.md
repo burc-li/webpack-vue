@@ -43,7 +43,7 @@ npm run analyz:prod
 ### `image-webpack-loader`： 压缩图片
 ### `url-loader`： 小体积字体图片base64引入项目，减少HTTP请求
 ### `cssnano`： 智能合并压缩css代码
-### `postcss-preset-env`： 给 css 补齐各种浏览器私有的前缀，处理浏览器兼容问题
+### `postcss-preset-env`： 补齐各种浏览器私有的前缀，处理浏览器兼容问题
 
 
 
