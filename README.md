@@ -1,8 +1,10 @@
 
 # webpack-vue
 
+## 启动命令简介
+
  **eslint检测** 
-```shell
+```
 npm run lint-ext
 ```
 
@@ -30,7 +32,11 @@ npm run analyz:dev
 ```
 npm run analyz:prod
 ```
+## 项目优化
 
+1. 根据不同的使用环境合理划分 Webpack 的配置文件 
+2. 使用 Eslint + husky 保证代码风格和质量 
+3. 尽可能提高构建速度和压缩打包体积
 
 
 
