@@ -9,15 +9,12 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 // 1. 为html文件中引入的外部资源如script、link,动态添加每次compile后的hash，防止引用缓存的外部文件问题
 // 2. 可以生成创建html入口文件，比如单页面可以生成一个html文件入口，配置N个html-webpack-plugin可以生成N个页面入口
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-// 在打包之前使用这个插件尝试清除output.path打包目录中的所有文件,但是目录本身不会被删除
-// const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-
 // 增强控制台日志显示效果
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
-
 // 可视化分析包大小
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-
+// 在打包之前使用这个插件尝试清除output.path打包目录中的所有文件,但是目录本身不会被删除
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 //  引入vue-loader配置项
 // const createVueLoaderOptions = require('./vue-loader.config.js')
 
@@ -41,14 +38,18 @@ const BundleAnalyzerPluginInstance = new BundleAnalyzerPlugin({
 
 const config = {
   mode: 'development',
-  // 控制台不输出children 信息
+
+  // 控制台不输出 构建模块信息 和 children 信息
   stats: {
+    modules: false,
     children: false,
   },
+
   // 入口， __dirname 是当前文件所在目录
   entry: {
     main: path.join(__dirname, '../src/index.js'),
   },
+
   // 输出 [hash:8] 哈希算法随机生成 8位 大/小写字母和数字 例如： bundle.0f127098.js
   // hash是跟整个项目的构建相关，只要项目里有文件更改，整个项目构建的hash值都会更改，并且全部文件都共用相同的hash值
   output: {
@@ -57,7 +58,7 @@ const config = {
     // 根据不同的入口文件(Entry)进行依赖文件解析、构建对应的chunk，生成对应的哈希值
     filename: isDev ? 'bundle.[hash:8].js' : 'js/[name].[chunkhash:8].js',
     // 输出非入口(non-entry) chunk 文件的名称，默认'[id].js',例如 0.js 1.js
-    chunkFilename: 'js/[id].[chunkhash:8].js',
+    chunkFilename: 'js/[name].[chunkhash:8].js',
     path: path.join(__dirname, '../dist'),
     // 在打包发布时，需要指定项目的路径。在hash模式时，项目的根目录是不变的，而在history模式时，以/开头的嵌套路径会被当做根路径。
     // 生产环境使用'./'，相对于当前路径
@@ -76,7 +77,7 @@ const config = {
       '@components': path.resolve(__dirname, '../src/components'),
     },
     // 引入时省略文件扩展名
-    extensions: ['.js', '.jsx', '.json', '.vue', '.scss', '.css'],
+    extensions: ['.vue', '.js', '.jsx', '.json', '.scss', '.css'],
   },
 
   // webpack原生只支持js、json文件类型，只支持ES5语法，
@@ -94,27 +95,6 @@ const config = {
       {
         test: /\.jsx$/,
         loader: 'babel-loader',
-      },
-
-      // 解析和转换 .js文件
-      // exclude 表示哪些目录中的 .js 文件不要进行 babel-loader
-      // 它会应用到普通的 `.js` 文件  以及  `.vue` 文件中的 `<script>` 块
-      {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        options: {
-          // 打包速度优化
-          // 用来缓存 loader 的执行结果。之后的 webpack 构建，将会尝试读取缓存，来避免在每次执行时，可能产生的、高性能消耗的 Babel 重新编译过程
-          // 默认值false，设置为true，将使用默认的缓存目录 node_modules/.cache/babel-loader
-          cacheDirectory: true,
-        },
-        // Webpack 中打包的核心是 JavaScript 文件的打包，JavaScript 使用的是 babel-loader，其实打包时间长很多时候是 babel-loader 执行慢导致的。
-        // 这时候我们就要使用exclude和include来尽可能准确的指定要转换内容的范畴
-        // 排除路径
-        exclude: path.resolve(__dirname, '../node_modules'),
-        // 查找路径
-        include: [path.resolve('.src')],
-
       },
 
       // 解析和转换 css代码 或 .css 文件
@@ -205,7 +185,6 @@ const config = {
     // 如果使用webpack-dev-server打包到内存中【开发环境】，dist目录下的文件会被全部删除,不太友好
     // 个人更喜欢使用 rimraf插件
     // new CleanWebpackPlugin(),
-
   ],
 }
 

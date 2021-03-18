@@ -1,6 +1,10 @@
 /**
  * @name 区分开发环境和生产环境的webpack配置
  */
+const path = require('path')
+// 合并webpack配置文件
+const merge = require('webpack-merge')
+const baseConfig = require('./webpack.config.base')
 // 配置CSS单独分离打包  开发环境使用 vue-style-loader   生产环境使用 MiniCssExtractPlugin
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // JavaScript 压缩工具，单线程压缩代码
@@ -9,14 +13,42 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 // 打包进度条显示
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
-
-// 合并webpack配置文件
-const merge = require('webpack-merge')
-const baseConfig = require('./webpack.config.base')
+// 多进程Loader文件转换处理
+const HappyPack = require('happypack')
 
 const config = merge(baseConfig, {
+  // 不生成 source map，sourceMap 生成耗时严重
+  devtool: 'none',
+
+  // 性能优化
+  optimization: {
+    // 开启Scope Hoisting,打包出来的代码文件更小、运行的更快
+    concatenateModules: true,
+  },
+
   module: {
     rules: [
+      // 解析和转换 .js文件
+      // exclude 表示哪些目录中的 .js 文件不要进行 babel-loader
+      // 它会应用到普通的 `.js` 文件  以及  `.vue` 文件中的 `<script>` 块
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        options: {
+          // 打包速度优化
+          // 用来缓存 loader 的执行结果。之后的 webpack 构建，将会尝试读取缓存，来避免在每次执行时，可能产生的、高性能消耗的 Babel 重新编译过程
+          // 默认值false，设置为true，将使用默认的缓存目录 node_modules/.cache/babel-loader
+          cacheDirectory: true,
+        },
+        // Webpack 中打包的核心是 JavaScript 文件的打包，JavaScript 使用的是 babel-loader，其实打包时间长很多时候是 babel-loader 执行慢导致的。
+        // 这时候我们就要使用exclude和include来尽可能准确的指定要转换内容的范畴
+        // node_modules 目录下的文件都是采用的 ES5 语法，没必要再通过 Babel 去转换
+        // 排除路径
+        exclude: [path.resolve(__dirname, '../node_modules')],
+        // 查找路径
+        include: [path.resolve(__dirname, '../src')],
+      },
+
       // 解析和转换.less 文件
       // Loader 解析顺序从右向左 style-loader(css-loader(less-loader(content)))
       {
@@ -71,31 +103,9 @@ const config = merge(baseConfig, {
       // 删除有关css冲突顺序的警告，例如在a.js 里，引入的顺序是1.css、2.css; 在b.js里，引入顺序是1.css、2.css,
       ignoreOrder: true,
     }),
+
     // 打包进度条显示
     new SimpleProgressWebpackPlugin(),
-
-    // new UglifyJsPlugin({
-    //   cache: false, // 开启缓存
-    //   parallel: true, // 开启多个进程并行处理
-    //   uglifyOptions: {
-    //     // 是否在UglifyJS删除没有用到的代码时输出警告信息，默认为输出，可以设置为false关闭这些作用不大的警告
-    //     warnings: false,
-    //     output: {
-    //       // 最紧凑的输出,是否输出可读性较强的代码，即会保留空格和制表符，默认为输出，为了达到更好的压缩效果
-    //       beautify: false,
-    //       // 是否保留代码中的注释，默认为保留，为了达到更好的压缩效果，可以设置为false
-    //       comments: false,
-    //     },
-    //     compress: {
-    //       // 是否删除代码中所有的console语句，默认为不删除，开启后，会删除所有的console语句
-    //       drop_console: true,
-    //       // 是否内嵌虽然已经定义了，但是只用到一次的变量，比如将 var x = 1; y = x, 转换成 y = 1, 默认为不转换，为了达到更好的压缩效果，可以设置为false
-    //       collapse_vars: true,
-    //       // 是否提取出现了多次但是没有定义成变量去引用的静态值，比如将 x = 'xxx'; y = 'xxx'  转换成var a = 'xxx'; x = a; y = a; 默认为不转换，为了达到更好的压缩效果，可以设置为false
-    //       reduce_vars: true,
-    //     },
-    //   },
-    // }),
 
     // 使用 ParallelUglifyPlugin 并行压缩输出的 JS 代码
     new ParallelUglifyPlugin({
@@ -120,16 +130,29 @@ const config = merge(baseConfig, {
         },
       },
     }),
+    // new UglifyJsPlugin({
+    //   cache: false, // 开启缓存
+    //   parallel: true, // 开启多个进程并行处理
+    //   uglifyOptions: {
+    //     // 是否在UglifyJS删除没有用到的代码时输出警告信息，默认为输出，可以设置为false关闭这些作用不大的警告
+    //     warnings: false,
+    //     output: {
+    //       // 最紧凑的输出,是否输出可读性较强的代码，即会保留空格和制表符，默认为输出，为了达到更好的压缩效果
+    //       beautify: false,
+    //       // 是否保留代码中的注释，默认为保留，为了达到更好的压缩效果，可以设置为false
+    //       comments: false,
+    //     },
+    //     compress: {
+    //       // 是否删除代码中所有的console语句，默认为不删除，开启后，会删除所有的console语句
+    //       drop_console: true,
+    //       // 是否内嵌虽然已经定义了，但是只用到一次的变量，比如将 var x = 1; y = x, 转换成 y = 1, 默认为不转换，为了达到更好的压缩效果，可以设置为false
+    //       collapse_vars: true,
+    //       // 是否提取出现了多次但是没有定义成变量去引用的静态值，比如将 x = 'xxx'; y = 'xxx'  转换成var a = 'xxx'; x = a; y = a; 默认为不转换，为了达到更好的压缩效果，可以设置为false
+    //       reduce_vars: true,
+    //     },
+    //   },
+    // }),
   ],
-
-  // 不生成 source map，sourceMap 生成耗时严重
-  devtool: 'none',
-
-  // 性能优化
-  optimization: {
-    // 开启Scope Hoisting,打包出来的代码文件更小、运行的更快
-    concatenateModules: true,
-  },
 })
 
 module.exports = config

@@ -1,6 +1,7 @@
 /**
  * @name 开发环境的webpack配置
  */
+const path = require('path')
 const webpack = require('webpack')
 // 合并webpack配置文件
 const merge = require('webpack-merge')
@@ -41,8 +42,35 @@ const devServer = {
 const config = merge(baseConfig, {
   devServer,
 
+  // cheap：忽略打包前后的列信息，源代码中的列信息是没有任何作用，因此我们打包后的文件不希望包含列相关信息，只有行信息能建立打包前后的依赖关系
+  // module：定位到bug的源代码具体的位置
+  // eval：不生成 .map 文件，仅仅是在每一个模块后，增加sourceURL来关联模块处理前后对应的关系，打包速度更快，体积稍大一点
+  // source-map：生成 .map 文件
+  devtool: 'cheap-module-eval-source-map',
+
   module: {
     rules: [
+      // 解析和转换 .js文件
+      // exclude 表示哪些目录中的 .js 文件不要进行 babel-loader
+      // 它会应用到普通的 `.js` 文件  以及  `.vue` 文件中的 `<script>` 块
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        options: {
+          // 打包速度优化
+          // 用来缓存 loader 的执行结果。之后的 webpack 构建，将会尝试读取缓存，来避免在每次执行时，可能产生的、高性能消耗的 Babel 重新编译过程
+          // 默认值false，设置为true，将使用默认的缓存目录 node_modules/.cache/babel-loader
+          cacheDirectory: true,
+        },
+        // Webpack 中打包的核心是 JavaScript 文件的打包，JavaScript 使用的是 babel-loader，其实打包时间长很多时候是 babel-loader 执行慢导致的。
+        // 这时候我们就要使用exclude和include来尽可能准确的指定要转换内容的范畴
+        // node_modules 目录下的文件都是采用的 ES5 语法，没必要再通过 Babel 去转换
+        // 排除路径
+        exclude: [path.resolve(__dirname, '../node_modules')],
+        // 查找路径
+        include: [path.resolve(__dirname, '../src')],
+      },
+
       // 解析和转换.less 文件
       // Loader 解析顺序从右向左 style-loader(css-loader(less-loader(content)))
       {
@@ -79,14 +107,7 @@ const config = merge(baseConfig, {
     // 开启后 bundle 文件会变大一些，因为它加入了一个小型的 HMR 运行时（runtime），
     // 当你的应用在运行的时候，Webpack 监听到文件变更并重新打包模块时，HMR 会判断这些模块是否接受 update，若允许，则发信号通知应用进行热替换。
     new webpack.HotModuleReplacementPlugin(),
-
   ],
-
-  // cheap：忽略打包前后的列信息，源代码中的列信息是没有任何作用，因此我们打包后的文件不希望包含列相关信息，只有行信息能建立打包前后的依赖关系
-  // module：定位到bug的源代码具体的位置
-  // eval：不生成 .map 文件，仅仅是在每一个模块后，增加sourceURL来关联模块处理前后对应的关系，打包速度更快，体积稍大一点
-  // source-map：生成 .map 文件
-  devtool: 'cheap-module-eval-source-map',
 })
 
 module.exports = config
