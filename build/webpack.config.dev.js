@@ -109,6 +109,14 @@ const config = merge(baseConfig, {
     // 开启后 bundle 文件会变大一些，因为它加入了一个小型的 HMR 运行时（runtime），
     // 当你的应用在运行的时候，Webpack 监听到文件变更并重新打包模块时，HMR 会判断这些模块是否接受 update，若允许，则发信号通知应用进行热替换。
     new webpack.HotModuleReplacementPlugin(),
+
+    // 告诉 Webpack 使用了哪些动态链接库
+    new webpack.DllReferencePlugin({
+      // 描述动态链接库文件 vendors.manifest.json 的父级目录
+      context: path.join(__dirname, '../dll'),
+      // 用于加载 描述动态链接库的 manifest.json 文件
+      manifest: path.join(__dirname, '../dll/vendors.manifest.json'),
+    }),
   ],
 })
 
