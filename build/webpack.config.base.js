@@ -51,6 +51,14 @@ const config = {
     children: false,
   },
 
+  // 性能展示提示
+  performance: {
+    // 入口起点的最大体积，默认值 250000 (bytes) 即 244KB
+    maxEntrypointSize: 500000,
+    // webpack 生成的单个资源最大体积，默认值 250000 (bytes) 即 244KB
+    maxAssetSize: 500000,
+  },
+
   // 入口， __dirname 是当前文件所在目录
   entry: {
     main: path.join(__dirname, '../src/index.js'),
