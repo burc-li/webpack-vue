@@ -30,6 +30,38 @@ const config = merge(baseConfig, {
 
   module: {
     rules: [
+      // 解析和转换 css代码 或 .css 文件
+      // css-loader: 对 @import 和 url() 进行处理，但此时页面样式并不生效
+      // style-loader: 将 css-loader 打包好的 CSS 代码以<style>标签的形式插入到 HTML 文件中。页面样式生效
+      // 它会应用到普通的 `.css` 文件 以及  `.vue` 文件中的 `<style>` 块
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              // 为CSS中的图像、文件等外部资源指定自定义公共路径，将CSS文件抽离出来后，css文件和资源文件可能不在同一级目录，需要添加'./' '../' '../../'，此时会在url()等引用外部资源的地方自动添加相对路径'./' '../' '../../'
+              // 和MiniCssExtractPlugin-》filename有关，
+              // 若filename 为 '[name].[contenthash:8].css',则 publicPath 为 './'
+              // 若filename 为 'css/[name].[contenthash:8].css',则 publicPath 为 '../'
+              publicPath: '../',
+            },
+          },
+          'css-loader',
+          {
+            // 只要使用 postcss-loader，必须配置 postcss-preset-env 插件
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => [
+                // 智能合并压缩css代码
+                require('cssnano')(),
+                // 跟 babel 的 preset-env 类似的功能，通过它可以安心的使用最新的 CSS 语法来写样式，不用关心浏览器兼容性，给 css 补齐各种浏览器私有的前缀，处理浏览器兼容问题
+                require('postcss-preset-env')(),
+              ],
+            },
+          },
+        ],
+      },
       // 解析和转换.less 文件
       // Loader 解析顺序从右向左 style-loader(css-loader(less-loader(content)))
       {
@@ -57,7 +89,7 @@ const config = merge(baseConfig, {
             // 只要使用 postcss-loader，必须配置 postcss-preset-env 插件
             loader: 'postcss-loader',
             options: {
-              plugins: [
+              plugins: () => [
                 // 智能合并压缩css代码
                 require('cssnano')(),
                 // 跟 babel 的 preset-env 类似的功能，通过它可以安心的使用最新的 CSS 语法来写样式，不用关心浏览器兼容性，给 css 补齐各种浏览器私有的前缀，处理浏览器兼容问题
