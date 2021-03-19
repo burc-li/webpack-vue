@@ -13,6 +13,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 // 可视化分析包大小
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// 多进程Loader文件转换处理
+const HappyPack = require('happypack')
+// 构造出共享进程池，进程池中包含4个子进程
+const happyThreadPool = HappyPack.ThreadPool({ size: 4 })
 // 在打包之前使用这个插件尝试清除output.path打包目录中的所有文件,但是目录本身不会被删除
 // const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 //  引入vue-loader配置项
@@ -97,6 +101,22 @@ const config = {
         loader: 'babel-loader',
       },
 
+      // 解析和转换 .js文件
+      // exclude 表示哪些目录中的 .js 文件不要进行 babel-loader
+      // 它会应用到普通的 `.js` 文件  以及  `.vue` 文件中的 `<script>` 块
+      {
+        test: /\.js$/,
+        // 把对 .js 文件的处理转交给 id 为 babel 的 HappyPack 实例
+        use: ['happypack/loader?id=babel'],
+        // Webpack 中打包的核心是 JavaScript 文件的打包，JavaScript 使用的是 babel-loader，其实打包时间长很多时候是 babel-loader 执行慢导致的。
+        // 这时候我们就要使用exclude和include来尽可能准确的指定要转换内容的范畴
+        // node_modules 目录下的文件都是采用的 ES5 语法，没必要再通过 Babel 去转换
+        // 排除路径
+        exclude: [path.resolve(__dirname, '../node_modules')],
+        // 查找路径
+        include: [path.resolve(__dirname, '../src')],
+      },
+
       // 解析和转换 css代码 或 .css 文件
       // css-loader: 对 @import 和 url() 进行处理，但此时页面样式并不生效
       // style-loader: 将 css-loader 打包好的 CSS 代码以<style>标签的形式插入到 HTML 文件中。页面样式生效
@@ -171,6 +191,9 @@ const config = {
       'process.env.NODE_ENV': isDev ? JSON.stringify('development') : '"production"',
     }),
 
+    // 识别webpack中的某些类别的错误，并对它们进行清理、聚合和排序，以提供更好的开发体验
+    new FriendlyErrorsPlugin(),
+
     // 根据本地自定义文件 template.html 生成html文件，并自动注入所有生成的 bundle
     // 生成的文件所在目录同 output 输出目录一致
     new HtmlWebpackPlugin({
@@ -178,8 +201,15 @@ const config = {
       filename: 'index.html', // 默认名称为index.html
     }),
 
-    // 识别webpack中的某些类别的错误，并对它们进行清理、聚合和排序，以提供更好的开发体验
-    new FriendlyErrorsPlugin(),
+    // 使用 HappyPack 加速构建，多进程Loader文件转换处理
+    new HappyPack({
+      // 用唯一的标识符 id 来代表当前的 HappyPack 是用来处理一类特定的文件
+      id: 'babel',
+      // // 使用共享进程池中的子进程去处理任务
+      threadPool: happyThreadPool,
+      // babel-loader 支持缓存转换出的结果，通过 cacheDirectory 选项开启
+      loaders: ['babel-loader?cacheDirectory'],
+    }),
 
     // 在打包之前使用这个插件尝试清除output.path打包目录中的所有文件,但是目录本身不会被删除
     // 如果使用webpack-dev-server打包到内存中【开发环境】，dist目录下的文件会被全部删除,不太友好

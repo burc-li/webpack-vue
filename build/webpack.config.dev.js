@@ -3,6 +3,10 @@
  */
 const path = require('path')
 const webpack = require('webpack')
+// 多进程Loader文件转换处理
+const HappyPack = require('happypack')
+// 构造出共享进程池，进程池中包含4个子进程
+const happyThreadPool = HappyPack.ThreadPool({ size: 4 })
 // 合并webpack配置文件
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.config.base')
@@ -50,27 +54,6 @@ const config = merge(baseConfig, {
 
   module: {
     rules: [
-      // 解析和转换 .js文件
-      // exclude 表示哪些目录中的 .js 文件不要进行 babel-loader
-      // 它会应用到普通的 `.js` 文件  以及  `.vue` 文件中的 `<script>` 块
-      {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        options: {
-          // 打包速度优化
-          // 用来缓存 loader 的执行结果。之后的 webpack 构建，将会尝试读取缓存，来避免在每次执行时，可能产生的、高性能消耗的 Babel 重新编译过程
-          // 默认值false，设置为true，将使用默认的缓存目录 node_modules/.cache/babel-loader
-          cacheDirectory: true,
-        },
-        // Webpack 中打包的核心是 JavaScript 文件的打包，JavaScript 使用的是 babel-loader，其实打包时间长很多时候是 babel-loader 执行慢导致的。
-        // 这时候我们就要使用exclude和include来尽可能准确的指定要转换内容的范畴
-        // node_modules 目录下的文件都是采用的 ES5 语法，没必要再通过 Babel 去转换
-        // 排除路径
-        exclude: [path.resolve(__dirname, '../node_modules')],
-        // 查找路径
-        include: [path.resolve(__dirname, '../src')],
-      },
-
       // 解析和转换.less 文件
       // Loader 解析顺序从右向左 style-loader(css-loader(less-loader(content)))
       {

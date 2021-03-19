@@ -15,6 +15,8 @@ const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 // 多进程Loader文件转换处理
 const HappyPack = require('happypack')
+// 构造出共享进程池，进程池中包含4个子进程
+const happyThreadPool = HappyPack.ThreadPool({ size: 4 })
 
 const config = merge(baseConfig, {
   // 不生成 source map，sourceMap 生成耗时严重
@@ -28,22 +30,6 @@ const config = merge(baseConfig, {
 
   module: {
     rules: [
-      // 解析和转换 .js文件
-      // exclude 表示哪些目录中的 .js 文件不要进行 babel-loader
-      // 它会应用到普通的 `.js` 文件  以及  `.vue` 文件中的 `<script>` 块
-      {
-        test: /\.js$/,
-        // 把对 .js 文件的处理转交给 id 为 babel 的 HappyPack 实例
-        use: ['happypack/loader?id=babel'],
-        // Webpack 中打包的核心是 JavaScript 文件的打包，JavaScript 使用的是 babel-loader，其实打包时间长很多时候是 babel-loader 执行慢导致的。
-        // 这时候我们就要使用exclude和include来尽可能准确的指定要转换内容的范畴
-        // node_modules 目录下的文件都是采用的 ES5 语法，没必要再通过 Babel 去转换
-        // 排除路径
-        exclude: [path.resolve(__dirname, '../node_modules')],
-        // 查找路径
-        include: [path.resolve(__dirname, '../src')],
-      },
-
       // 解析和转换.less 文件
       // Loader 解析顺序从右向左 style-loader(css-loader(less-loader(content)))
       {
@@ -97,13 +83,6 @@ const config = merge(baseConfig, {
       chunkFilename: 'css/[id].[contenthash:8].css',
       // 删除有关css冲突顺序的警告，例如在a.js 里，引入的顺序是1.css、2.css; 在b.js里，引入顺序是1.css、2.css,
       ignoreOrder: true,
-    }),
-
-    new HappyPack({
-      // 用唯一的标识符 id 来代表当前的 HappyPack 是用来处理一类特定的文件
-      id: 'babel',
-      // 如何处理 .js 文件，用法和 Loader 配置中一样
-      loaders: ['babel-loader?cacheDirectory'],
     }),
 
     // 打包进度条显示
