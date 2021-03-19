@@ -54,9 +54,9 @@ const config = {
   // 性能展示提示
   performance: {
     // 入口起点的最大体积，默认值 250000 (bytes) 即 244KB
-    maxEntrypointSize: 500000,
+    maxEntrypointSize: 1024 * 1024,
     // webpack 生成的单个资源最大体积，默认值 250000 (bytes) 即 244KB
-    maxAssetSize: 500000,
+    maxAssetSize: 1024 * 1024,
   },
 
   // 入口， __dirname 是当前文件所在目录
