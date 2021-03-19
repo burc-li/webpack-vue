@@ -47,19 +47,8 @@ const config = merge(baseConfig, {
               publicPath: '../',
             },
           },
-          'css-loader',
-          {
-            // 只要使用 postcss-loader，必须配置 postcss-preset-env 插件
-            loader: 'postcss-loader',
-            options: {
-              plugins: () => [
-                // 智能合并压缩css代码
-                require('cssnano')(),
-                // 跟 babel 的 preset-env 类似的功能，通过它可以安心的使用最新的 CSS 语法来写样式，不用关心浏览器兼容性，给 css 补齐各种浏览器私有的前缀，处理浏览器兼容问题
-                require('postcss-preset-env')(),
-              ],
-            },
-          },
+          // 把对 .css 文件的处理转交给 id 为 css 的 HappyPack 实例，注意 MiniCssExtractPlugin不能添加到 happypack 实例中
+          'happypack/loader?id=css',
         ],
       },
       // 解析和转换.less 文件
@@ -77,27 +66,8 @@ const config = merge(baseConfig, {
               publicPath: '../',
             },
           },
-          {
-            loader: 'css-loader',
-            // 配置 css-loader 作用于 @import 引入的css文件之前，要使用几个其它的loader进行处理
-            // 此处有两个loader  postcss-loader、less-loader
-            options: {
-              importLoaders: 2,
-            },
-          },
-          {
-            // 只要使用 postcss-loader，必须配置 postcss-preset-env 插件
-            loader: 'postcss-loader',
-            options: {
-              plugins: () => [
-                // 智能合并压缩css代码
-                require('cssnano')(),
-                // 跟 babel 的 preset-env 类似的功能，通过它可以安心的使用最新的 CSS 语法来写样式，不用关心浏览器兼容性，给 css 补齐各种浏览器私有的前缀，处理浏览器兼容问题
-                require('postcss-preset-env')(),
-              ],
-            },
-          },
-          'less-loader',
+          // 把对 .less 文件的处理转交给 id 为 less 的 HappyPack 实例 ，注意 MiniCssExtractPlugin不能添加到 happypack 实例中
+          'happypack/loader?id=less',
         ],
       },
     ],
@@ -119,6 +89,38 @@ const config = merge(baseConfig, {
 
     // 打包进度条显示
     new SimpleProgressWebpackPlugin(),
+
+    // 使用 HappyPack 加速构建，多进程Loader文件转换处理
+    new HappyPack({
+      id: 'css',
+      // 使用共享进程池中的子进程去处理任务
+      threadPool: happyThreadPool,
+      // 如何处理 .css 文件，用法和 Loader 配置中一样
+      loaders: [
+        'css-loader',
+        'postcss-loader',
+      ],
+    }),
+
+    // 使用 HappyPack 加速构建，多进程Loader文件转换处理
+    new HappyPack({
+      id: 'less',
+      // 使用共享进程池中的子进程去处理任务
+      threadPool: happyThreadPool,
+      // 如何处理 .less 文件，用法和 Loader 配置中一样
+      loaders: [
+        {
+          loader: 'css-loader',
+          // 配置 css-loader 作用于 @import 引入的css文件之前，要使用几个其它的loader进行处理
+          // 此处有两个loader  postcss-loader、less-loader
+          options: {
+            importLoaders: 2,
+          },
+        },
+        'postcss-loader',
+        'less-loader',
+      ],
+    }),
 
     // 使用 ParallelUglifyPlugin 并行压缩输出的 JS 代码
     new ParallelUglifyPlugin({
@@ -143,6 +145,7 @@ const config = merge(baseConfig, {
         },
       },
     }),
+
     // new UglifyJsPlugin({
     //   cache: false, // 开启缓存
     //   parallel: true, // 开启多个进程并行处理

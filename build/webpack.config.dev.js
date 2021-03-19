@@ -3,10 +3,6 @@
  */
 const path = require('path')
 const webpack = require('webpack')
-// 多进程Loader文件转换处理
-const HappyPack = require('happypack')
-// 构造出共享进程池，进程池中包含4个子进程
-const happyThreadPool = HappyPack.ThreadPool({ size: 4 })
 // 合并webpack配置文件
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.config.base')
@@ -65,6 +61,7 @@ const config = merge(baseConfig, {
           'css-loader',
           {
             // 只要使用 postcss-loader，必须配置 postcss-preset-env 插件
+            // webpack中 postcss-loader plugins配置 优先级 高于 postcss.config.js plugins配置
             loader: 'postcss-loader',
             options: {
               plugins: () => [
@@ -91,6 +88,7 @@ const config = merge(baseConfig, {
           },
           {
             // 只要使用 postcss-loader，必须配置 postcss-preset-env 插件
+            // webpack中 postcss-loader plugins配置 优先级 高于 postcss.config.js plugins配置
             loader: 'postcss-loader',
             options: {
               plugins: () => [

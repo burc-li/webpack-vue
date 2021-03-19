@@ -183,7 +183,7 @@ const config = {
     new HappyPack({
       // 用唯一的标识符 id 来代表当前的 HappyPack 是用来处理一类特定的文件
       id: 'babel',
-      // // 使用共享进程池中的子进程去处理任务
+      // 使用共享进程池中的子进程去处理任务
       threadPool: happyThreadPool,
       // babel-loader 支持缓存转换出的结果，通过 cacheDirectory 选项开启
       loaders: ['babel-loader?cacheDirectory'],
