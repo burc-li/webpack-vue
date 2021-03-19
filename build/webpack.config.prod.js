@@ -24,7 +24,7 @@ const config = merge(baseConfig, {
 
   // 性能优化
   optimization: {
-    // 开启Scope Hoisting,打包出来的代码文件更小、运行的更快
+    // 开启 作用域提升 Scope Hoisting,打包出来的代码文件更小、运行的更快
     concatenateModules: true,
   },
 
