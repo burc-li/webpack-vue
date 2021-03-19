@@ -41,14 +41,16 @@ npm run analyz:prod
 
 - 缓存 `babel` 编译结果加快重新编译速度
 - 使用 `Eslint + husky` 保证代码风格和提交质量 
+- 使用 `web-webpack-plugin` 代替 `html-webpack-plugin`,可根据不同环境引入不同的 <script> 和 <link>
 - 使用 `image-webpack-loader` 对大图片进行压缩优化
 - 使用 `url-loader` 对小体积字体图片base64直接引入项目，减少HTTP请求
 - 使用 `webpack-parallel-uglify-plugin` 并行压缩js代码来提升压缩速度
+- 使用 `DllPlugin + DllReferencePlugin` 接入动态链接库，提升构建速度
 - 使用 `happypack` 对js、css、less文件多进程转换处理
-- 进行 `作用域提升 (Scope Hoisting)`，打包出来的代码文件更小、运行的更快
-- 进行 `摇树优化 (Tree Shaking）`，将代码中永远不会走到的片段删除掉
 - 使用 `cssnano` 智能合并压缩css代码
 - 使用 `postcss-preset-env` 自动补齐各种浏览器私有的前缀，处理浏览器兼容问题
+- 进行 `作用域提升 (Scope Hoisting)`，打包出来的代码文件更小、运行的更快
+- 进行 `摇树优化 (Tree Shaking）`，将代码中永远不会走到的片段删除掉
 
 
 
