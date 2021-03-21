@@ -11,14 +11,7 @@ module.exports = {
   // JS 执行入口文件
   entry: {
     // 把相关模块的放到一个单独的动态链接库
-    vendors: [
-      'vue',
-      'vuex',
-      'vue-router',
-      'element-ui',
-      'axios',
-      'lodash',
-    ],
+    vendors: [path.join(__dirname, './vendors.js')],
   },
 
   output: {
@@ -36,6 +29,8 @@ module.exports = {
     new webpack.DllPlugin({
       // 动态链接库的全局变量名称，需要和 output.library 中保持一致
       name: '_dll_[name]',
+      // 同 webpack.config.dev.js 中 DllReferencePlugin 的 context上下文一致
+      context: path.resolve(__dirname, '../dll'),
       // 描述动态链接库的 manifest.json 文件输出时的文件名称
       path: path.join(__dirname, '../dll', '[name].manifest.json'),
     }),

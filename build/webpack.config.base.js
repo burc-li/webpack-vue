@@ -47,8 +47,8 @@ const config = {
 
   // 控制台不输出 构建模块信息 和 children 信息
   stats: {
-    modules: false,
-    children: false,
+    // modules: false,
+    // children: false,
   },
 
   // 性能展示提示

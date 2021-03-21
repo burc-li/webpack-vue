@@ -112,10 +112,10 @@ const config = merge(baseConfig, {
 
     // 告诉 Webpack 使用了哪些动态链接库
     new webpack.DllReferencePlugin({
-      // 描述动态链接库文件 vendors.manifest.json 的父级目录
-      context: path.join(__dirname, '../dll'),
+      // 同webpack.config.dll.js 中 DllPlugin 的 context上下文一致
+      context: path.resolve(__dirname, '../dll'),
       // 用于加载 描述动态链接库的 manifest.json 文件
-      manifest: path.join(__dirname, '../dll/vendors.manifest.json'),
+      manifest: require(path.join(__dirname, '../dll/vendors.manifest.json')),
     }),
   ],
 })
