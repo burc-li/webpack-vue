@@ -20,7 +20,7 @@ npm run lint-fix
 
 **启动项目** 
 ```shell
-npm run dev:dll # 只有第一次启动项目或公共依赖库发生变更
+npm run dev:dll # 只有第一次启动项目或公共依赖库发生变更才会启用此命令生成动态链接库
 npm run dev
 ```
 
