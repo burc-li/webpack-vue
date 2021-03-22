@@ -3,8 +3,8 @@
 
 ## 分支说明
 
-master：纯净版分支
-dev-annotation：详细注释版分支
+- master：纯净版分支
+- dev-annotation：详细注释版分支
 
 ## 安装依赖
 **部分依赖包需要从GitHub上下载，首先要确保你能访问 https://github.com/**
