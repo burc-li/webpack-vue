@@ -21,8 +21,8 @@ const HappyPack = require('happypack')
 const happyThreadPool = HappyPack.ThreadPool({ size: 4 })
 // 在打包之前使用这个插件尝试清除output.path打包目录中的所有文件,但是目录本身不会被删除
 // const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-//  引入vue-loader配置项
-// const createVueLoaderOptions = require('./vue-loader.config.js')
+
+const pathConfig = require('./pathConfig')
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -47,8 +47,8 @@ const config = {
 
   // 控制台不输出 构建模块信息 和 children 信息
   stats: {
-    // modules: false,
-    // children: false,
+    modules: false,
+    children: false,
   },
 
   // 性能展示提示
@@ -61,7 +61,7 @@ const config = {
 
   // 入口， __dirname 是当前文件所在目录
   entry: {
-    main: path.join(__dirname, '../src/index.js'),
+    main: pathConfig.appEntry,
   },
 
   // 输出 [hash:8] 哈希算法随机生成 8位 大/小写字母和数字 例如： bundle.0f127098.js
@@ -73,7 +73,7 @@ const config = {
     filename: isDev ? 'bundle.[hash:8].js' : 'js/[name].[chunkhash:8].js',
     // 输出非入口(non-entry) chunk 文件的名称，默认'[id].js',例如 0.js 1.js
     chunkFilename: 'js/[name].[chunkhash:8].js',
-    path: path.join(__dirname, '../dist'),
+    path: pathConfig.appDist,
     // 在打包发布时，需要指定项目的路径。在hash模式时，项目的根目录是不变的，而在history模式时，以/开头的嵌套路径会被当做根路径。
     // 生产环境使用'./'，相对于当前路径
     // 例如把打包文件放入服务器mobile目录下，<script>标签的src属性 和 <link>标签的href属性引用的路径是：https://xbworld.cn/mobile/bundle.0f127098.js(假设路径)
@@ -86,9 +86,9 @@ const config = {
   resolve: {
     // 设置别名
     alias: {
-      '@': path.resolve(__dirname, '../src'),
-      '@assets': path.resolve(__dirname, '../src/assets'),
-      '@components': path.resolve(__dirname, '../src/components'),
+      '@': pathConfig.appSrc,
+      '@assets': pathConfig.appAssets,
+      '@components': pathConfig.appComponents,
     },
     // 引入时省略文件扩展名
     extensions: ['.vue', '.js', '.jsx', '.json', '.scss', '.css'],
@@ -122,9 +122,9 @@ const config = {
         // 这时候我们就要使用exclude和include来尽可能准确的指定要转换内容的范畴
         // node_modules 目录下的文件都是采用的 ES5 语法，没必要再通过 Babel 去转换
         // 排除路径
-        exclude: [path.resolve(__dirname, '../node_modules')],
+        exclude: [pathConfig.appNodeModules],
         // 查找路径
-        include: [path.resolve(__dirname, '../src')],
+        include: [pathConfig.appSrc],
       },
 
       // 解决 vue 使用 element 时报错ERROR in ./node_modules/element-ui/lib/theme-chalk/fonts/element-icons.ttf
@@ -186,7 +186,7 @@ const config = {
     // 生成的文件所在目录同 output 输出目录一致
     // 可以根据生产开发环境引入不同的 script & link
     new WebPlugin({
-      template: path.join(__dirname, './template.html'),
+      template: pathConfig.appTemplate,
       filename: 'index.html', // 默认名称为index.html
       // 该html文件依赖的entry，必须是一个数组。依赖的资源的注入顺序按照数组的顺序。
       requires: ['main'],

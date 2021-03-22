@@ -7,6 +7,8 @@ const webpack = require('webpack')
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.config.base')
 
+const pathConfig = require('./pathConfig')
+
 // devServer配置 并不会真正的打包文件，而是生成内存中的打包，把文件写到内存中
 const devServer = {
   // 端口
@@ -113,9 +115,9 @@ const config = merge(baseConfig, {
     // 告诉 Webpack 使用了哪些动态链接库
     new webpack.DllReferencePlugin({
       // 同webpack.config.dll.js 中 DllPlugin 的 context上下文一致
-      context: path.resolve(__dirname, '../dll'),
+      context: pathConfig.appDll,
       // 用于加载 描述动态链接库的 manifest.json 文件
-      manifest: require(path.join(__dirname, '../dll/vendors.manifest.json')),
+      manifest: require(path.resolve(pathConfig.appDll, 'vendors.manifest.json')),
     }),
   ],
 })
