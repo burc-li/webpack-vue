@@ -20,6 +20,7 @@ npm run lint-fix
 
 **启动项目** 
 ```
+npm run dev:dll
 npm run dev
 ```
 
