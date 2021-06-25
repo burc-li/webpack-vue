@@ -5,6 +5,7 @@
 
 <template>
   <div class="testVuex">
+    <Silder></Silder>
     <section class="modules-item">
       <h1>根命名空间</h1>
       <h3>state: {{ firstName }} {{ lastName }}</h3>
@@ -62,10 +63,15 @@
 
 <script>
 import { createNamespacedHelpers, mapState, mapGetters, mapActions } from 'vuex'
+import Silder from '../../components/Slider'
+// 5.js
+const vuerouter = require('vue-router')
+const vuex = require('vuex')
+const elementui = require('element-ui')
 const { mapState: mapStateCart, mapGetters: mapGettersCart, mapActions: mapActionsCart } = createNamespacedHelpers('cart')
 const { mapState: mapStateProduct, mapGetters: mapGettersProduct, mapActions: mapActionsProduct } = createNamespacedHelpers('product')
-
 export default {
+  comments: { Silder },
   data () {
     return {
     }

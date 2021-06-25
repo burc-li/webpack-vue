@@ -35,9 +35,14 @@
 import Item from './item'
 import Tabs from './tabs'
 import Silder from '../../components/Slider'
+const vuerouter = require('vue-router')
+const vuex = require('vuex')
+const elementui = require('element-ui')
+// import VueRouter from 'vue-router'
+// import Vuex from 'vuex'
+// import ElementUI from 'element-ui'
 
 let id = 0
-
 export default {
   components: {
     Item,

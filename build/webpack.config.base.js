@@ -11,8 +11,6 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 // HtmlWebpackPlugin 加强版
 const { WebPlugin, AutoWebPlugin } = require('web-webpack-plugin')
-// 增强控制台日志显示效果
-const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 // 可视化分析包大小
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 // 多进程Loader文件转换处理
@@ -46,17 +44,14 @@ const config = {
   mode: isDev ? 'development' : 'production',
 
   // 控制台不输出 构建模块信息 和 children 信息
-  stats: {
-    modules: false,
-    children: false,
-  },
+  stats: 'minimal',
 
   // 性能展示提示
   performance: {
     // 入口起点的最大体积，默认值 250000 (bytes) 即 244KB
-    maxEntrypointSize: 1024 * 1024,
+    maxEntrypointSize: 1024 * 1024 * 3,
     // webpack 生成的单个资源最大体积，默认值 250000 (bytes) 即 244KB
-    maxAssetSize: 1024 * 1024,
+    maxAssetSize: 1024 * 1024 * 3,
   },
 
   // 入口， __dirname 是当前文件所在目录
@@ -71,8 +66,8 @@ const config = {
     // 模块热替换 和 [chunkhash] 是冲突的，所以开发环境下 filename 无法设置[chunkhash]!!!!!!!!!!
     // 根据不同的入口文件(Entry)进行依赖文件解析、构建对应的chunk，生成对应的哈希值
     filename: isDev ? 'bundle.[hash:8].js' : 'js/[name].[chunkhash:8].js',
-    // 输出非入口(non-entry) chunk 文件的名称，默认'[id].js',例如 0.js 1.js
-    chunkFilename: 'js/[name].[chunkhash:8].js',
+    // 输出非入口(non-entry) chunk 文件的名称，默认'[id].js',例如 0.js 1.js  路由中使用webpack魔法注释来提供 chunkName
+    chunkFilename: 'js/[name].[chunkhash:8].chunk.js',
     path: pathConfig.appDist,
     // 在打包发布时，需要指定项目的路径。在hash模式时，项目的根目录是不变的，而在history模式时，以/开头的嵌套路径会被当做根路径。
     // 生产环境使用'./'，相对于当前路径
@@ -178,9 +173,6 @@ const config = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': isDev ? JSON.stringify('development') : '"production"',
     }),
-
-    // 识别webpack中的某些类别的错误，并对它们进行清理、聚合和排序，以提供更好的开发体验
-    new FriendlyErrorsPlugin(),
 
     // 根据本地自定义文件 template.html 生成html文件，并自动注入所有生成的 bundle
     // 生成的文件所在目录同 output 输出目录一致

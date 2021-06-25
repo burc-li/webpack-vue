@@ -5,14 +5,16 @@ const path = require('path')
 const webpack = require('webpack')
 // 合并webpack配置文件
 const merge = require('webpack-merge')
+// 增强控制台日志显示效果
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const baseConfig = require('./webpack.config.base')
 
 const pathConfig = require('./pathConfig')
-
+const port = 8001
 // devServer配置 并不会真正的打包文件，而是生成内存中的打包，把文件写到内存中
 const devServer = {
   // 端口
-  port: 8002,
+  port,
   // 可以通过三种方式访问: 127.0.0.1:8000  localhost:8000  192.168.43.117:8000(本机IP)
   host: '127.0.0.1',
   // 是否允许使用全屏覆盖的方式显示编译错误，默认不允许
@@ -111,6 +113,16 @@ const config = merge(baseConfig, {
     // 开启后 bundle 文件会变大一些，因为它加入了一个小型的 HMR 运行时（runtime），
     // 当你的应用在运行的时候，Webpack 监听到文件变更并重新打包模块时，HMR 会判断这些模块是否接受 update，若允许，则发信号通知应用进行热替换。
     new webpack.HotModuleReplacementPlugin(),
+
+    // 识别webpack中的某些类别的错误，并对它们进行清理、聚合和排序，以提供更好的开发体验
+    new FriendlyErrorsPlugin({
+      // 运行成功的提示
+      compilationSuccessInfo: {
+        messages: [`Your application is running here: http://127.0.0.1:${port}/`],
+      },
+      // 是否每次都清空控制台
+      clearConsole: true,
+    }),
 
     // 告诉 Webpack 使用了哪些动态链接库
     new webpack.DllReferencePlugin({

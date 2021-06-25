@@ -22,10 +22,10 @@ const config = merge(baseConfig, {
   // 不生成 source map，sourceMap 生成耗时严重
   devtool: 'none',
 
-  // 性能优化
-  optimization: {
-    // 开启 作用域提升 Scope Hoisting,打包出来的代码文件更小、运行的更快
-    concatenateModules: true,
+  // 准确地控制终端展示的信息 控制台不输出 构建模块信息 和 children 信息
+  stats: {
+    modules: false,
+    children: false,
   },
 
   module: {
@@ -169,6 +169,45 @@ const config = merge(baseConfig, {
     //   },
     // }),
   ],
+
+  optimization: {
+    // 开启 作用域提升 Scope Hoisting,打包出来的代码文件更小、运行的更快
+    concatenateModules: true,
+    // 代码拆分
+    splitChunks: {
+      minSize: 20000, // 19.5KB 单位是字节Byte 如果一个模块符合之前所说的拆分规则，但是如果提取出来最后生成文件大小比minSize要小，那它仍然不会被提取出来。这个属性可以在每个缓存组属性中设置，也可以在splitChunks属性中设置，这样在每个缓存组都会继承这个配置
+      maxAsyncRequests: 30, // 当整个项目打包完之后，一个按需加载的包最终被拆分成 n 个包，maxAsyncRequests 就是用来限制 n 的最大值
+      maxInitialRequests: 30, // 允许入口并行加载的最大请求数
+      cacheGroups: {
+        // 初始化就能获取的 node_modules 模块
+        moduleInit: {
+          name: 'module-init',
+          test: /[\\/]node_modules[\\/]/, // 匹配模块的路径 test属性用于进一步控制缓存组选择的模块 使用[\\/]来表示路径分隔符，为了兼容Unix系统和Windows
+          chunks: 'initial', // 定哪些类型的chunk参与拆分  all 代表所有模块，async代表只管异步加载的, initial代表初始化时就能获取的模块
+          minChunks: 1, // 模块被引用1次及以上的才抽离
+          priority: -10, // 规则优先级，当缓存组中设置有多个拆分规则，而某个模块同时符合好几个规则的时候，则需要通过优先级属性priority来决定使用哪个拆分规则。优先级高者执行
+          reuseExistingChunk: true, // 复用其他chunk内已拥有的模块,而不是创建一个包含公共模块B和C的新块
+        },
+        // 异步加载的 node_modules 模块
+        moduleAsync: {
+          name: 'module-async',
+          test: /[\\/]node_modules[\\/]/, // 匹配模块的路径 test属性用于进一步控制缓存组选择的模块 使用[\\/]来表示路径分隔符，为了兼容Unix系统和Windows
+          chunks: 'async', // 定哪些类型的chunk参与拆分  all 代表所有模块，async代表只管异步加载的, initial代表初始化时就能获取的模块
+          minChunks: 1, // 模块被引用1次及以上的才抽离
+          priority: -10, // 规则优先级，当缓存组中设置有多个拆分规则，而某个模块同时符合好几个规则的时候，则需要通过优先级属性priority来决定使用哪个拆分规则。优先级高者执行
+          reuseExistingChunk: true, // 复用其他chunk内已拥有的模块,而不是创建一个包含公共模块B和C的新块
+        },
+        common: {
+          name: 'common',
+          chunks: 'all', // 定哪些类型的chunk参与拆分  all 代表所有模块，async代表只管异步加载的, initial代表初始化时就能获取的模块
+          minChunks: 2,
+          minSize: 20000,
+          priority: -20,
+          reuseExistingChunk: true,
+        },
+      },
+    },
+  },
 })
 
 module.exports = config

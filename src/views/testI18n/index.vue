@@ -52,6 +52,9 @@
 
 <script>
 import { getTitle, getIntroduction } from './until'
+const vuerouter = require('vue-router')
+const vuex = require('vuex')
+const elementui = require('element-ui')
 export default {
   inject: ['reload'],
   data () {
