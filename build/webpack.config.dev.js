@@ -10,13 +10,15 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const baseConfig = require('./webpack.config.base')
 
 const pathConfig = require('./pathConfig')
-const port = 8001
+const port = 8002
 // devServer配置 并不会真正的打包文件，而是生成内存中的打包，把文件写到内存中
 const devServer = {
   // 端口
   port,
   // 可以通过三种方式访问: 127.0.0.1:8000  localhost:8000  192.168.43.117:8000(本机IP)
   host: '127.0.0.1',
+  // 禁止打印浏览器控制台热更新日志
+  clientLogLevel: 'none',
   // 是否允许使用全屏覆盖的方式显示编译错误，默认不允许
   // webpack编译时任何错误显示在浏览器中 【包括eslint的语法错误，糟糕的编程体验，不友好】
   overlay: {

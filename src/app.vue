@@ -7,10 +7,7 @@
     <Header />
     <h1>{{ `${burcAddress}--${hello}` }}</h1>
     <section class="router-wrap">
-      <transition
-        mode="out-in"
-        name="fade"
-      >
+      <transition mode="out-in" name="fade">
         <!-- <router-view />显示的是当前路由地址所对应的内容 -->
         <router-view v-if="isRouterAlive" />
       </transition>
