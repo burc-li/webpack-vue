@@ -6,6 +6,18 @@
     // Vue支持 jsx语法 ，npm install babel-plugin-transform-vue-jsx -D
     "transform-vue-jsx",
 
+    // 支持async 等语法 
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "absoluteRuntime": false,
+        "corejs": false,
+        "helpers": true,
+        "regenerator": true,
+        "version": "7.0.0-beta.0"
+      }
+    ],
+
     // elementui 按需引入，npm install babel-plugin-component -D
     [
       "component",
