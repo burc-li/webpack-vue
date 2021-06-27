@@ -28,18 +28,15 @@ export default () => {
   // 缺点：配置vuex热更新后，直接手动更改state中的数据，无效果，页面不会自动刷新
   if (module.hot) {
     module.hot.accept([
-      './state/state',
       './mutations/mutations',
       './actions/actions',
       './getters/getters',
     ], () => {
-      const newState = require('./state/state').default
       const newMutations = require('./mutations/mutations').default
       const newActions = require('./actions/actions').default
       const newGetters = require('./getters/getters').default
 
       store.hotUpdate({
-        state: newState,
         mutations: newMutations,
         actions: newActions,
         getters: newGetters,

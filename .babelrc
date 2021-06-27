@@ -6,7 +6,9 @@
     // Vue支持 jsx语法 ，npm install babel-plugin-transform-vue-jsx -D
     "transform-vue-jsx",
 
-    // 支持async 等语法 
+    // 支持async 等语法 ,
+    // npm install --save-dev @babel/plugin-transform-runtime
+    // npm install --save @babel/runtime
     [
       "@babel/plugin-transform-runtime",
       {

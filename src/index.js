@@ -76,13 +76,18 @@ router.beforeEach((to, from, next) => {
 // 挂载到全局window对象上
 window.vm = new Vue({
   // 如果在实例化时存在el这个选项，实例将立即进入编译过程，否则，需要显式调用 vm.$mount() 手动开启编译。
-  // el: '#todo-root',
+  el: '#app',
 
   router,
   store,
   i18n,
   render: (h) => h(App),
-}).$mount('#todo-root')
+})
 
 // 使用i18n导出方法二：使用createI18n方法创建的i18n实例互相独立，为了让js文件可以引入，必须把此实例导出
 // export default i18n
+
+if (module.hot) {
+  // 通知 webpack 该模块接受 hmr
+  module.hot.accept()
+}
