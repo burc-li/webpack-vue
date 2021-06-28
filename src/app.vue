@@ -119,17 +119,7 @@ export default {
   width: 100%;
   margin: 0px auto 40px;
   h1 {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
     color: #de5e60;
-  }
-  a {
-    position: absolute;
-    left: 50%;
-    transform: translateX(calc(-50% - 100px));
-    font-size: 22px;
-    line-height: 30px;
   }
   section.router-wrap {
     margin-top: 20vh;
