@@ -13,6 +13,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { WebPlugin, AutoWebPlugin } = require('web-webpack-plugin')
 // 可视化分析包大小
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// 将单个文件或整个目录复制到构建目录
+const CopyPlugin = require('copy-webpack-plugin')
 // 多进程Loader文件转换处理
 const HappyPack = require('happypack')
 // 构造出共享进程池，进程池中包含4个子进程
@@ -205,6 +207,9 @@ const config = {
     // 如果使用webpack-dev-server打包到内存中【开发环境】，dist目录下的文件会被全部删除,不太友好
     // 个人更喜欢使用 rimraf插件
     // new CleanWebpackPlugin(),
+
+    // 将 statics 目录复制到build 构建目录
+    new CopyPlugin([{ from: pathConfig.appStatics, to: pathConfig.appDistStatics }]),
   ],
 }
 
