@@ -7,7 +7,7 @@ module.exports = {
   appDist: resolveApp('dist'),
   appDll: resolveApp('dll'),
   appVendorConfigs: resolveApp('build/vendorConfigs.js'),
-  appTemplate: resolveApp('build/template.html'),
+  appTemplate: resolveApp('src/html/template.html'),
   appEntry: resolveApp('src/index.js'),
   appSrc: resolveApp('src'),
   appApis: resolveApp('src/apis'),
