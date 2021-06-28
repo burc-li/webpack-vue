@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint-ext": "eslint --ext .js,.jsx,.vue src/",
     "lint-fix": "eslint --fix --ext .js,.jsx,.vue src/",
-    "analyz:dev": "cross-env REPORT_VIS=OK npm run dev",
-    "analyz:prod": "cross-env REPORT_VIS=OK npm run build:prod",
+    "analyz:dev": "cross-env REPORT_VIS=yes npm run dev",
+    "analyz:prod": "cross-env REPORT_VIS=yes npm run build:prod",
     "dev:dll": "rimraf dll && cross-env NODE_ENV=development webpack --config build/webpack.config.dll.js --progress",
     "dev": "cross-env NODE_ENV=development VERSION=2.0 webpack-dev-server --config build/webpack.config.dev.js --progress",
     "build:prod": "rimraf dist && cross-env NODE_ENV=production webpack --config build/webpack.config.prod.js"

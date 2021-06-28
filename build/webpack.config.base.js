@@ -21,6 +21,8 @@ const happyThreadPool = HappyPack.ThreadPool({ size: 4 })
 // const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 const pathConfig = require('./pathConfig')
+const devConfig = require('../config/dev.env')
+const prodConfig = require('../config/prod.env')
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -171,7 +173,7 @@ const config = {
     // 在编译时期创建全局变量，对开发模式和发布模式的构建允许不同的行为
     // src下的全部文件都可以访问到此全局变量
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': isDev ? JSON.stringify('development') : '"production"',
+      'process.env': isDev ? devConfig : prodConfig,
     }),
 
     // 根据本地自定义文件 template.html 生成html文件，并自动注入所有生成的 bundle
@@ -206,8 +208,7 @@ const config = {
   ],
 }
 
-console.log('REPORT_VIS', process.env.REPORT_VIS)
-if (process.env.REPORT_VIS === 'OK') {
+if (process.env.REPORT_VIS === 'yes') {
   config.plugins.push(BundleAnalyzerPluginInstance)
 }
 

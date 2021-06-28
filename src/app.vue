@@ -64,10 +64,7 @@ export default {
   mounted () {
     // 获取route参数
     console.log('app.vue--route路由对象', this.$route)
-
-    console.log('process.env.NODE_ENV', process.env.NODE_ENV)
-    console.log('process.env.VERSION', process.env.VERSION)
-    console.log('process.env.GLOBAL_CONFIG', process.env.GLOBAL_CONFIG)
+    console.log('process.env', process.env)
 
     // 原生执行vuex中 mutations中的方法 (不建议在store外部使用mutations方法)
     // this.$store.commit("updateAddress", {
