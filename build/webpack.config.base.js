@@ -79,7 +79,7 @@ const config = {
     // 开发环境使用'/'，根路径
     // <script>标签的src属性 和 <link>标签的href属性引用的路径是：http://127.0.0.1/bundle.0f127098.js(假设路径)
     // 如果使用history路由模式，服务器非根目录部署，生产环境下要改为'/mobile/',绝对路径
-    publicPath: isDev ? '/' : '/vue/',
+    publicPath: isDev ? '/' : '/h5/',
   },
 
   resolve: {
@@ -189,7 +189,7 @@ const config = {
     }),
 
     // new HtmlWebpackPlugin({
-    //   template: isDev ? path.join(__dirname, './devTemplate.html') : path.join(__dirname, './prodTemplate.html'),
+    //   template: pathConfig.appTemplate,
     //   filename: 'index.html', // 默认名称为index.html
     // }),
 

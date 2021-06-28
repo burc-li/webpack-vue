@@ -39,7 +39,7 @@ const devServer = {
   // router中 history模式下的url会请求到服务器端，但是服务器端并没有这一个资源文件，就会返回404，所以需要配置这一项
   historyApiFallback: {
     // 与devServer的publicPath、HtmlWebpackPlugin的filename有关
-    // 例如此处填写 '/vue/index.html'，devServer=》publicPath属性应该填写 '/vue/'
+    // 例如此处填写 '/h5/index.html'，devServer=》publicPath属性应该填写 '/h5/'
     // HtmlWebpackPlugin生成的html默认名称为index.html，若修改HtmlWebpackPlugin-》filename为 main.html，则此处需填写 '/main.html'
     index: '/index.html',
   },
