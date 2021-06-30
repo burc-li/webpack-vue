@@ -180,19 +180,19 @@ const config = merge(baseConfig, {
       maxInitialRequests: 30, // 允许入口并行加载的最大请求数
       cacheGroups: {
         // 异步加载的 node_modules 模块  亲自尝试：设为 initial 或 all 部署服务器后页面空白！！！
-        module: {
-          name: 'module',
+        vendor: {
+          name: 'vendor',
           test: /[\\/]node_modules[\\/]/, // 匹配模块的路径 test属性用于进一步控制缓存组选择的模块 使用[\\/]来表示路径分隔符，为了兼容Unix系统和Windows
           chunks: 'async', // 定哪些类型的chunk参与拆分  all 代表所有模块，async代表只管异步加载的, initial代表初始化时就能获取的模块
           minChunks: 1, // 模块被引用1次及以上的才抽离
           priority: -10, // 规则优先级，当缓存组中设置有多个拆分规则，而某个模块同时符合好几个规则的时候，则需要通过优先级属性priority来决定使用哪个拆分规则。优先级高者执行
           reuseExistingChunk: true, // 复用其他chunk内已拥有的模块,而不是创建一个包含公共模块B和C的新块
         },
-        default: {
+        commons: {
           name: 'common',
-          chunks: 'async', // 定哪些类型的chunk参与拆分  all 代表所有模块，async代表只管异步加载的, initial代表初始化时就能获取的模块
+          chunks: 'all', // 定哪些类型的chunk参与拆分  all 代表所有模块，async代表只管异步加载的, initial代表初始化时就能获取的模块
           minChunks: 2,
-          minSize: 20000,
+          minSize: 0,
           priority: -20,
           reuseExistingChunk: true,
         },
