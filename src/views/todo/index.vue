@@ -58,7 +58,7 @@ export default {
   computed: {
     filterTodos () {
       const { filter } = this.$data
-      console.log('--------', filter)
+      console.log('----------', filter)
       if (this.filter === 'all') {
         return this.todos
       }
