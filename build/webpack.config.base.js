@@ -185,7 +185,7 @@ const config = {
       template: pathConfig.appTemplate,
       filename: 'index.html', // 默认名称为index.html
       // 该html文件依赖的entry，必须是一个数组。依赖的资源的注入顺序按照数组的顺序。
-      requires: ['main'],
+      requires: ['main', 'vendor', 'commons'], // 包含了 splitChunks 中的缓存组的 name
     }),
 
     // new HtmlWebpackPlugin({

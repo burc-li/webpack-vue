@@ -134,6 +134,7 @@ const config = merge(baseConfig, {
       manifest: require(path.resolve(pathConfig.appDll, 'vendors.manifest.json')),
     }),
   ],
+
 })
 
 module.exports = config
