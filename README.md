@@ -55,8 +55,6 @@ npm run analyz:prod
 - 使用 `happypack` 对js、css、less文件多进程转换处理
 - 使用 `cssnano` 智能合并压缩css代码
 - 使用 `postcss-preset-env` 自动补齐各种浏览器私有的前缀，处理浏览器兼容问题
-- 进行 `作用域提升 (Scope Hoisting)`，打包出来的代码文件更小、运行的更快
-- 进行 `摇树优化 (Tree Shaking）`，将代码中永远不会走到的片段删除掉
 
 
 

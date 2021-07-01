@@ -191,6 +191,7 @@ const config = {
     // new HtmlWebpackPlugin({
     //   template: pathConfig.appTemplate,
     //   filename: 'index.html', // 默认名称为index.html
+    //   chunks: ['main', 'vendor', 'commons'],
     // }),
 
     // 使用 HappyPack 加速构建，多进程Loader文件转换处理
