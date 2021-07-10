@@ -4,7 +4,7 @@
 </doc>
 
 <template>
-  <section class="real-app">
+  <section class="real-app" ref="sec">
     <GlobalSilder />
     <Silder />
     <input
@@ -12,21 +12,14 @@
       class="add-input"
       autofocus="autofocus"
       placeholder="接下来做什么"
-      @keyup.enter="addTodo"
-    >
+      @keyup.enter="addTodo" />
     <Item
       v-for="todo in filterTodos"
       :key="todo.id"
       :todo="todo"
       @changeStatus="updateTodo"
-      @del="deleteTodo"
-    />
-    <Tabs
-      :filter="filter"
-      :todos="todos"
-      @toggle="toggleFilter"
-      @clearAll="clearAllCompletedTodo"
-    />
+      @del="deleteTodo" />
+    <Tabs :filter="filter" :todos="todos" @toggle="toggleFilter" @clearAll="clearAllCompletedTodo" />
     <router-view />
   </section>
 </template>
@@ -66,10 +59,20 @@ export default {
       return this.todos.filter(todo => todo.completed === filterCompleted)
     },
   },
+  beforeCreate () {
+    console.log('生命周期-beforeCreate', this.filter, this.$refs.sec)
+  },
+  created () {
+    console.log('生命周期-created', this.filter, this.$refs.sec)
+  },
+  beforeMount () {
+    console.log('生命周期-beforeMount', this.$refs.sec)
+  },
   mounted () {
     // 小姐姐小姐姐
     console.log('todo/index.vue--this.$router全局路由器对象：', this.$router)
     console.log('todo/index.vue--this.$route路由对象：', this.$route)
+    console.log('生命周期-mounted', this.$refs.sec)
   },
   methods: {
     addTodo (e) {

@@ -175,24 +175,17 @@ const config = {
     // 在编译时期创建全局变量，对开发模式和发布模式的构建允许不同的行为
     // src下的全部文件都可以访问到此全局变量
     new webpack.DefinePlugin({
-      'process.env': isDev ? devConfig : prodConfig,
+      'process.config': isDev ? devConfig : prodConfig,
     }),
 
     // 根据本地自定义文件 template.html 生成html文件，并自动注入所有生成的 bundle
     // 生成的文件所在目录同 output 输出目录一致
-    // 可以根据生产开发环境引入不同的 script & link
-    new WebPlugin({
+    new HtmlWebpackPlugin({
       template: pathConfig.appTemplate,
       filename: 'index.html', // 默认名称为index.html
-      // 该html文件依赖的entry，必须是一个数组。依赖的资源的注入顺序按照数组的顺序。
-      requires: ['main', 'vendor', 'commons'], // 包含了 splitChunks 中的缓存组的 name
+      config: isDev ? devConfig : prodConfig,
+      // chunks: ['main', 'vendor', 'common'], // 默认是显示全部chunks，包含 项目入口（entry）、import()动态引入的代码、splitChunks 拆分出来的代码 即缓存组的 name
     }),
-
-    // new HtmlWebpackPlugin({
-    //   template: pathConfig.appTemplate,
-    //   filename: 'index.html', // 默认名称为index.html
-    //   chunks: ['main', 'vendor', 'commons'],
-    // }),
 
     // 使用 HappyPack 加速构建，多进程Loader文件转换处理
     new HappyPack({
