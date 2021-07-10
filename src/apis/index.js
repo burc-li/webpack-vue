@@ -9,7 +9,7 @@ const axiosInstance = axios.create()
 
 // `baseURL` 将自动加在 `url` 前面，除非 `url` 是一个绝对 URL。
 // 它可以通过设置一个 `baseURL` 便于为 axios 实例的方法传递相对 URL
-axiosInstance.defaults.baseURL = process.env.baseUrl
+axiosInstance.defaults.baseURL = process.config.baseUrl
 
 // 覆写库的超时默认值
 // 现在，在超时前，所有请求都会等待 2.5 秒

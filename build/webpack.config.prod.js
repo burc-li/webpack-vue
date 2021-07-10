@@ -1,11 +1,9 @@
 /**
  * @name 区分开发环境和生产环境的webpack配置
  */
-const path = require('path')
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.config.base')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const HappyPack = require('happypack')
@@ -105,7 +103,7 @@ const config = merge(baseConfig, {
       minSize: 30000,
       maxAsyncRequests: 30,
       maxInitialRequests: 30,
-      cacheGroups: {
+      module: {
         vendor: {
           name: 'vendor',
           test: /[\\/]node_modules[\\/]/,
@@ -114,11 +112,11 @@ const config = merge(baseConfig, {
           priority: -10,
           reuseExistingChunk: true,
         },
-        commons: {
+        default: {
           name: 'common',
           chunks: 'all',
           minChunks: 2,
-          minSize: 0,
+          minSize: 20000,
           priority: -20,
           reuseExistingChunk: true,
         },

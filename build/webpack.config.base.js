@@ -2,11 +2,9 @@
  * @name webpack基础配置
  */
 
-const path = require('path')
 const webpack = require('webpack')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const { WebPlugin, AutoWebPlugin } = require('web-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const CopyPlugin = require('copy-webpack-plugin')
 const HappyPack = require('happypack')
@@ -121,19 +119,14 @@ const config = {
     new VueLoaderPlugin(),
 
     new webpack.DefinePlugin({
-      'process.env': isDev ? devConfig : prodConfig,
+      'process.config': isDev ? devConfig : prodConfig,
     }),
 
-    new WebPlugin({
+    new HtmlWebpackPlugin({
       template: pathConfig.appTemplate,
-      filename: 'index.html',
-      requires: ['main', 'vendor', 'commons'],
+      filename: 'index.html', // 默认名称为index.html
+      config: isDev ? devConfig : prodConfig,
     }),
-
-    // new HtmlWebpackPlugin({
-    //   template: pathConfig.appTemplate,
-    //   filename: 'index.html', // 默认名称为index.html
-    // }),
 
     new HappyPack({
       id: 'babel',
