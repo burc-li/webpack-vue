@@ -29,6 +29,8 @@ const prodConfig = require('../config/prod.env')
 const isDev = process.env.NODE_ENV === 'development'
 
 console.log('process.env.NODE_ENV', process.env.NODE_ENV)
+const envConfig = isDev ? devConfig : prodConfig
+console.log('envConfig', envConfig)
 
 // 可视化分析包大小配置
 const BundleAnalyzerPluginInstance = new BundleAnalyzerPlugin({
@@ -79,7 +81,8 @@ const config = {
     // 开发环境使用'/'，根路径
     // <script>标签的src属性 和 <link>标签的href属性引用的路径是：http://127.0.0.1/bundle.0f127098.js(假设路径)
     // 如果使用history路由模式，服务器非根目录部署，生产环境下要改为'/mobile/',绝对路径
-    publicPath: isDev ? '/' : '/h5/',
+    // publicPath: isDev ? '/' : '/h5/',
+    publicPath: JSON.parse(envConfig.basePath),
   },
 
   resolve: {
@@ -175,7 +178,7 @@ const config = {
     // 在编译时期创建全局变量，对开发模式和发布模式的构建允许不同的行为
     // src下的全部文件都可以访问到此全局变量
     new webpack.DefinePlugin({
-      'process.config': isDev ? devConfig : prodConfig,
+      'process.config': envConfig,
     }),
 
     // 根据本地自定义文件 template.html 生成html文件，并自动注入所有生成的 bundle
@@ -183,7 +186,7 @@ const config = {
     new HtmlWebpackPlugin({
       template: pathConfig.appTemplate,
       filename: 'index.html', // 默认名称为index.html
-      config: isDev ? devConfig : prodConfig,
+      config: envConfig,
       // chunks: ['main', 'vendor', 'common'], // 默认是显示全部chunks，包含 项目入口（entry）、import()动态引入的代码、splitChunks 拆分出来的代码 即缓存组的 name
     }),
 

@@ -6,10 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <!-- 开发环境生产环境都已使用 copy-webpack-plugin 将 statics 目录 拷贝到 打包目录，所以可以使用相对路径 -->
     <!-- 根目录部署 /  非根目录部署 /h5/ -->
-    <link rel="shortcut icon" href="/statics/ico/favicon.ico" />
+    <link rel="shortcut icon" href="<%= JSON.parse(htmlWebpackPlugin.options.config.basePath) %>statics/ico/favicon.ico" />
     
     <title><%= JSON.parse(htmlWebpackPlugin.options.config.title) %></title>
-
+    
+    <!-- 开发环境引入dll 动态链接库   生产环境不引入 -->
     <% if(htmlWebpackPlugin.options.config.NODE_ENV === JSON.stringify("dev")){ %>
     <script src="../../dll/vendors.dll.js"></script>
     <% } %>
