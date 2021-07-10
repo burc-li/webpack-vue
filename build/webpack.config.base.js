@@ -15,6 +15,7 @@ const devConfig = require('../config/dev.env')
 const prodConfig = require('../config/prod.env')
 
 const isDev = process.env.NODE_ENV === 'development'
+const envConfig = isDev ? devConfig : prodConfig
 
 // 可视化分析包大小配置
 const BundleAnalyzerPluginInstance = new BundleAnalyzerPlugin({
@@ -48,7 +49,8 @@ const config = {
     filename: isDev ? 'bundle.[hash:8].js' : 'js/[name].[chunkhash:8].js',
     chunkFilename: 'js/[name].[chunkhash:8].chunk.js',
     path: pathConfig.appDist,
-    publicPath: isDev ? '/' : '/h5/',
+    // publicPath: isDev ? '/' : '/h5/',
+    publicPath: JSON.parse(envConfig.basePath),
   },
 
   resolve: {
@@ -119,13 +121,13 @@ const config = {
     new VueLoaderPlugin(),
 
     new webpack.DefinePlugin({
-      'process.config': isDev ? devConfig : prodConfig,
+      'process.config': envConfig,
     }),
 
     new HtmlWebpackPlugin({
       template: pathConfig.appTemplate,
       filename: 'index.html', // 默认名称为index.html
-      config: isDev ? devConfig : prodConfig,
+      config: envConfig,
     }),
 
     new HappyPack({
