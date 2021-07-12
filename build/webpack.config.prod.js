@@ -10,7 +10,7 @@ const HappyPack = require('happypack')
 const happyThreadPool = HappyPack.ThreadPool({ size: 4 })
 
 const config = merge(baseConfig, {
-  devtool: 'none',
+  devtool: 'nosources-source-map',
 
   stats: {
     modules: false,
