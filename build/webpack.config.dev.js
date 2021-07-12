@@ -48,11 +48,13 @@ const devServer = {
 const config = merge(baseConfig, {
   devServer,
 
-  // cheap：忽略打包前后的列信息，源代码中的列信息是没有任何作用，因此我们打包后的文件不希望包含列相关信息，只有行信息能建立打包前后的依赖关系
-  // module：定位到bug的源代码具体的位置
   // eval：不生成 .map 文件，仅仅是在每一个模块后，增加sourceURL来关联模块处理前后对应的关系，打包速度更快，体积稍大一点
+  // cheap：不包含列信息，并且源码是通过loader处理过的
+  // module：定位到bug的源代码具体的位置
   // source-map：生成 .map 文件
-  devtool: 'cheap-module-eval-source-map',
+  // 'eval-source-map', 会生成用于开发环境的最佳品质的 source map, 便于调试，构建速度稍慢
+  // 'eval-cheap-module-source-map', 是 "cheap(低开销)" 的 source map，因为它没有生成列映射(column mapping)，只是映射行数
+  devtool: 'eval-source-map',
 
   module: {
     rules: [
