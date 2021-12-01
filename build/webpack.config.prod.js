@@ -19,8 +19,8 @@ const HappyPack = require('happypack')
 const happyThreadPool = HappyPack.ThreadPool({ size: 4 })
 
 const config = merge(baseConfig, {
-  // nosources：使用这个关键字的Source Map不包含sourcesContent，调试时只能看到文件信息和行信息，无法看到源码。
-  devtool: 'nosources-source-map',
+  // 不生成 source map
+  devtool: 'none',
 
   // 准确地控制终端展示的信息 控制台不输出 构建模块信息 和 children 信息
   stats: {

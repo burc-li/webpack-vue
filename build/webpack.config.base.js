@@ -73,7 +73,7 @@ const config = {
     // 根据不同的入口文件(Entry)进行依赖文件解析、构建对应的chunk，生成对应的哈希值
     filename: isDev ? 'bundle.[hash:8].js' : 'js/[name].[chunkhash:8].js',
     // 输出非入口(non-entry) chunk 文件的名称，默认'[id].js',例如 0.js 1.js  路由中使用webpack魔法注释来提供 chunkName
-    chunkFilename: 'js/[name].[chunkhash:8].chunk.js',
+    chunkFilename: 'js/chunk.[name].[chunkhash:8].js',
     path: pathConfig.appDist,
     // 在打包发布时，需要指定项目的路径。在hash模式时，项目的根目录是不变的，而在history模式时，以/开头的嵌套路径会被当做根路径。
     // 生产环境使用'./'，相对于当前路径

@@ -46,9 +46,29 @@ export default {
       return this.todos.filter(todo => todo.completed === false)
     },
   },
+  beforeCreate () {
+    console.log('子---beforeCreate')
+  },
+  created () {
+    console.log('子---created')
+  },
+  beforeMount () {
+    console.log('子---beforeMount')
+  },
   mounted () {
-    console.log('data', this.state)
-    console.log('props', this.filter)
+    console.log('子---mounted')
+  },
+  beforeUpdate () {
+    console.log('子---beforeUpdate')
+  },
+  updated () {
+    console.log('子---updated')
+  },
+  beforeDestroy () {
+    console.log('子---beforeDestroy')
+  },
+  destroyed () {
+    console.log('子---destroyed')
   },
   methods: {
     clearAllCompleted () {

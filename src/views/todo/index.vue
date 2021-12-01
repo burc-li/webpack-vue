@@ -51,7 +51,6 @@ export default {
   computed: {
     filterTodos () {
       const { filter } = this.$data
-      console.log('----------', filter)
       if (this.filter === 'all') {
         return this.todos
       }
@@ -60,19 +59,28 @@ export default {
     },
   },
   beforeCreate () {
-    console.log('生命周期-beforeCreate', this.filter, this.$refs.sec)
+    console.log('父---beforeCreate')
   },
   created () {
-    console.log('生命周期-created', this.filter, this.$refs.sec)
+    console.log('父---created')
   },
   beforeMount () {
-    console.log('生命周期-beforeMount', this.$refs.sec)
+    console.log('父---beforeMount')
   },
   mounted () {
-    // 小姐姐小姐姐
-    console.log('todo/index.vue--this.$router全局路由器对象：', this.$router)
-    console.log('todo/index.vue--this.$route路由对象：', this.$route)
-    console.log('生命周期-mounted', this.$refs.sec)
+    console.log('父---mounted')
+  },
+  beforeUpdate () {
+    console.log('父---beforeUpdate')
+  },
+  updated () {
+    console.log('父---updated')
+  },
+  beforeDestroy () {
+    console.log('父---beforeDestroy')
+  },
+  destroyed () {
+    console.log('父---destroyed')
   },
   methods: {
     addTodo (e) {
