@@ -8,7 +8,8 @@ export default [
   {
     path: '/',
     // 重定向
-    redirect: '/todo/1',
+    // redirect: '/todo/1',
+    redirect: '/testI18n',
   },
   {
     // 路由传参 /todo/xxx
@@ -23,7 +24,7 @@ export default [
 
     // 异步路由，提高首屏加载速度
     // component: resolve => require(['@/views/todo/index.vue'], resolve),
-    component: () => import('@/views/todo/index.vue'),
+    component: () => import(/* webpackChunkName: "todo" */ '@/views/todo/index.vue'),
 
     // 给路由命名  使用：<router-link :to="{name: 'burcTodo'}">跳转todo</router-link>
     name: 'burcTodo',
@@ -57,7 +58,7 @@ export default [
     children: [
       {
         path: 'child', // 以“/”开头的嵌套路径会被当作根路径，所以子路由上不用加“/”
-        component: () => import('@/views/testI18n/index.vue'),
+        component: () => import(/* webpackChunkName: "child" */ '@/views/testI18n/index.vue'),
       },
     ],
   },
@@ -66,19 +67,19 @@ export default [
 
     // 异步路由，提高首屏加载速度
     // component: resolve => require(['@/views/i18n/index.vue'], resolve)
-    component: () => import('@/views/testI18n/index.vue'),
+    component: () => import(/* webpackChunkName: "testI18n" */ '@/views/testI18n/index.vue'),
   },
   {
     path: '/refresh',
-    component: () => import('@/views/refresh/index.vue'),
+    component: () => import(/* webpackChunkName: "refresh" */ '@/views/refresh/index.vue'),
   },
   {
     path: '/test',
-    component: () => import('@/views/test/index.vue'),
+    component: () => import(/* webpackChunkName: "test" */ '@/views/test/index.vue'),
   },
   {
     path: '/testVuex/:id',
     name: 'myTestVuex',
-    component: () => import('@/views/testVuex/index.vue'),
+    component: () => import(/* webpackChunkName: "myTestVuex" */ '@/views/testVuex/index.vue'),
   },
 ]

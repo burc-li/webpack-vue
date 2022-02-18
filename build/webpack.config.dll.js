@@ -4,6 +4,8 @@
  */
 const path = require('path')
 const webpack = require('webpack')
+const WebpackBar = require('webpackbar')
+const ProgressBarWebpackPlugin = require('progress-bar-webpack-plugin')
 const pathConfig = require('./pathConfig')
 
 module.exports = {
@@ -26,6 +28,10 @@ module.exports = {
   },
 
   plugins: [
+    // 构建进度条
+    // new WebpackBar(),
+    new ProgressBarWebpackPlugin(),
+
     // 接入 DllPlugin
     new webpack.DllPlugin({
       // 动态链接库的全局变量名称，需要和 output.library 中保持一致

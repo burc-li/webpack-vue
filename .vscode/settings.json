@@ -1,0 +1,7 @@
+{
+  "jumpToAliasFile.alias": {
+    "@": "d:\\www\\Vue\\webpack-vue\\src",
+    "@assets": "d:\\www\\Vue\\webpack-vue\\src\\assets",
+    "@components": "d:\\www\\Vue\\webpack-vue\\src\\components"
+  }
+}

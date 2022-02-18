@@ -1,11 +1,7 @@
 <template>
   <header class="main-header">
     <h1>
-      <img
-        src="../../assets/images/bg.jpg"
-        width="50"
-        height="50"
-      >
+      <img src="../../assets/images/bg.jpg" width="50" height="50" />
       {{ hello }}
     </h1>
 
@@ -52,8 +48,8 @@ export default {
 <style rel="stylesheet/less" lang="less" scoped>
 .main-header {
   text-align: center;
-  background-color: #26292E;
-  color: #DE5E60;
+  background-color: #26292e;
+  color: #de5e60;
   margin-bottom: 40px;
   padding: 5px 20px;
   display: flex;
@@ -69,7 +65,7 @@ export default {
   vertical-align: bottom;
 }
 
-.main-header .link{
+.main-header .link {
   display: flex;
   align-items: center;
   font-size: 20px;

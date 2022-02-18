@@ -17,8 +17,8 @@ export default () => {
 
     // 基路径 用vue-router跳转的路径都会自动加/h5/
     // 服务器非根目录部署必须要加基路径！！！
-    // base: '/h5/',
-    base: process.config.basePath,
+    base: '/libc/',
+    // base: process.config.basePath,
 
     // 如果浏览器不支持 history 形式的前端路由方式，vue 会自动的给我们 fallback 到 hash 的模式
     fallback: true,

@@ -19,8 +19,7 @@ const HappyPack = require('happypack')
 const happyThreadPool = HappyPack.ThreadPool({ size: 4 })
 
 const config = merge(baseConfig, {
-  // 不生成 source map
-  devtool: 'none',
+  devtool: false,
 
   // 准确地控制终端展示的信息 控制台不输出 构建模块信息 和 children 信息
   stats: {
@@ -74,7 +73,7 @@ const config = merge(baseConfig, {
   },
 
   plugins: [
-    //  配置CSS单独分离打包，将CSS从JS中抽离出来，为每个包含CSS的JS文件创建一个CSS文件
+    // 配置CSS单独分离打包，将CSS从JS中抽离出来，为每个包含CSS的JS文件创建一个CSS文件
     // 输出 [contenthash:8] 哈希算法随机生成 8位 大/小写字母和数字 例如： main.5917e715.css
     // 只要css文件内容不变，那么不会重复构建，粒度是每个文件的内容
     new MiniCssExtractPlugin({
@@ -96,10 +95,7 @@ const config = merge(baseConfig, {
       // 使用共享进程池中的子进程去处理任务
       threadPool: happyThreadPool,
       // 如何处理 .css 文件，用法和 Loader 配置中一样
-      loaders: [
-        'css-loader',
-        'postcss-loader',
-      ],
+      loaders: ['css-loader', 'postcss-loader'],
     }),
 
     // 使用 HappyPack 加速构建，多进程Loader文件转换处理

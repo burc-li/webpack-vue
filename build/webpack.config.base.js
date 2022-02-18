@@ -45,7 +45,6 @@ const BundleAnalyzerPluginInstance = new BundleAnalyzerPlugin({
   statsOptions: null,
   logLevel: 'info',
 })
-
 const config = {
   mode: isDev ? 'development' : 'production',
 
@@ -71,7 +70,7 @@ const config = {
     // 输出 bundle 的名称，一般是入口文件对应的bundle
     // 模块热替换 和 [chunkhash] 是冲突的，所以开发环境下 filename 无法设置[chunkhash]!!!!!!!!!!
     // 根据不同的入口文件(Entry)进行依赖文件解析、构建对应的chunk，生成对应的哈希值
-    filename: isDev ? 'bundle.[hash:8].js' : 'js/[name].[chunkhash:8].js',
+    filename: isDev ? 'js/[name].[hash:8].js' : 'js/[name].[chunkhash:8].js',
     // 输出非入口(non-entry) chunk 文件的名称，默认'[id].js',例如 0.js 1.js  路由中使用webpack魔法注释来提供 chunkName
     chunkFilename: 'js/chunk.[name].[chunkhash:8].js',
     path: pathConfig.appDist,
@@ -136,7 +135,7 @@ const config = {
           {
             loader: 'file-loader',
             options: {
-              name: isDev ? '[path]/[name].[ext]' : '[name].[hash:8].[ext]',
+              name: '[name].[hash:8].[ext]',
               outputPath: 'fonts/',
             },
           },
@@ -153,7 +152,7 @@ const config = {
             options: {
               // 限制大小 10KB  1KB = 1024byte
               limit: 10 * 1024,
-              name: isDev ? '[path]/[name].[ext]' : '[name].[hash:8].[ext]',
+              name: '[name].[hash:8].[ext]',
               outputPath: 'images/',
               esModule: false,
             },
@@ -206,7 +205,10 @@ const config = {
     // new CleanWebpackPlugin(),
 
     // 将 statics 目录复制到build 构建目录
-    new CopyPlugin([{ from: pathConfig.appStatics, to: pathConfig.appDistStatics }]),
+    // new CopyPlugin([{ from: pathConfig.appStatics, to: pathConfig.appDistStatics }]),
+    new CopyPlugin([
+      { from: path.resolve(__dirname, '../src/statics'), to: path.resolve(__dirname, '../dist/statics') },
+    ]),
   ],
 }
 

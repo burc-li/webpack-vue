@@ -19,6 +19,7 @@ const devServer = {
   host: '127.0.0.1',
   // 禁止打印浏览器控制台热更新日志
   clientLogLevel: 'none',
+  progress: true,
   // 是否允许使用全屏覆盖的方式显示编译错误，默认不允许
   // webpack编译时任何错误显示在浏览器中 【包括eslint的语法错误，糟糕的编程体验，不友好】
   overlay: {
@@ -136,7 +137,6 @@ const config = merge(baseConfig, {
       manifest: require(path.resolve(pathConfig.appDll, 'vendors.manifest.json')),
     }),
   ],
-
 })
 
 module.exports = config
