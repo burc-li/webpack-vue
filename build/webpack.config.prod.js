@@ -177,12 +177,14 @@ const config = merge(baseConfig, {
         vendor: {
           name: 'chunk-vendor',
           test: /[\\/]node_modules[\\/]/, // 匹配模块的路径 test属性用于进一步控制缓存组选择的模块 使用[\\/]来表示路径分隔符，为了兼容Unix系统和Windows
-          chunks: 'initial', // 定哪些类型的chunk参与拆分  all 代表所有模块，async代表只管异步加载的, initial代表初始化时就能获取的模块
+          chunks: 'initial', // 仅提取同步加载，从入口文件开始向下递归遍历，提取依赖包【页面文件是异步引入,各页面的依赖包不提取】
+          // chunks: 'all', // 不管异步加载还是同步加载的依赖包都提取出来，打包到一个文件中【各页面的依赖也进行提取】
           priority: -10, // 规则优先级，当缓存组中设置有多个拆分规则，而某个模块同时符合好几个规则的时候，则需要通过优先级属性priority来决定使用哪个拆分规则。优先级高者执行
         },
         commons: {
           name: 'chunk-common',
-          chunks: 'initial', // 定哪些类型的chunk参与拆分  all 代表所有模块，async代表只管异步加载的, initial代表初始化时就能获取的模块
+          chunks: 'initial', // 仅提取同步加载，从入口文件开始向下递归遍历，提取公共代码【页面文件是异步引入,各页面的公共代码不提取】
+          // chunks: 'all', // 不管异步加载还是同步加载的模块都提取出来，打包到一个文件中【各页面的公共代码也进行提取】
           minChunks: 2,
           priority: -20,
           reuseExistingChunk: true,
@@ -190,30 +192,30 @@ const config = merge(baseConfig, {
       },
     },
     // 添加默认配置之后如下所示：
-    // splitChunks: {
-    //   chunks: 'async',
-    //   minSize: 30000, 规定被提取的模块在压缩前的大小最小值，单位为字节?Byte，默认为30000，只有超过了30000字节才会被提取，如果一个模块符合之前所说的拆分规则，但是如果提取出来最后生成文件大小比minSize要小，那它仍然不会被提取出来。这个属性可以在每个缓存组属性中设置，也可以在splitChunks属性中设置，这样在每个缓存组都会继承这个配置
-    //   maxSize: 0, 把提取出来的模块打包生成的文件大小不能超过maxSize值，如果超过了，要对其进行分割并打包生成新的文件。单位为字节，默认为0，表示不限制大小
-    //   minChunks: 1, 表示要被提取的模块最小被引用次数，引用次数超过或等于minChunks值，才能被提取。
-    //   maxAsyncRequests: 6, 最大的按需(异步)加载次数，默认为 6
-    //   maxInitialRequests: 4, 打包后的入口文件加载时，还能同时加载js文件的数量（包括入口文件），默认为4
-    //   automaticNameDelimiter: '~', 打包生成的js文件名的分割符，默认为~
-    //   cacheGroups: {
-    //     vendors: {
-    //       name: 'chunk-vendors',
-    //       test: /[\\/]node_modules[\\/]/, 用来匹配要提取的模块的资源路径或名称。值是正则或函数
-    //       priority: -10, 方案的优先级，值越大表示提取模块时优先采用此方案。默认值为0；当缓存组中设置有多个拆分规则，而某个模块同时符合好几个规则的时候，则需要通过优先级属性priority来决定使用哪个拆分规则。优先级高者执行
-    //       chunks: 'initial',
+    //     splitChunks: {
+    //       chunks: 'async',
+    //       minSize: 30000, // 规定被提取的模块在压缩前的大小最小值，单位为字节?Byte，默认为30000，只有超过了30000字节才会被提取，如果一个模块符合之前所说的拆分规则，但是如果提取出来最后生成文件大小比minSize要小，那它仍然不会被提取出来。这个属性可以在每个缓存组属性中设置，也可以在splitChunks属性中设置，这样在每个缓存组都会继承这个配置
+    //       maxSize: 0, // 把提取出来的模块打包生成的文件大小不能超过maxSize值，如果超过了，要对其进行分割并打包生成新的文件。单位为字节，默认为0，表示不限制大小
+    //       minChunks: 1, // 表示要被提取的模块最小被引用次数，引用次数超过或等于minChunks值，才能被提取。
+    //       maxAsyncRequests: 6, // 最大的按需(异步)加载次数，默认为 6
+    //       maxInitialRequests: 4, // 打包后的入口文件加载时，还能同时加载js文件的数量（包括入口文件），默认为4
+    //       automaticNameDelimiter: '~', // 打包生成的js文件名的分割符，默认为~
+    //       cacheGroups: {
+    //         vendors: {
+    //           name: 'chunk-vendors',
+    //           test: /[\\/]node_modules[\\/]/, // 用来匹配要提取的模块的资源路径或名称。值是正则或函数
+    //           priority: -10, // 方案的优先级，值越大表示提取模块时优先采用此方案。默认值为0；当缓存组中设置有多个拆分规则，而某个模块同时符合好几个规则的时候，则需要通过优先级属性priority来决定使用哪个拆分规则。优先级高者执行
+    //           chunks: 'initial',
+    //         },
+    //         common: {
+    //           name: 'chunk-common',
+    //           minChunks: 2,
+    //           priority: -20,
+    //           chunks: 'initial',
+    //           reuseExistingChunk: true, // 如果当前要提取的模块，在已经在打包生成的js文件中存在，则将重用该模块，而不是把当前要提取的模块打包生成新的js文件。
+    //         },
+    //       },
     //     },
-    //     common: {
-    //       name: 'chunk-common',
-    //       minChunks: 2,
-    //       priority: -20,
-    //       chunks: 'initial',
-    //       reuseExistingChunk: true, 如果当前要提取的模块，在已经在打包生成的js文件中存在，则将重用该模块，而不是把当前要提取的模块打包生成新的js文件。
-    //     },
-    //   },
-    // },
   },
 })
 
